@@ -3,13 +3,15 @@ import { Chart, registerables } from 'chart.js';
 import { 
   IonContent, IonCard, IonIcon, IonText, IonButton 
 } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [IonContent, IonCard, IonIcon,  IonButton]
+  imports: [IonContent, IonCard, IonIcon, IonButton]
 })
 export class DashboardComponent implements OnInit {
   currentWeather = {
@@ -35,24 +37,34 @@ export class DashboardComponent implements OnInit {
   isWindRising = false;
   isPrecipitationRising = true;
 
+  constructor(
+    private navCtrl: NavController,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     Chart.register(...registerables);
     this.createCharts();
   }
 
-  // Méthodes Ajoutées pour les Boutons
+  // Navigation methods
+  goToHomePage() {
+    this.navCtrl.navigateRoot('/home');
+    // Alternative with Angular Router:
+    // this.router.navigate(['/home']);
+  }
+
   refreshData() {
     console.log('Mise à jour des données...');
     // Implémentez votre logique d'actualisation ici
-    // Ex: this.loadLatestWeatherData();
   }
 
   showHistory() {
     console.log('Ouverture historique...');
     // Implémentez votre logique de navigation ici
-    // Ex: this.router.navigate(['/weather-history']);
   }
 
+  // Chart methods
   createCharts() {
     this.createChart('temperatureChart', {
       label: 'Température (°C)',
@@ -158,6 +170,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // Helper methods
   getAirQualityColor() {
     const pm25 = this.currentWeather.airQuality.pm25;
     if (pm25 <= 12) return '#51cf66';
