@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -18,8 +19,8 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
-    "useDefineForClassFields": false
+    "lib": ["es2020", "es2020.intl", "dom"],
+    "useDefineForClassFields": false, 
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/* home.component.scss */
+/* Couleurs principales */
+:root {
+  --ion-color-primary: #007BFF;
+  /* Bleu */
+  --ion-color-secondary: #FFC107;
+  /* Jaune */
+}
+
+/* Fond d'écran complet */
+ion-content {
+  --background: #f0f8ff;
+  /* Bleu très clair assorti */
+}
+
+/* En-tête */
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: white;
+  text-align: center;
+}
+ion-toolbar ion-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Contenu principal */
+.welcome-message {
+  text-align: center;
+  padding: 20px;
+  margin-top: 30%;
+}
+.welcome-message h1 {
+  color: var(--ion-color-primary);
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.welcome-message p {
+  color: #333;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* Boutons */
+ion-button {
+  --background: var(--ion-color-secondary);
+  --color: #000;
+  --border-radius: 25px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 300px;
+  font-weight: bold;
+}
+ion-button:hover {
+  --background: #ffd700;
+  /* Jaune plus vif au survol */
+}

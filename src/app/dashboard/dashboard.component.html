@@ -1,0 +1,152 @@
+<ion-content class="dashboard-content">
+  <!-- Boutons Ajoutés -->
+  <div class="action-buttons">
+    <ion-button expand="block" color="primary" (click)="refreshData()">
+      <ion-icon name="refresh" slot="start"></ion-icon>
+      Actualiser
+    </ion-button>
+    <ion-button expand="block" color="secondary" (click)="showHistory()">
+      <ion-icon name="time" slot="start"></ion-icon>
+      Historique
+    </ion-button>
+  </div>
+
+  <!-- Température -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="thermometer" class="metric-icon temperature"></ion-icon>
+        <div>
+          <div class="metric-label">Température actuelle</div>
+          <div class="metric-value">{{ currentWeather.temperature }}°C</div>
+        </div>
+      </div>
+      <div class="trend-indicator" [class.up]="isTemperatureRising" [class.down]="!isTemperatureRising">
+        <ion-icon [name]="isTemperatureRising ? 'trending-up' : 'trending-down'"></ion-icon>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="temperatureChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Humidité -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="water" class="metric-icon humidity"></ion-icon>
+        <div>
+          <div class="metric-label">Humidité actuelle</div>
+          <div class="metric-value">{{ currentWeather.humidity }}%</div>
+        </div>
+      </div>
+      <div class="trend-indicator" [class.up]="isHumidityRising" [class.down]="!isHumidityRising">
+        <ion-icon [name]="isHumidityRising ? 'trending-up' : 'trending-down'"></ion-icon>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="humidityChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Pression Atmosphérique -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="speedometer" class="metric-icon pressure"></ion-icon>
+        <div>
+          <div class="metric-label">Pression atmosphérique</div>
+          <div class="metric-value">{{ currentWeather.pressure }} hPa</div>
+        </div>
+      </div>
+      <div class="trend-indicator" [class.up]="isPressureRising" [class.down]="!isPressureRising">
+        <ion-icon [name]="isPressureRising ? 'trending-up' : 'trending-down'"></ion-icon>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="pressureChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Vent -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="flag" class="metric-icon wind"></ion-icon>
+        <div>
+          <div class="metric-label">Vitesse du vent</div>
+          <div class="metric-value">{{ currentWeather.wind.speed }} km/h</div>
+          <div class="wind-direction">
+            <ion-icon name="navigate" [style.transform]="'rotate(' + currentWeather.wind.directionAngle + 'deg)'"></ion-icon>
+            {{ currentWeather.wind.direction }}
+          </div>
+        </div>
+      </div>
+      <div class="trend-indicator" [class.up]="isWindRising" [class.down]="!isWindRising">
+        <ion-icon [name]="isWindRising ? 'trending-up' : 'trending-down'"></ion-icon>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="windChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Précipitations -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="rainy" class="metric-icon precipitation"></ion-icon>
+        <div>
+          <div class="metric-label">Précipitations</div>
+          <div class="metric-value">{{ currentWeather.precipitation }} mm</div>
+        </div>
+      </div>
+      <div class="trend-indicator" [class.up]="isPrecipitationRising" [class.down]="!isPrecipitationRising">
+        <ion-icon [name]="isPrecipitationRising ? 'trending-up' : 'trending-down'"></ion-icon>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="precipitationChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Qualité de l'air -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="cloud" class="metric-icon air-quality"></ion-icon>
+        <div>
+          <div class="metric-label">Qualité de l'air</div>
+          <div class="metric-value">{{ currentWeather.airQuality.pm25 }} µg/m³</div>
+          <div class="air-quality-status" [style.color]="getAirQualityColor()">
+            {{ getAirQualityStatus() }}
+          </div>
+        </div>
+      </div>
+      <div class="air-quality-indicator" [style.background]="getAirQualityColor()"></div>
+    </div>
+    <div class="chart-container">
+      <canvas id="airQualityChart"></canvas>
+    </div>
+  </ion-card>
+
+  <!-- Indice UV -->
+  <ion-card class="metric-card">
+    <div class="current-value-container">
+      <div class="value-display">
+        <ion-icon name="sunny" class="metric-icon uv-index"></ion-icon>
+        <div>
+          <div class="metric-label">Indice UV</div>
+          <div class="metric-value">{{ currentWeather.uvIndex }}</div>
+          <div class="uv-intensity">{{ getUvIntensity() }}</div>
+        </div>
+      </div>
+      <div class="uv-meter">
+        <div class="uv-level" [style.width]="(currentWeather.uvIndex / 12) * 100 + '%'"></div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="uvChart"></canvas>
+    </div>
+  </ion-card>
+</ion-content>
