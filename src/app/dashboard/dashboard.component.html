@@ -13,9 +13,27 @@
 </ion-header>
 
 <ion-content class="dashboard-content">
+<<<<<<< HEAD
   <div class="last-update">
     Dernière mise à jour: {{ lastUpdate | date:'medium' }}
+=======
+  <!-- Boutons Ajoutés -->
+  <div class="action-buttons">
+    <ion-button expand="block" color="primary" (click)="refreshData()">
+      <ion-icon name="refresh" slot="start"></ion-icon>
+      Actualiser
+    </ion-button>
+    <ion-button expand="block" color="secondary" (click)="showHistory()">
+      <ion-icon name="time" slot="start"></ion-icon>
+      Historique
+    </ion-button>
+    <ion-button expand="block" color="tertiary" (click)="goToHomePage()">
+      <ion-icon name="home" slot="start"></ion-icon>
+      Accueil
+    </ion-button>
+>>>>>>> ec93d45d33df1ef5f07970619bc26b64207ba4d9
   </div>
+</ion-button>
 
   <ion-grid>
     <ion-row>
