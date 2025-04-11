@@ -1,198 +1,165 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import { CommonModule } from '@angular/common'; // Import crucial
 import { 
-  IonContent, IonCard, IonIcon, IonText, IonButton 
-} from '@ionic/angular/standalone';
-import { NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+  IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, 
+  IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
+  IonCardContent, IonIcon, IonProgressBar, IonButtons,
+  IonButton, IonFooter, IonSegment, IonSegmentButton, 
+  IonLabel
+} from '@ionic/angular/standalone'; // Notez le /standalone
+import { addIcons } from 'ionicons';
+import { partlySunny, thermometer, water, speedometer, cloud, flag, 
+        speedometerOutline, rainy, sunny, refresh, home, time, 
+        settings, wifi, remove, trendingUp, 
+        trendingDown } from 'ionicons/icons';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  standalone: true,
-  imports: [IonContent, IonCard, IonIcon, IonButton]
+  standalone: true, // Important pour le mode standalone
+  imports: [
+    CommonModule, // Nécessaire pour ngClass, ngIf, etc.
+    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid,
+    IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
+    IonCardContent, IonIcon, IonProgressBar, IonButtons,
+    IonButton, IonFooter, IonSegment, IonSegmentButton,
+    IonLabel
+  ]
 })
+
 export class DashboardComponent implements OnInit {
-  currentWeather = {
-    temperature: 22.5,
-    humidity: 65,
-    pressure: 1013,
-    wind: {
-      speed: 15,
-      direction: 'NE',
-      directionAngle: 45
-    },
-    precipitation: 2.4,
-    airQuality: {
-      pm25: 12,
-      pm10: 24
-    },
-    uvIndex: 5
-  };
+  // Sensor values
+  temperature: number = 22.5;
+  humidity: number = 65;
+  pressure: number = 1013;
+  pm25: number = 12;
+  pm10: number = 24;
+  windSpeed: number = 15;
+  windDirection: number = 45; // en degrés
+  precipitation: number = 5.2;
+  precipitationRate: number = 0.5;
+  uvIndex: number = 4;
+  
+  // Calculated values
+  airQualityText: string = '--';
+  airQualityColor: string = 'medium';
+  airQualityClass: string = '';
+  windDirectionText: string = '--';
+  windDirectionIcon: string = 'compass';
+  uvText: string = '--';
+  uvColor: string = 'medium';
+  uvClass: string = '';
+  pressureTrend: string = 'stable';
+  pressureTrendIcon: string = 'remove';
+  pressureTrendColor: string = 'medium';
+  
+  lastUpdate: Date = new Date();
 
-  isTemperatureRising = true;
-  isHumidityRising = false;
-  isPressureRising = true;
-  isWindRising = false;
-  isPrecipitationRising = true;
-
-  constructor(
-    private navCtrl: NavController,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    Chart.register(...registerables);
-    this.createCharts();
+  constructor() {
+    addIcons({
+      partlySunny, thermometer, water, speedometer, cloud, flag,
+      speedometerOutline, rainy, sunny, refresh, home, time,
+      settings, wifi,  remove, trendingUp,
+      trendingDown
+    });
   }
 
-  // Navigation methods
-  goToHomePage() {
-    this.navCtrl.navigateRoot('/home');
-    // Alternative with Angular Router:
-    // this.router.navigate(['/home']);
+  ngOnInit() {
+    this.loadData();
+    // Refresh data every 5 minutes
+    setInterval(() => this.loadData(), 300000);
+  }
+
+  loadData() {
+    // Simuler des données aléatoires pour la démo
+    this.temperature = this.getRandomInRange(15, 30, 1);
+    this.humidity = this.getRandomInRange(30, 90, 0);
+    this.pressure = this.getRandomInRange(980, 1030, 0);
+    this.pm25 = this.getRandomInRange(5, 50, 1);
+    this.pm10 = this.getRandomInRange(10, 80, 1);
+    this.windSpeed = this.getRandomInRange(0, 40, 1);
+    this.windDirection = this.getRandomInRange(0, 360, 0);
+    this.precipitation = this.getRandomInRange(0, 20, 1);
+    this.precipitationRate = this.getRandomInRange(0, 5, 1);
+    this.uvIndex = this.getRandomInRange(0, 12, 1);
+    this.lastUpdate = new Date();
+    
+    this.calculateDerivedValues();
+  }
+
+  private getRandomInRange(min: number, max: number, decimals: number): number {
+    const rand = Math.random() * (max - min) + min;
+    return parseFloat(rand.toFixed(decimals));
+  }
+
+  calculateDerivedValues() {
+    // Air quality calculation
+    const aqi = Math.max(this.pm25 / 25, this.pm10 / 50) * 100;
+    if (aqi < 50) {
+      this.airQualityText = 'Bon';
+      this.airQualityColor = 'success';
+      this.airQualityClass = 'good';
+    } else if (aqi < 100) {
+      this.airQualityText = 'Modéré';
+      this.airQualityColor = 'warning';
+      this.airQualityClass = 'moderate';
+    } else {
+      this.airQualityText = 'Mauvais';
+      this.airQualityColor = 'danger';
+      this.airQualityClass = 'bad';
+    }
+
+    // Wind direction
+    const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    this.windDirectionText = directions[Math.round(this.windDirection / 22.5) % 16];
+    this.windDirectionIcon = 'arrow-round-forward';
+
+    // UV index
+    if (this.uvIndex <= 2) {
+      this.uvText = 'Faible';
+      this.uvColor = 'success';
+      this.uvClass = 'uv-low';
+    } else if (this.uvIndex <= 5) {
+      this.uvText = 'Modéré';
+      this.uvColor = 'warning';
+      this.uvClass = 'uv-moderate';
+    } else if (this.uvIndex <= 7) {
+      this.uvText = 'Élevé';
+      this.uvColor = 'warning';
+      this.uvClass = 'uv-high';
+    } else if (this.uvIndex <= 10) {
+      this.uvText = 'Très élevé';
+      this.uvColor = 'danger';
+      this.uvClass = 'uv-very-high';
+    } else {
+      this.uvText = 'Extrême';
+      this.uvColor = 'danger';
+      this.uvClass = 'uv-extreme';
+    }
+
+    // Pressure trend (simplified)
+    if (this.pressure > 1018) {
+      this.pressureTrend = 'Haut';
+      this.pressureTrendIcon = 'trending-up';
+      this.pressureTrendColor = 'success';
+    } else if (this.pressure < 1008) {
+      this.pressureTrend = 'Bas';
+      this.pressureTrendIcon = 'trending-down';
+      this.pressureTrendColor = 'danger';
+    } else {
+      this.pressureTrend = 'Stable';
+      this.pressureTrendIcon = 'remove';
+      this.pressureTrendColor = 'medium';
+    }
   }
 
   refreshData() {
-    console.log('Mise à jour des données...');
-    // Implémentez votre logique d'actualisation ici
+    this.loadData();
   }
 
-  showHistory() {
-    console.log('Ouverture historique...');
-    // Implémentez votre logique de navigation ici
-  }
-
-  // Chart methods
-  createCharts() {
-    this.createChart('temperatureChart', {
-      label: 'Température (°C)',
-      data: [20, 21, 22, 23, 22.5, 22, 22.5, 23],
-      borderColor: '#ff6b6b',
-      backgroundColor: 'rgba(255, 107, 107, 0.1)'
-    });
-
-    this.createChart('humidityChart', {
-      label: 'Humidité (%)',
-      data: [60, 62, 63, 65, 64, 65, 64, 65],
-      borderColor: '#4dabf7',
-      backgroundColor: 'rgba(77, 171, 247, 0.1)'
-    });
-
-    this.createChart('pressureChart', {
-      label: 'Pression (hPa)',
-      data: [1012, 1012.5, 1013, 1013.5, 1013, 1013.2, 1013, 1013.5],
-      borderColor: '#20c997',
-      backgroundColor: 'rgba(32, 201, 151, 0.1)'
-    });
-
-    this.createChart('windChart', {
-      label: 'Vent (km/h)',
-      data: [12, 14, 15, 16, 15, 14, 15, 16],
-      borderColor: '#fcc419',
-      backgroundColor: 'rgba(252, 196, 25, 0.1)'
-    });
-
-    this.createChart('precipitationChart', {
-      label: 'Précipitations (mm)',
-      data: [0, 0.5, 1, 1.5, 2, 2.4, 2.2, 2.4],
-      borderColor: '#748ffc',
-      backgroundColor: 'rgba(116, 143, 252, 0.1)'
-    });
-
-    this.createChart('airQualityChart', {
-      label: 'PM2.5 (µg/m³)',
-      data: [10, 12, 11, 13, 12, 12, 11, 12],
-      borderColor: '#b197fc',
-      backgroundColor: 'rgba(177, 151, 252, 0.1)'
-    });
-
-    this.createChart('uvChart', {
-      label: 'Indice UV',
-      data: [3, 4, 5, 6, 5, 4, 3, 2],
-      borderColor: '#ff922b',
-      backgroundColor: 'rgba(255, 146, 43, 0.1)'
-    });
-  }
-
-  private createChart(chartId: string, config: any) {
-    const canvas = document.getElementById(chartId) as HTMLCanvasElement;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['6h', '8h', '10h', '12h', '14h', '16h', '18h', '20h'],
-        datasets: [{
-          label: config.label,
-          data: config.data,
-          borderColor: config.borderColor,
-          backgroundColor: config.backgroundColor,
-          borderWidth: 2,
-          tension: 0.3,
-          fill: true,
-          pointBackgroundColor: '#fff',
-          pointBorderColor: config.borderColor,
-          pointBorderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              color: '#868e96'
-            }
-          },
-          y: {
-            grid: {
-              color: 'rgba(0, 0, 0, 0.05)'
-            },
-            ticks: {
-              color: '#868e96'
-            }
-          }
-        }
-      }
-    });
-  }
-
-  // Helper methods
-  getAirQualityColor() {
-    const pm25 = this.currentWeather.airQuality.pm25;
-    if (pm25 <= 12) return '#51cf66';
-    if (pm25 <= 35) return '#fcc419';
-    if (pm25 <= 55) return '#ff922b';
-    return '#fa5252';
-  }
-
-  getAirQualityStatus() {
-    const pm25 = this.currentWeather.airQuality.pm25;
-    if (pm25 <= 12) return 'Bon';
-    if (pm25 <= 35) return 'Moyen';
-    if (pm25 <= 55) return 'Mauvais';
-    return 'Très mauvais';
-  }
-
-  getUvIntensity() {
-    const uv = this.currentWeather.uvIndex;
-    if (uv <= 2) return 'Faible';
-    if (uv <= 5) return 'Modéré';
-    if (uv <= 7) return 'Fort';
-    if (uv <= 10) return 'Très fort';
-    return 'Extrême';
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev.detail.value);
+    // Implémentez la navigation ici si nécessaire
   }
 }

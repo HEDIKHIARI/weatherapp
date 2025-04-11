@@ -18,5 +18,17 @@ export const routes: Routes = [
   { 
     path: '**',
     redirectTo: 'home'
+  },
+  {
+    path: 'history',
+    loadComponent: () => import('./history/history.page').then( m => m.HistoryPage)
+  },
+  {
+    path: 'connectivity',
+    loadComponent: () => import('./connectivity/connectivity.page').then( m => m.ConnectivityPage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
   }
 ];
