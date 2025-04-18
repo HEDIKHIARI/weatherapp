@@ -1,0 +1,31 @@
+ion-content {
+    --background: var(--ion-color-light);
+  }
+  
+  ion-segment {
+    margin: 16px 0;
+  }
+  
+  ion-list {
+    background: transparent;
+    margin-top: 16px;
+  }
+  
+  ion-item {
+    --background: var(--ion-color-light);
+    --border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .settings-footer {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  ion-select {
+    max-width: 100%;
+    width: 100%;
+    justify-content: flex-end;
+  }

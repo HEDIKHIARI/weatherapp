@@ -1,0 +1,77 @@
+{
+    "DASHBOARD": {
+      "TITLE": "Weather Dashboard",
+      "TEMPERATURE": "Temperature",
+      "WIND": "Wind",
+      "HUMIDITY": "Humidity",
+      "PRESSURE": "Pressure",
+      "PRECIPITATION": "Precipitation",
+      "RATE": "Rate",
+      "AIR_QUALITY": "Air Quality",
+      "UV_INDEX": "UV Index",
+      "WEATHER_SUMMARY": "Weather Summary",
+      "LAST_UPDATE": "Last update",
+      "CURRENT_CONDITIONS": "Current conditions",
+      "FEELS_LIKE": "Feels like"
+    },
+    "AIR_QUALITY": {
+      "GOOD": "Good",
+      "MODERATE": "Moderate",
+      "POOR": "Poor"
+    },
+    "UV_INDEX": {
+      "LOW": "Low",
+      "MODERATE": "Moderate",
+      "HIGH": "High",
+      "VERY_HIGH": "Very High",
+      "EXTREME": "Extreme"
+    },
+    "PRESSURE": {
+      "HIGH": "High",
+      "LOW": "Low",
+      "STABLE": "Stable"
+    },
+    "CONDITIONS": {
+      "PARTLY_CLOUDY": "Partly cloudy"
+    },
+    "MENU": {
+      "HOME": "Home",
+      "HISTORY": "History",
+      "SETTINGS": "Settings",
+      "CONNECTIVITY":"connectvity"
+      
+    },
+    
+      "ALERTS": {
+        "TITLE": "Weather Alerts",
+        "NEW_ALERTS": "{{count}} new alerts",
+        "NO_NEW_ALERTS": "No new alerts",
+        "MARK_READ": "Mark as read",
+        "HIGH_WIND": "High wind ({{speed}} km/h)",
+        "POOR_AIR_QUALITY": "Poor air quality",
+        "SENSOR_CHECK": "Sensor check required",
+        "EXTREME_RAIN": "Extreme rain",
+        "FLOOD_WARNING": "Flood warning",
+        "STORM_WARNING": "Storm warning",
+        "HEAT_WAVE": "Heat wave",
+        "COLD_WAVE": "Cold wave",
+        "AIR_QUALITY": "Air quality",
+        "UV_ALERT": "High UV",
+        "SENSOR_ISSUE": "Sensor issue",
+        "FIRE_RISK": "Fire risk",
+        "FROST_ALERT": "Frost alert",
+        "THUNDERSTORM": "Thunderstorm",
+        "SNOW_ALERT": "Snow alert",
+        "HAIL_WARNING": "Hail warning",
+        "DROUGHT_WARNING": "Drought warning",
+        "HUMIDITY_ALERT": "Extreme humidity",
+        "PRESSURE_DROP": "Pressure drop",
+        "SENSOR_MAINTENANCE": "Sensor maintenance"
+      },
+      "COMMON": {
+        "CLOSE": "Close",
+        "OK": "OK"
+      }
+    
+
+  }

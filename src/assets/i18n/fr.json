@@ -1,0 +1,79 @@
+{
+    "DASHBOARD": {
+      "TITLE": "Tableau de bord météo",
+      "TEMPERATURE": "Température",
+      "WIND": "Vent",
+      "HUMIDITY": "Humidité",
+      "PRESSURE": "Pression",
+      "PRECIPITATION": "Précipitation",
+      "RATE": "Taux",
+      "AIR_QUALITY": "Qualité de l'air",
+      "UV_INDEX": "Indice UV",
+      "WEATHER_SUMMARY": "Résumé météo",
+      "LAST_UPDATE": "Dernière mise à jour",
+      "CURRENT_CONDITIONS": "Conditions actuelles",
+      "FEELS_LIKE": "Ressenti"
+    },
+    "AIR_QUALITY": {
+      "GOOD": "Bon",
+      "MODERATE": "Modéré",
+      "POOR": "Mauvais"
+    },
+    "UV_INDEX": {
+      "LOW": "Faible",
+      "MODERATE": "Modéré",
+      "HIGH": "Élevé",
+      "VERY_HIGH": "Très élevé",
+      "EXTREME": "Extrême"
+    },
+    "PRESSURE": {
+      "HIGH": "Élevée",
+      "LOW": "Basse",
+      "STABLE": "Stable"
+    },
+    "CONDITIONS": {
+      "PARTLY_CLOUDY": "Partiellement nuageux"
+    },
+    "MENU": {
+      "HOME": "Accueil",
+      "HISTORY": "Historique",
+      "SETTINGS": "Paramètres",
+      "CONNECTIVITY": "Connectivité"
+
+    },
+    
+    
+      "ALERTS": {
+        "TITLE": "Alertes Météo",
+        "NEW_ALERTS": "{{count}} nouvelles alertes",
+        "NO_NEW_ALERTS": "Pas de nouvelles alertes",
+        "MARK_READ": "Marquer comme lues",
+        "HIGH_WIND": "Vent violent ({{speed}} km/h)",
+        "POOR_AIR_QUALITY": "Qualité de l'air médiocre",
+        "SENSOR_CHECK": "Vérification des capteurs requise",
+        "EXTREME_RAIN": "Pluie extrême",
+        "FLOOD_WARNING": "Alerte inondation",
+        "STORM_WARNING": "Alerte tempête",
+        "HEAT_WAVE": "Vague de chaleur",
+        "COLD_WAVE": "Vague de froid",
+        "AIR_QUALITY": "Qualité de l'air",
+        "UV_ALERT": "UV élevés",
+        "SENSOR_ISSUE": "Problème capteur",
+        "FIRE_RISK": "Risque incendie",
+        "FROST_ALERT": "Alerte gel",
+        "THUNDERSTORM": "Orage violent",
+        "SNOW_ALERT": "Chute de neige",
+        "HAIL_WARNING": "Alerte grêle",
+        "DROUGHT_WARNING": "Sécheresse",
+        "HUMIDITY_ALERT": "Humidité extrême",
+        "PRESSURE_DROP": "Chute de pression",
+        "SENSOR_MAINTENANCE": "Maintenance capteur"
+      },
+      "COMMON": {
+        "CLOSE": "Fermer",
+        "OK": "OK"
+      }
+    }
+    
+    
+  
