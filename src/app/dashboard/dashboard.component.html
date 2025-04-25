@@ -23,7 +23,8 @@
         <small>{{ 'DASHBOARD.LAST_UPDATE' | translate }}: {{lastUpdate | date:'mediumTime'}}</small>
       </ion-col>
     </ion-row>
-
+<!-- Sensor Data -->
+<ion-row>
     <!-- Main weather cards -->
     <ion-row>
       <!-- Temperature -->
@@ -37,7 +38,8 @@
           </ion-card-header>
           <ion-card-content>
             <h1>{{displayTemperature | number:'1.1-1'}}°{{temperatureUnit === 'celsius' ? 'C' : 'F'}}</h1>
-          </ion-card-content>
+          <h1>{{ sensorData.temperature || 'N/A' }}°C</h1>
+        </ion-card-content>
         </ion-card>
       </ion-col>
 
@@ -51,7 +53,7 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h1>{{displayWindSpeed | number:'1.1-1'}} 
+            <h1>{{ sensorData.windSpeed || 'N/A' }} km/h
               <span *ngIf="windSpeedUnit === 'kmh'">km/h</span>
               <span *ngIf="windSpeedUnit === 'mph'">mph</span>
               <span *ngIf="windSpeedUnit === 'ms'">m/s</span>
@@ -59,7 +61,7 @@
             </h1>
             <p>
               <ion-icon name="compass"></ion-icon>
-              {{windDirection}}° {{windDirectionText}}
+              {{sensorData.windDirection|| 'N/A' }}°
             </p>
           </ion-card-content>
         </ion-card>
@@ -75,8 +77,8 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h1>{{humidity}}%</h1>
-            <ion-progress-bar [value]="humidity/100"></ion-progress-bar>
+            <h1>{{ sensorData.humidity || 'N/A' }}%</h1>
+            <ion-progress-bar [value]="sensorData.humidity/100"></ion-progress-bar>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -91,16 +93,9 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h1>{{displayPressure | number:'1.1-1'}} 
-              <span *ngIf="pressureUnit === 'hpa'">hPa</span>
-              <span *ngIf="pressureUnit === 'mmhg'">mmHg</span>
-              <span *ngIf="pressureUnit === 'inhg'">inHg</span>
+            <h1>{{ sensorData.pressure || 'N/A' }} hPa
             </h1>
-            <p>
-              <ion-icon [name]="pressureTrendIcon"></ion-icon>
-              {{pressureTrend}}
-            </p>
-          </ion-card-content>
+            </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

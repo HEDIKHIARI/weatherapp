@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SensorService } from '../sensorservice/sensor.service'; // Removed as it is unused and causing errors
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, 
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-  IonLabel, IonNote, IonBadge, IonAlert
+  IonLabel, IonNote , IonBadge, IonAlert
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -39,8 +40,8 @@ interface WeatherAlert {
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: 'dashboard.component.html',
+  styleUrls: ['dashboard.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -55,6 +56,8 @@ interface WeatherAlert {
 })
 export class DashboardComponent implements OnInit {
   // Variables de connectivité
+  sensorData: any = {}; // Holds the sensor data
+  // Removed duplicate declaration of lastUpdate
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
   isOnline: boolean = true;
@@ -106,7 +109,8 @@ export class DashboardComponent implements OnInit {
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private platform: Platform,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private sensorService: SensorService,
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -129,6 +133,8 @@ export class DashboardComponent implements OnInit {
     this.checkForAlerts();
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
+    this.sensorData(); // Fetch sensor data on initialization
+    setInterval(() => this.sensorData(), 300000); // Refresh every 5 minutes
   }
 
   // Méthodes pour les notifications et alertes
@@ -173,7 +179,17 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
-
+  loadSensorData() {
+    this.sensorService.getSensorData().subscribe(
+      (data) => {
+        this.sensorData = data; // Assign fetched data to sensorData
+        this.lastUpdate = new Date(); // Update the last update time
+      },
+      (error) => {
+        console.error('Error fetching sensor data:', error);
+      }
+    );
+  }
   addAlert(alert: WeatherAlert) {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
@@ -404,5 +420,6 @@ export class DashboardComponent implements OnInit {
 
   refreshData() {
     this.loadData();
+    this.loadSensorData();
   }
 }
