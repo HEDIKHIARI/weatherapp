@@ -15,8 +15,6 @@ export class HomePage {
 
   // Méthode garantie pour la navigation
   goToDashboard() {
-    this.router.navigate(['/dashboard'], {
-      replaceUrl: true  // Empêche le retour à la page home
-    });
+    this.router.navigate(['/dashboard'],);
   }
 }
