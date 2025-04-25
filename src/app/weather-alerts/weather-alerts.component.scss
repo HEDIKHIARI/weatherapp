@@ -8,5 +8,21 @@ ion-badge {
   
   ion-button {
     position: relative;
+
     
   }
+  /* Styles pour les différents niveaux d'alertes */
+.alert-high {
+  --background: var(--ion-color-danger);
+  --color: white;
+}
+
+.alert-medium {
+  --background: var(--ion-color-warning);
+  --color: black;
+}
+
+.alert-low {
+  --background: var(--ion-color-primary);
+  --color: white;
+}

@@ -19,13 +19,7 @@
       "MODERATE": "Modéré",
       "POOR": "Mauvais"
     },
-    "UV_INDEX": {
-      "LOW": "Faible",
-      "MODERATE": "Modéré",
-      "HIGH": "Élevé",
-      "VERY_HIGH": "Très élevé",
-      "EXTREME": "Extrême"
-    },
+    
     "PRESSURE": {
       "HIGH": "Élevée",
       "LOW": "Basse",
@@ -72,8 +66,26 @@
       "COMMON": {
         "CLOSE": "Fermer",
         "OK": "OK"
+      },
+      
+        "HISTORY": {
+          "DATA_HISTORY": "Historique des Données",
+          "TEMPERATURE_HISTORY": "Historique de Température",
+          "HUMIDITY_HISTORY": "Historique d'Humidité",
+          "PRESSURE_HISTORY": "Historique de Pression",
+          "TEMPERATURE_LABEL": "Température (°C)",
+          "HUMIDITY_LABEL": "Humidité (%)",
+          "PRESSURE_LABEL": "Pression (hPa)"
+        },
+        "MONTHS": {
+          "JAN": "Jan",
+          "FEB": "Fév",
+          "MAR": "Mar",
+          "APR": "Avr",
+          "MAY": "Mai",
+          "JUN": "Jun"
+        }
       }
-    }
     
     
   

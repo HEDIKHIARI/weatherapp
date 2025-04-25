@@ -5,20 +5,19 @@ import {
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-  IonLabel, IonNote, IonBadge, IonAlert
-} from '@ionic/angular/standalone';
+  IonLabel, IonNote, IonBadge, IonAlert, IonItem } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
   speedometerOutline, rainy, sunny, refresh, home, time, 
   settings, wifi, remove, trendingUp, trendingDown,
-  arrowBack, compass, notifications
-} from 'ionicons/icons';
+  arrowBack, compass, notifications, timeOutline } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 // Types d'alertes
 type AlertType = 
@@ -42,7 +41,7 @@ interface WeatherAlert {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     TranslateModule,
@@ -54,6 +53,9 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
+openConnectivity() {
+  this.router.navigate(['/connectivity']); 
+}
   // Variables de connectivité
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
@@ -106,7 +108,8 @@ export class DashboardComponent implements OnInit {
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private platform: Platform,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private router: Router// Ajout du Router dans le constructeur
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -114,13 +117,30 @@ export class DashboardComponent implements OnInit {
       document.body.classList.add('md');
     }
 
-    addIcons({
-      partlySunny, thermometer, water, speedometer, cloud, flag,
-      speedometerOutline, rainy, sunny, refresh, home, time,
-      settings, wifi,  remove, trendingUp, trendingDown,
-      arrowBack, compass, notifications
-    });
+    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
   }
+
+  // Méthode pour naviguer vers la page historique
+  async openHistory() {
+    try {
+      const success = await this.router.navigate(['/history']);
+      if (!success) {
+        console.error('Navigation failed - route might not exist');
+        // Fallback alternatif
+        window.location.hash = '/history';
+      }
+    } catch (err) {
+      console.error('Navigation error:', err);
+      // Afficher un message à l'utilisateur si nécessaire
+      const alert = await this.alertCtrl.create({
+        header: 'Erreur',
+        message: 'Impossible d\'accéder à l\'historique',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+  }
+  
 
   ngOnInit() {
     this.loadData();
@@ -131,6 +151,7 @@ export class DashboardComponent implements OnInit {
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
   }
 
+  // ... [Le reste de votre code existant reste inchangé]
   // Méthodes pour les notifications et alertes
   checkForAlerts() {
     // Simulation d'alertes basées sur les conditions actuelles

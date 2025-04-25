@@ -1,0 +1,83 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/dashboard"></ion-back-button>
+      </ion-buttons>
+      <ion-title>📡 Connexion & Configuration IoT</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Statut de l'ESP32</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon 
+            slot="start" 
+            [name]="esp32Status === 'connected' ? 'checkmark-circle' : 'close-circle'" 
+            [color]="esp32Status === 'connected' ? 'success' : 'danger'">
+          </ion-icon>
+          <ion-label>
+            <h2>Statut: {{ esp32Status === 'connected' ? 'Connecté' : 'Hors ligne' }}</h2>
+            <p *ngIf="lastConnectionTime">Dernière connexion: {{ lastConnectionTime }}</p>
+            <p *ngIf="!lastConnectionTime">Aucune connexion récente</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Réseau WiFi</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon 
+            slot="start" 
+            [name]="wifiStrengthIcon" 
+            [color]="wifiStrength > 25 ? 'success' : 'warning'">
+          </ion-icon>
+          <ion-label>
+            <h2>Force du signal: {{ wifiStrength }}%</h2>
+            <ion-progress-bar 
+              [value]="wifiStrength/100" 
+              [color]="getWifiStrengthColor()">
+            </ion-progress-bar>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Connexion MQTT</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon 
+            slot="start" 
+            [name]="mqttConnected ? 'cloud-done' : 'cloud-offline'" 
+            [color]="mqttConnected ? 'success' : 'danger'">
+          </ion-icon>
+          <ion-label>
+            <h2>Statut: {{ mqttConnected ? 'Connecté à ThingSpeak' : 'Déconnecté' }}</h2>
+            <p>Broker: MQTT ThingSpeak</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-button 
+      expand="block" 
+      color="warning" 
+      (click)="reconnect()" 
+      [disabled]="esp32Status === 'connected'">
+      <ion-icon slot="start" name="refresh"></ion-icon>
+      Forcer la reconnexion
+    </ion-button>
+  </ion-content>

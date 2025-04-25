@@ -1,115 +1,127 @@
-/* dashboard.component.scss */
+/* dashboard.component.scss - Version Web Responsive */
 
 /* Structure de base */
 ion-content {
-  --background: #f5f7fa; /* Fond gris très clair */
-  --padding-top: 16px;
-  --padding-bottom: 16px;
+  --background: #f5f7fa;
+  --padding-top: 24px;
+  --padding-bottom: 24px;
+  max-width: 1200px; /* Largeur maximale pour les grands écrans */
+  margin: 0 auto; /* Centrage sur les grands écrans */
 }
 
 /* En-tête */
 ion-toolbar {
   --background: #ffffff;
-  --color: #2d3748; /* Texte foncé */
-  --border-color: #e2e8f0; /* Bordure grise claire */
+  --color: #2d3748;
+  --border-color: #e2e8f0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Grille principale */
 ion-grid {
-  padding: 0 12px;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-/* Cartes de données */
+/* Cartes de données - Version Web */
 ion-card {
   background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin: 0 0 16px 0;
-  transition: transform 0.2s ease;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 0 0 24px 0;
+  transition: all 0.3s ease;
+  flex: 1 1 30%; /* Flex grow/shrink/basis */
+  min-width: 300px; /* Largeur minimale */
+  max-width: 100%;
+  margin: 12px;
 
-  &:active {
-    transform: scale(0.98);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   }
 }
 
-/* En-tête des cartes */
+/* Conteneur de cartes pour alignement */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+/* En-tête des cartes - Version Web */
 ion-card-header {
-  padding: 12px 16px 8px;
+  padding: 16px 24px 12px;
   border-bottom: 1px solid #edf2f7;
 
   ion-card-title {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #4a5568; /* Gris foncé */
-    display: flex;
-    align-items: center;
+    color: #4a5568;
 
     ion-icon {
-      margin-right: 8px;
-      color: #4299e1; /* Bleu */
+      margin-right: 10px;
+      font-size: 1.2rem;
     }
   }
 }
 
-/* Contenu des cartes */
+/* Contenu des cartes - Version Web */
 ion-card-content {
-  padding: 12px 16px;
+  padding: 16px 24px;
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 700;
-    color: #1a202c; /* Noir */
-    margin: 8px 0;
+    margin: 12px 0;
     
     span {
-      font-weight: 400;
-      font-size: 1rem;
-      color: #718096; /* Gris moyen */
+      font-size: 1.1rem;
     }
   }
 
   p {
-    color: #4a5568; /* Gris foncé */
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    margin-top: 4px;
+    font-size: 1rem;
+    margin-top: 8px;
 
     ion-icon {
-      margin-right: 6px;
-      color: #4299e1; /* Bleu */
+      margin-right: 8px;
     }
   }
 }
 
-/* Barre de progression */
+/* Barre de progression - Version Web */
 ion-progress-bar {
-  --progress-background: #4299e1; /* Bleu */
-  --background: #ebf8ff; /* Bleu très clair */
-  height: 6px;
-  border-radius: 3px;
-  margin-top: 12px;
+  height: 8px;
+  border-radius: 4px;
+  margin-top: 16px;
 }
 
-/* Pied de page */
+/* Pied de page - Version Web */
 ion-footer {
   ion-toolbar {
-    --background: #ffffff;
-    border-top: 1px solid #e2e8f0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
 
     ion-segment {
+      justify-content: center;
+
       ion-segment-button {
-        --color: #718096; /* Gris moyen */
-        --color-checked: #4299e1; /* Bleu */
-        --indicator-color: transparent;
+        min-width: 100px;
+        padding: 12px 0;
 
         ion-icon {
-          font-size: 1.4rem;
+          font-size: 1.6rem;
         }
 
         ion-label {
-          font-size: 0.7rem;
-          margin-top: 4px;
+          font-size: 0.8rem;
+          margin-top: 6px;
         }
       }
     }
@@ -118,29 +130,55 @@ ion-footer {
 
 /* Badge de notification */
 ion-badge {
-  --background: #e53e3e; /* Rouge */
-  --color: #ffffff;
-  font-size: 11px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  font-size: 12px;
+  padding: 4px 8px;
 }
 
 /* Dernière mise à jour */
 .last-update {
-  color: #718096; /* Gris moyen */
-  font-size: 0.8rem;
-  text-align: center;
-  margin: 8px 0 16px;
+  font-size: 0.9rem;
+  margin: 16px 0;
 }
 
-/* Version mobile */
-@media (max-width: 768px) {
-  ion-card {
-    margin-bottom: 12px;
+/* Version Desktop */
+@media (min-width: 992px) {
+  ion-content {
+    --padding-top: 32px;
+    --padding-bottom: 32px;
   }
-  
+
+  ion-card {
+    flex: 1 1 22%;
+    margin: 16px;
+  }
+
   ion-card-content h1 {
-    font-size: 1.8rem;
+    font-size: 2.8rem;
+  }
+}
+
+/* Version Tablette */
+@media (max-width: 991px) and (min-width: 576px) {
+  ion-card {
+    flex: 1 1 45%;
+  }
+}
+
+/* Version Mobile */
+@media (max-width: 575px) {
+  ion-grid {
+    padding: 0 16px;
+  }
+
+  ion-card {
+    flex: 1 1 100%;
+    margin: 8px 0;
+  }
+}
+
+/* Pleine largeur pour les grands écrans */
+@media (min-width: 1600px) {
+  ion-content, ion-toolbar, ion-footer ion-toolbar {
+    max-width: 1400px;
   }
 }

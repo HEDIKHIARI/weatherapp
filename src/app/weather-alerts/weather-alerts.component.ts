@@ -3,7 +3,6 @@ import { AlertController, IonBadge } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// Types d'alertes possibles
 export type AlertType = 
   'EXTREME_RAIN' | 'FLOOD_WARNING' | 'STORM_WARNING' | 
   'HIGH_WIND' | 'HEAT_WAVE' | 'COLD_WAVE' |
@@ -38,7 +37,6 @@ export class WeatherAlertsComponent implements OnInit {
     this.checkSensorStatus();
   }
 
-  // Détection d'alertes
   checkForAlerts() {
     const sampleAlerts: WeatherAlert[] = [
       {
@@ -49,10 +47,31 @@ export class WeatherAlertsComponent implements OnInit {
         read: false
       },
       {
-        type: 'SENSOR_MAINTENANCE',
+        type: 'HIGH_WIND',
+        severity: 'high',
+        message: 'Vents violents attendus - rafales jusqu\'à 80 km/h',
+        timestamp: new Date(),
+        read: false
+      },
+      {
+        type: 'HEAT_WAVE',
         severity: 'medium',
-        message: 'Capteur d\'humidité nécessite calibration',
-        timestamp: new Date(Date.now() - 3600000),
+        message: 'Vague de chaleur - températures supérieures à 35°C',
+        timestamp: new Date(),
+        read: false
+      },
+      {
+        type: 'AIR_QUALITY',
+        severity: 'medium',
+        message: 'Qualité de l\'air médiocre - limite PM2.5 dépassée',
+        timestamp: new Date(),
+        read: false
+      },
+      {
+        type: 'FROST_ALERT',
+        severity: 'low',
+        message: 'Risque de gel nocturne - protéger les plantes sensibles',
+        timestamp: new Date(),
         read: false
       }
     ];
@@ -61,7 +80,6 @@ export class WeatherAlertsComponent implements OnInit {
     this.updateUnreadCount();
   }
 
-  // Vérification périodique des capteurs
   checkSensorStatus() {
     setInterval(() => {
       const sensorAlert: WeatherAlert = {
@@ -156,6 +174,7 @@ export class WeatherAlertsComponent implements OnInit {
       'HEAT_WAVE': 'Vague de chaleur',
       'COLD_WAVE': 'Vague de froid',
       'AIR_QUALITY': 'Pollution élevée',
+      'UV_ALERT': 'UV élevés',
       'SENSOR_ISSUE': 'Problème capteur',
       'FIRE_RISK': 'Risque incendie',
       'FROST_ALERT': 'Gel prévu',
@@ -165,8 +184,7 @@ export class WeatherAlertsComponent implements OnInit {
       'DROUGHT_WARNING': 'Sécheresse',
       'HUMIDITY_ALERT': 'Humidité extrême',
       'PRESSURE_DROP': 'Chute de pression',
-      'SENSOR_MAINTENANCE': 'Maintenance capteur',
-      UV_ALERT: ''
+      'SENSOR_MAINTENANCE': 'Maintenance capteur'
     };
     return titles[type] || 'Alerte météo';
   }
