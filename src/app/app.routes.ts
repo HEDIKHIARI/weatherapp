@@ -3,32 +3,38 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   { 
     path: 'home',
-    loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+    loadComponent: () => import('./home/home.page').then(m => m.HomePage),
+    title: 'Accueil'  // Ajout du titre de page
   },
   { 
     path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
+    title: 'Tableau de bord'
+  },
+  {
+    path: 'history',
+    loadComponent: () => import('./history/history.page').then(m => m.HistoryPage),
+    title: 'Historique'
+  },
+  {
+    path: 'connectivity',
+    loadComponent: () => import('./connectivity/connectivity.page').then(m => m.ConnectivityPage),
+    title: 'Connectivité IoT'
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage),
+    title: 'Paramètres'
   },
   { 
     path: '',
     redirectTo: 'home',
     pathMatch: 'full' 
   },
-  // Optionnel : route pour les pages non trouvées
+  // Route de fallback - Doit être la dernière
   { 
     path: '**',
-    redirectTo: 'home'
-  },
-  {
-    path: 'history',
-    loadComponent: () => import('./history/history.page').then( m => m.HistoryPage)
-  },
-  {
-    path: 'connectivity',
-    loadComponent: () => import('./connectivity/connectivity.page').then( m => m.ConnectivityPage)
-  },
-  {
-    path: 'settings',
-    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
+    redirectTo: 'home',
+    title: 'Page non trouvée'
   }
 ];

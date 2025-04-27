@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SensorService } from '../sensorservice/sensor.service'; // Removed as it is unused and causing errors
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, 
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-  IonLabel, IonNote , IonBadge, IonAlert
-} from '@ionic/angular/standalone';
+  IonLabel, IonNote, IonBadge, IonAlert, IonItem,IonToggle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
   speedometerOutline, rainy, sunny, refresh, home, time, 
   settings, wifi, remove, trendingUp, trendingDown,
-  arrowBack, compass, notifications
-} from 'ionicons/icons';
+  arrowBack, compass, notifications, timeOutline, moon } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 // Types d'alertes
 type AlertType = 
@@ -40,24 +38,47 @@ interface WeatherAlert {
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: 'dashboard.component.html',
-  styleUrls: ['dashboard.component.scss'],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     TranslateModule,
-    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid,
+    IonHeader, IonToolbar, IonTitle,  IonGrid,
     IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonIcon, IonProgressBar, IonButtons,
     IonButton, IonFooter, IonSegment, IonSegmentButton,
-    IonLabel, IonBadge, 
+    IonLabel, IonBadge, IonContent
   ]
 })
 export class DashboardComponent implements OnInit {
+  darkMode = false;
+  private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  toggleDarkMode() {
+    document.body.classList.toggle('dark', this.darkMode);
+    localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
+    this.applyTheme();
+
+  }
+
+  private loadThemePreference() {
+    const savedMode = localStorage.getItem('darkMode');
+    this.darkMode = savedMode ? JSON.parse(savedMode) : this.prefersDark.matches;
+    this.toggleDarkMode();
+  }
+
+  private applyTheme() {
+    const theme = this.darkMode ? 'dark' : 'light';
+    document.body.setAttribute('color-theme', theme);
+  }
+  
+
+ 
+ openConnectivity() {
+  this.router.navigate(['/connectivity']); 
+}
   // Variables de connectivité
-  sensorData: any = {}; // Holds the sensor data
-  // Removed duplicate declaration of lastUpdate
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
   isOnline: boolean = true;
@@ -97,20 +118,22 @@ export class DashboardComponent implements OnInit {
   airQualityText: string = '--';
   airQualityColor: string = 'medium';
   windDirectionText: string = '--';
-  uvText: string = '--';
-  uvColor: string = 'medium';
+
   pressureTrend: string = 'stable';
   pressureTrendIcon: string = 'remove';
   
   lastUpdate: Date = new Date();
   isRefreshing: boolean = false;
+  
 
   constructor(
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private sensorService: SensorService,
+    private router: Router// Ajout du Router dans le constructeur
+    
+    
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -118,13 +141,37 @@ export class DashboardComponent implements OnInit {
       document.body.classList.add('md');
     }
 
-    addIcons({
-      partlySunny, thermometer, water, speedometer, cloud, flag,
-      speedometerOutline, rainy, sunny, refresh, home, time,
-      settings, wifi,  remove, trendingUp, trendingDown,
-      arrowBack, compass, notifications
-    });
+    
+   addIcons({home,sunny,moon,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
+   this.prefersDark.addEventListener('change', (e) => {
+    this.darkMode = e.matches;
+    this.toggleDarkMode();
+  });
   }
+
+  
+
+  // Méthode pour naviguer vers la page historique
+  async openHistory() {
+    try {
+      const success = await this.router.navigate(['/history']);
+      if (!success) {
+        console.error('Navigation failed - route might not exist');
+        // Fallback alternatif
+        window.location.hash = '/history';
+      }
+    } catch (err) {
+      console.error('Navigation error:', err);
+      // Afficher un message à l'utilisateur si nécessaire
+      const alert = await this.alertCtrl.create({
+        header: 'Erreur',
+        message: 'Impossible d\'accéder à l\'historique',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+  }
+  
 
   ngOnInit() {
     this.loadData();
@@ -133,11 +180,15 @@ export class DashboardComponent implements OnInit {
     this.checkForAlerts();
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
-    this.sensorData(); // Fetch sensor data on initialization
-    setInterval(() => this.sensorData(), 300000); // Refresh every 5 minutes
+    const savedMode = localStorage.getItem('darkMode');
+if (savedMode) {
+  this.darkMode = JSON.parse(savedMode);
+  document.body.classList.toggle('dark', this.darkMode);
+  this.loadThemePreference();
+}
   }
 
-  // Méthodes pour les notifications et alertes
+  
   checkForAlerts() {
     // Simulation d'alertes basées sur les conditions actuelles
     const newAlerts: WeatherAlert[] = [];
@@ -179,17 +230,7 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
-  loadSensorData() {
-    this.sensorService.getSensorData().subscribe(
-      (data) => {
-        this.sensorData = data; // Assign fetched data to sensorData
-        this.lastUpdate = new Date(); // Update the last update time
-      },
-      (error) => {
-        console.error('Error fetching sensor data:', error);
-      }
-    );
-  }
+
   addAlert(alert: WeatherAlert) {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
@@ -420,6 +461,5 @@ export class DashboardComponent implements OnInit {
 
   refreshData() {
     this.loadData();
-    this.loadSensorData();
   }
 }

@@ -19,13 +19,7 @@
       "MODERATE": "Modéré",
       "POOR": "Mauvais"
     },
-    "UV_INDEX": {
-      "LOW": "Faible",
-      "MODERATE": "Modéré",
-      "HIGH": "Élevé",
-      "VERY_HIGH": "Très élevé",
-      "EXTREME": "Extrême"
-    },
+    
     "PRESSURE": {
       "HIGH": "Élevée",
       "LOW": "Basse",
@@ -72,7 +66,49 @@
       "COMMON": {
         "CLOSE": "Fermer",
         "OK": "OK"
-      }
+      },
+      
+        "IOT": {
+          "TITLE": "📡 Connexion & Configuration IoT",
+          "ESP32_STATUS": "Statut ESP32",
+          "STATUS_LABEL": "Statut",
+          "CONNECTED": "Connecté",
+          "OFFLINE": "Hors ligne",
+          "LAST_CONNECTION": "Dernière connexion",
+          "NO_CONNECTION": "Aucune connexion récente",
+          "WIFI_TITLE": "Réseau WiFi",
+          "SIGNAL_STRENGTH": "Force du signal",
+          "MQTT_TITLE": "Connexion MQTT",
+          "CONNECTED_TO": "Connecté à ThingSpeak",
+          "DISCONNECTED": "Déconnecté",
+          "BROKER": "Broker",
+          "FORCE_RECONNECT": "Forcer la reconnexion",
+          "MQTT_ERROR": "Erreur MQTT : {error}",
+          "MQTT_CONNECT_FAIL": "Échec de connexion MQTT",
+          "RECONNECTING": "Tentative de reconnexion...",
+          "RECONNECT_SUCCESS": "Reconnecté avec succès"
+        },
+      
+    
+    
+      "HISTORY": {
+        "DATA_HISTORY": "Historique des données",
+
+        "TEMPERATURE_LABEL": "Température (°C)",
+        "HUMIDITY_LABEL": "Humidité (%)",
+        "PRESSURE_LABEL": "Pression (hPa)",
+        "PRECIPITATION_LABEL": "Précipitation (mm)"
+      },
+      "DAYS": {
+        "MON": "Lundi",
+        "TUE": "Mardi",
+        "WED": "Mercredi",
+        "THU": "Jeudi",
+        "FRI": "Vendredi",
+        "SAT": "Samedi",
+        "SUN": "Dimanche"
+      },
+      "WEEK": "Semaine"
     }
     
     

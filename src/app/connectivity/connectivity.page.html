@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ 'IOT.TITLE' | translate }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <!-- ESP32 Status Card -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ 'IOT.ESP32_STATUS' | translate }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+            <ion-item lines="none">
+                <ion-icon 
+                    slot="start" 
+                    [name]="esp32Status === 'connected' ? 'checkmark-circle' : 'close-circle'" 
+                    [color]="esp32Status === 'connected' ? 'success' : 'danger'">
+                </ion-icon>
+                <ion-label>
+                    <h2>{{ 'IOT.STATUS_LABEL' | translate }}: {{ esp32Status === 'connected' ? ('IOT.CONNECTED' | translate) : ('IOT.OFFLINE' | translate) }}</h2>
+                    <p *ngIf="lastConnectionTime">{{ 'IOT.LAST_CONNECTION' | translate }}: {{ lastConnectionTime }}</p>
+                    <p *ngIf="!lastConnectionTime">{{ 'IOT.NO_CONNECTION' | translate }}</p>
+                </ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+
+    <!-- WiFi Network Card -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ 'IOT.WIFI_TITLE' | translate }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+            <ion-item lines="none">
+                <ion-icon 
+                    slot="start" 
+                    [name]="wifiStrengthIcon" 
+                    [color]="wifiStrength > 25 ? 'success' : 'warning'">
+                </ion-icon>
+                <ion-label>
+                    <h2>{{ 'IOT.SIGNAL_STRENGTH' | translate }}: {{ wifiStrength }}%</h2>
+                    <ion-progress-bar 
+                        [value]="wifiStrength/100" 
+                        [color]="getWifiStrengthColor()">
+                    </ion-progress-bar>
+                </ion-label>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+
+    
+    
+                
+
+    <!-- Reconnection Button -->
+    <ion-button 
+        expand="block" 
+        color="warning" 
+        (click)="reconnect()" 
+        [disabled]="esp32Status === 'connected'">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        {{ 'IOT.FORCE_RECONNECT' | translate }}
+    </ion-button>
+</ion-content>
