@@ -8,8 +8,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   standalone: true,
   imports: [
     IonApp,
-    IonRouterOutlet
-],
+    IonRouterOutlet,
+    DashboardComponent
+  ],
   providers: [] // No need for provideHttpClient here
 })
 export class AppComponent {}
