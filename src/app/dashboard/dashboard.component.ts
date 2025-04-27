@@ -11,7 +11,7 @@ import {
   partlySunny, thermometer, water, speedometer, cloud, flag, 
   speedometerOutline, rainy, sunny, refresh, home, time, 
   settings, wifi, remove, trendingUp, trendingDown,
-  arrowBack, compass, notifications, timeOutline, moon } from 'ionicons/icons';
+  arrowBack, compass, notifications, timeOutline } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
@@ -45,37 +45,16 @@ interface WeatherAlert {
     CommonModule,
     FormsModule,
     TranslateModule,
-    IonHeader, IonToolbar, IonTitle,  IonGrid,
+    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid,
     IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonIcon, IonProgressBar, IonButtons,
     IonButton, IonFooter, IonSegment, IonSegmentButton,
-    IonLabel, IonBadge, IonContent
+    IonLabel, IonBadge, IonToggle
   ]
 })
 export class DashboardComponent implements OnInit {
-  darkMode = false;
-  private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  toggleDarkMode() {
-    document.body.classList.toggle('dark', this.darkMode);
-    localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
-    this.applyTheme();
-
-  }
-
-  private loadThemePreference() {
-    const savedMode = localStorage.getItem('darkMode');
-    this.darkMode = savedMode ? JSON.parse(savedMode) : this.prefersDark.matches;
-    this.toggleDarkMode();
-  }
-
-  private applyTheme() {
-    const theme = this.darkMode ? 'dark' : 'light';
-    document.body.setAttribute('color-theme', theme);
-  }
-  
-
  
- openConnectivity() {
+openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
   // Variables de connectivité
@@ -124,7 +103,7 @@ export class DashboardComponent implements OnInit {
   
   lastUpdate: Date = new Date();
   isRefreshing: boolean = false;
-  
+  darkMode = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -132,8 +111,6 @@ export class DashboardComponent implements OnInit {
     private platform: Platform,
     private alertCtrl: AlertController,
     private router: Router// Ajout du Router dans le constructeur
-    
-    
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -141,15 +118,8 @@ export class DashboardComponent implements OnInit {
       document.body.classList.add('md');
     }
 
-    
-   addIcons({home,sunny,moon,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
-   this.prefersDark.addEventListener('change', (e) => {
-    this.darkMode = e.matches;
-    this.toggleDarkMode();
-  });
+    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
   }
-
-  
 
   // Méthode pour naviguer vers la page historique
   async openHistory() {
@@ -184,7 +154,6 @@ export class DashboardComponent implements OnInit {
 if (savedMode) {
   this.darkMode = JSON.parse(savedMode);
   document.body.classList.toggle('dark', this.darkMode);
-  this.loadThemePreference();
 }
   }
 
