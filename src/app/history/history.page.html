@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>history</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'HISTORY.DATA_HISTORY' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">history</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-segment [(ngModel)]="selectedWeek" (ionChange)="weekChanged($event)">
+    <ion-segment-button *ngFor="let week of weeks" [value]="week">
+      {{ 'WEEK' | translate }} {{ week }}
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="chart-container">
+    <!-- Graphique de Température -->
+    <div class="chart-card">
+      <h2>{{ 'HISTORY.TEMPERATURE_LABEL' | translate }}</h2>
+      <canvas #temperatureChart></canvas>
+    </div>
+
+    <!-- Graphique d'Humidité -->
+    <div class="chart-card">
+      <h2>{{ 'HISTORY.HUMIDITY_LABEL' | translate }}</h2>
+      <canvas #humidityChart></canvas>
+    </div>
+
+    <!-- Graphique de Pression -->
+    <div class="chart-card">
+      <h2>{{ 'HISTORY.PRESSURE_LABEL' | translate }}</h2>
+      <canvas #pressureChart></canvas>
+    </div>
+
+    <!-- Graphique de Précipitation -->
+    <div class="chart-card">
+      <h2>{{ 'HISTORY.PRECIPITATION_LABEL' | translate }}</h2>
+      <canvas #precipitationChart></canvas>
+    </div>
+  </div>
 </ion-content>

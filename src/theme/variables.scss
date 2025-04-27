@@ -1,2 +1,128 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/* Variables pour les deux thèmes */
+:root {
+    /* Light Theme */
+    --ion-color-primary: #3880ff;
+    --ion-color-secondary: #3dc2ff;
+    --ion-color-tertiary: #5260ff;
+    --ion-color-success: #2dd36f;
+    --ion-color-warning: #ffc409;
+    --ion-color-danger: #eb445a;
+    --ion-color-dark: #222428;
+    --ion-color-medium: #92949c;
+    --ion-color-light: #f4f5f8;
+  
+    --app-background: #f5f7fa;
+    --app-card-background: #ffffff;
+    --app-text-color: #2d3748;
+    --app-border-color: #e2e8f0;
+    --app-icon-color: #4299e1;
+    --app-secondary-text: #718096;
+  }
+  
+  /* Dark Theme */
+  [color-theme="dark"] {
+    --ion-color-primary: #428cff;
+    --ion-color-secondary: #50c8ff;
+    --ion-color-tertiary: #6a64ff;
+    --ion-color-success: #2fdf75;
+    --ion-color-warning: #ffd534;
+    --ion-color-danger: #ff4961;
+    --ion-color-dark: #f4f5f8;
+    --ion-color-medium: #989aa2;
+    --ion-color-light: #222428;
+  
+    --app-background: #1a1a2e;
+    --app-card-background: #16213e;
+    --app-text-color: #e2e8f0;
+    --app-border-color: #2d3748;
+    --app-icon-color: #63b3ed;
+    --app-secondary-text: #a0aec0;
+  }
+  
+  /* Application des thèmes */
+  ion-content {
+    --background: var(--app-background);
+    color: var(--app-text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  ion-card {
+    --background: var(--app-card-background);
+    color: var(--app-text-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  ion-toolbar {
+    --background: var(--app-card-background);
+    --color: var(--app-text-color);
+    --border-color: var(--app-border-color);
+  }
+  
+  /* Styles spécifiques pour le dark mode */
+  [color-theme="dark"] {
+    ion-card {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+  
+    .weather-icon {
+      filter: brightness(0.8);
+    }
+  }
+  
+  /* Toggle Style */
+  .dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  
+    ion-icon {
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+  
+    .sun-icon {
+      color: var(--ion-color-warning);
+    }
+  
+    .moon-icon {
+      color: var(--ion-color-tertiary);
+    }
+  
+    ion-toggle {
+      --handle-spacing: 2px;
+      --handle-width: 20px;
+      --handle-height: 20px;
+      --background: var(--app-border-color);
+      --background-checked: var(--ion-color-primary);
+      --handle-background: #ffffff;
+      --handle-background-checked: #ffffff;
+      width: 48px;
+      height: 24px;
+    }
+  }
+  
+  /* Adaptation des éléments spécifiques */
+  .weather-detail {
+    ion-icon {
+      color: var(--app-icon-color);
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+  
+    .detail-label {
+      color: var(--app-secondary-text);
+      font-size: 0.8rem;
+    }
+  
+    .detail-value {
+      font-weight: 500;
+      font-size: 1rem;
+    }
+  }
+  
+  /* Transition pour tous les éléments thématiques */
+  ion-item, ion-card-header, ion-card-content, ion-footer {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
