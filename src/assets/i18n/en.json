@@ -109,4 +109,14 @@
 }
     
 
+<<<<<<< HEAD
   
+=======
+  }
+  {
+    "HOME": {
+      "LOGIN": "Login" ,
+      "COMMENCER": "Start"
+    }
+  }
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208

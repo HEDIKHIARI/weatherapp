@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SensorService } from '../sensorservice/sensor.service'; // Removed as it is unused and causing errors
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, 
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
+<<<<<<< HEAD
   IonLabel, IonNote, IonBadge, IonAlert, IonItem } from '@ionic/angular/standalone';
+=======
+  IonLabel, IonNote , IonBadge, IonAlert
+} from '@ionic/angular/standalone';
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
@@ -18,6 +24,10 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
+=======
+
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
 
 // Types d'alertes
 type AlertType = 
@@ -38,8 +48,8 @@ interface WeatherAlert {
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: 'dashboard.component.html',
+  styleUrls: ['dashboard.component.scss'],
   standalone: true,
   imports: [ 
     CommonModule,
@@ -53,10 +63,18 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
+<<<<<<< HEAD
 openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
+=======
+  logout() {
+    this.router.navigate(['/home']);
+  }
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
   // Variables de connectivité
+  sensorData: any = {}; // Holds the sensor data
+  // Removed duplicate declaration of lastUpdate
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
   isOnline: boolean = true;
@@ -109,7 +127,12 @@ openConnectivity() {
     private translate: TranslateService,
     private platform: Platform,
     private alertCtrl: AlertController,
+<<<<<<< HEAD
     private router: Router// Ajout du Router dans le constructeur
+=======
+    private sensorService: SensorService,
+    private router: Router, // Inject Router service
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -117,7 +140,16 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
+<<<<<<< HEAD
     addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
+=======
+    addIcons({
+      partlySunny, thermometer, water, speedometer, cloud, flag,
+      speedometerOutline, rainy, sunny, refresh, time,
+      settings, wifi,  remove, trendingUp, trendingDown,
+      arrowBack, compass, notifications
+    });
+>>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
   }
 
   // Méthode pour naviguer vers la page historique
@@ -149,6 +181,8 @@ openConnectivity() {
     this.checkForAlerts();
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
+    this.sensorData(); // Fetch sensor data on initialization
+    setInterval(() => this.sensorData(), 300000); // Refresh every 5 minutes
   }
 
   // ... [Le reste de votre code existant reste inchangé]
@@ -194,7 +228,17 @@ openConnectivity() {
       });
     }
   }
-
+  loadSensorData() {
+    this.sensorService.getSensorData().subscribe(
+      (data) => {
+        this.sensorData = data; // Assign fetched data to sensorData
+        this.lastUpdate = new Date(); // Update the last update time
+      },
+      (error) => {
+        console.error('Error fetching sensor data:', error);
+      }
+    );
+  }
   addAlert(alert: WeatherAlert) {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
@@ -425,5 +469,6 @@ openConnectivity() {
 
   refreshData() {
     this.loadData();
+    this.loadSensorData();
   }
 }
