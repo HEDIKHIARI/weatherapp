@@ -84,18 +84,12 @@
           "APR": "Avr",
           "MAY": "Mai",
           "JUN": "Jun"
-        }
-      }
-<<<<<<< HEAD
+      },
     
-=======
-    }
-    {
-      "HOME": {
+    "HOME": {
         "LOGIN": "Connexion",
         "COMMENCER": "Commencer"
       }
     }
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
     
   
