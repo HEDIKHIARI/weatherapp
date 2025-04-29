@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.page').then(m => m.HomePage)
   },
   { 
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
@@ -14,7 +18,6 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full' 
   },
-  // Optionnel : route pour les pages non trouvées
   { 
     path: '**',
     redirectTo: 'home'

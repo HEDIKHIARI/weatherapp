@@ -75,3 +75,9 @@
     
 
   }
+  {
+    "HOME": {
+      "LOGIN": "Login" ,
+      "COMMENCER": "Start"
+    }
+  }

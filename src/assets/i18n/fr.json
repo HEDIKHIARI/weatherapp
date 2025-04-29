@@ -74,6 +74,11 @@
         "OK": "OK"
       }
     }
-    
+    {
+      "HOME": {
+        "LOGIN": "Connexion",
+        "COMMENCER": "Commencer"
+      }
+    }
     
   

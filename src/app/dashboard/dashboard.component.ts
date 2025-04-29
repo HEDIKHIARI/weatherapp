@@ -20,6 +20,8 @@ import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 
 // Types d'alertes
 type AlertType = 
@@ -55,6 +57,13 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
+  // Logout method
+  logout() {
+    this.router.navigate(['/login']);
+  }
   // Variables de connectivité
   sensorData: any = {}; // Holds the sensor data
   // Removed duplicate declaration of lastUpdate
@@ -111,6 +120,7 @@ export class DashboardComponent implements OnInit {
     private platform: Platform,
     private alertCtrl: AlertController,
     private sensorService: SensorService,
+    private router: Router, // Inject Router service
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -120,7 +130,7 @@ export class DashboardComponent implements OnInit {
 
     addIcons({
       partlySunny, thermometer, water, speedometer, cloud, flag,
-      speedometerOutline, rainy, sunny, refresh, home, time,
+      speedometerOutline, rainy, sunny, refresh, time,
       settings, wifi,  remove, trendingUp, trendingDown,
       arrowBack, compass, notifications
     });
