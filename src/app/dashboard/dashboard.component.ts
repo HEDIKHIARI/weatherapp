@@ -57,12 +57,8 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
-  goToHome() {
-    this.router.navigate(['/home']);
-  }
-  // Logout method
   logout() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
   // Variables de connectivité
   sensorData: any = {}; // Holds the sensor data
