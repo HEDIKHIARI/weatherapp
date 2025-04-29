@@ -35,10 +35,6 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full' 
   },
-<<<<<<< HEAD
-  // Route de fallback - Doit être la dernière
-=======
->>>>>>> chore/test
   { 
     path: '**',
     redirectTo: 'home',
