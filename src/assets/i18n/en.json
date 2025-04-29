@@ -109,4 +109,14 @@
       
     
 
+<<<<<<< HEAD
   
+=======
+  }
+  {
+    "HOME": {
+      "LOGIN": "Login" ,
+      "COMMENCER": "Start"
+    }
+  }
+>>>>>>> chore/test
