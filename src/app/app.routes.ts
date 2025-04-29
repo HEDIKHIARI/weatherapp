@@ -7,6 +7,10 @@ export const routes: Routes = [
     title: 'Accueil'  // Ajout du titre de page
   },
   { 
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
     title: 'Tableau de bord'
@@ -31,7 +35,10 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full' 
   },
+<<<<<<< HEAD
   // Route de fallback - Doit être la dernière
+=======
+>>>>>>> chore/test
   { 
     path: '**',
     redirectTo: 'home',

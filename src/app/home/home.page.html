@@ -5,6 +5,8 @@
     <ion-title>
       BWS : Be Wireless Solution
     </ion-title>
+    <ion-buttons slot="end">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,12 +15,12 @@
     <h1>Bienvenue dans BWS</h1>
     <p class="tagline">Votre solution connectée pour la météo intelligente</p>
   </div>
-
+  <!-- Updated Commencer button to navigate to the login page -->
   <ion-button 
     class="cta-button" 
-    (click)="goToDashboard()" 
+    (click)="Login()" 
     routerDirection="root">
-    COMMENCER 
+    {{ 'COMMENCER' | translate }}
     <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
   </ion-button>
 </ion-content>
