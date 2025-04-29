@@ -9,7 +9,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   imports: [
     IonApp,
     IonRouterOutlet,
-    DashboardComponent
   ],
   providers: [] // No need for provideHttpClient here
 })

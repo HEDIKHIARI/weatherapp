@@ -17,6 +17,7 @@ import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
+import { SensorService } from '../sensorservice/sensor.service';
 
 // Types d'alertes
 type AlertType = 
