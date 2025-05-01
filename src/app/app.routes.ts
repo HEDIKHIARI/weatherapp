@@ -28,6 +28,10 @@ export const routes: Routes = [
   // Routes protégées
  
   { 
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+  },
+  {
     path: 'dashboard',
     title: 'Tableau de bord',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
@@ -51,8 +55,21 @@ export const routes: Routes = [
     loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage),
  
   },
+
   
 
   // Gestion des routes inconnues
   
+
+  { 
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full' 
+  },
+  { 
+    path: '**',
+    redirectTo: 'home',
+    title: 'Page non trouvée'
+  }
+
 ];

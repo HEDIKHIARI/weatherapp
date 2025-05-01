@@ -17,7 +17,7 @@ import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { SensorService } from '../sensorservice/sensor.service';
 
 // Types d'alertes
 type AlertType = 
@@ -53,12 +53,14 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
+
   authService: any;
+  router: any;
  
 openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
-  // Variables de connectivité
+
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
   isOnline: boolean = true;
@@ -111,7 +113,7 @@ openConnectivity() {
     private translate: TranslateService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private router: Router// Ajout du Router dans le constructeur
+    private sensorService: SensorService,
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -119,30 +121,13 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
-    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
+    addIcons({
+      partlySunny, thermometer, water, speedometer, cloud, flag,
+      speedometerOutline, rainy, sunny, refresh, home, time,
+      settings, wifi,  remove, trendingUp, trendingDown,
+      arrowBack, compass, notifications
+    });
   }
-
-  // Méthode pour naviguer vers la page historique
-  async openHistory() {
-    try {
-      const success = await this.router.navigate(['/history']);
-      if (!success) {
-        console.error('Navigation failed - route might not exist');
-        // Fallback alternatif
-        window.location.hash = '/history';
-      }
-    } catch (err) {
-      console.error('Navigation error:', err);
-      // Afficher un message à l'utilisateur si nécessaire
-      const alert = await this.alertCtrl.create({
-        header: 'Erreur',
-        message: 'Impossible d\'accéder à l\'historique',
-        buttons: ['OK']
-      });
-      await alert.present();
-    }
-  }
-  
 
   ngOnInit() {
     this.loadData();

@@ -110,6 +110,11 @@
       },
       "WEEK": "Semaine"
     }
-    
+    {
+      "HOME": {
+        "LOGIN": "Connexion",
+        "COMMENCER": "Commencer"
+      }
+    }
     
   
