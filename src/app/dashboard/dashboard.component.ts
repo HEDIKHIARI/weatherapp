@@ -5,13 +5,7 @@ import {
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-
-
-  IonLabel, IonNote, IonBadge, IonAlert, IonItem } from '@ionic/angular/standalone';
-
-
-
-
+  IonLabel, IonNote, IonBadge, IonAlert, IonItem,IonToggle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
@@ -24,10 +18,6 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-
-
-
-
 
 // Types d'alertes
 type AlertType = 
@@ -59,24 +49,15 @@ interface WeatherAlert {
     IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonIcon, IonProgressBar, IonButtons,
     IonButton, IonFooter, IonSegment, IonSegmentButton,
-    IonLabel, IonBadge,
+    IonLabel, IonBadge, 
   ]
 })
 export class DashboardComponent implements OnInit {
-
+  authService: any;
  
 openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
-
-
-
-
-  logout() {
-    this.router.navigate(['/home']);
-  }
-
-
   // Variables de connectivité
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
@@ -130,12 +111,7 @@ openConnectivity() {
     private translate: TranslateService,
     private platform: Platform,
     private alertCtrl: AlertController,
- 
-    private router: Router,// Ajout du Router dans le constructeur
-
-
-
-
+    private router: Router// Ajout du Router dans le constructeur
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -143,9 +119,7 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
-
     addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
-
   }
 
   // Méthode pour naviguer vers la page historique
@@ -177,11 +151,12 @@ openConnectivity() {
     this.checkForAlerts();
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
-    const savedMode = localStorage.getItem('darkMode');
-if (savedMode) {
-  this.darkMode = JSON.parse(savedMode);
-  document.body.classList.toggle('dark', this.darkMode);
-}
+    this.authService.authState$.subscribe((user: any) => {
+      if (!user) {
+        this.router.navigate(['/login']);
+      }
+    });
+   
   }
 
   
@@ -341,14 +316,18 @@ if (savedMode) {
 
   // Méthodes existantes pour les données météo
   async openSettings() {
+    
+   
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
+      
       componentProps: {
         temperatureUnit: this.temperatureUnit,
         windSpeedUnit: this.windSpeedUnit,
         pressureUnit: this.pressureUnit,
         precipitationUnit: this.precipitationUnit
       }
+      
     });
 
     await modal.present();

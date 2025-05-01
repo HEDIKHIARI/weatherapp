@@ -2,19 +2,20 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  imports: [CommonModule, IonicModule,TranslateModule]
 })
 export class HomePage {
   constructor(private router: Router) {}
-
-  // Méthode garantie pour la navigation
-  goToDashboard() {
-    this.router.navigate(['/dashboard'],);
+  // Navigate to the login page
+  Login() {
+    this.router.navigate(['/login']);
   }
 }
