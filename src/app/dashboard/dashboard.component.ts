@@ -129,7 +129,7 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
-    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,timeOutline,partlySunny,speedometerOutline,sunny,wifi,remove,trendingUp,trendingDown,arrowBack});
+    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
   }
 
   // Méthode pour naviguer vers la page historique
