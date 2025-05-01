@@ -14,22 +14,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
   },
-  {
-    path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
-  },
-<<<<<<< HEAD
-=======
-  { 
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full' 
-  },
-  { 
-    path: '**',
-    redirectTo: 'home'
-  },
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
+  { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
   {
     path: 'history',
     loadComponent: () => import('./history/history.page').then(m => m.HistoryPage)

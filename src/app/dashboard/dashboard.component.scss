@@ -8,7 +8,18 @@ ion-content {
   max-width: 1200px; /* Largeur maximale pour les grands écrans */
   margin: 0 auto; /* Centrage sur les grands écrans */
 }
-
+.header-toolbar ion-buttons ion-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-toolbar ion-buttons {
+    display: flex;
+    align-items: center;
+  }
+.header-toolbar ion-buttons ion-icon {
+  margin: 0 5px;
+}
 /* En-tête */
 ion-toolbar {
   --background: #ffffff;
@@ -16,14 +27,17 @@ ion-toolbar {
   --border-color: #e2e8f0;
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: space-between; /* Space out start and end buttons */
 }
 
 /* Grille principale */
 ion-grid {
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between; /* Ensure even spacing between columns */
 }
 
 /* Cartes de données - Version Web */
@@ -31,12 +45,11 @@ ion-card {
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin: 0 0 24px 0;
-  transition: all 0.3s ease;
-  flex: 1 1 30%; /* Flex grow/shrink/basis */
-  min-width: 300px; /* Largeur minimale */
+  margin: 12px; /* Add consistent margin */
+  flex: 1 1 calc(33.33% - 16px); /* Ensure 4 cards per row with spacing */
+  min-width: 250px; /* Minimum width for smaller screens */
   max-width: 100%;
-  margin: 12px;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
@@ -49,7 +62,7 @@ ion-card {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -62,6 +75,8 @@ ion-card-header {
     font-size: 1.1rem;
     font-weight: 600;
     color: #4a5568;
+    display: flex;
+    align-items: center; /* Align icon and text vertically */
 
     ion-icon {
       margin-right: 10px;
@@ -139,6 +154,18 @@ ion-badge {
   font-size: 0.9rem;
   margin: 16px 0;
 }
+/* Align cards properly */
+ion-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ensure rows are evenly spaced */
+  gap: 8px; /* Add spacing between rows */
+}
+ion-col {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
 
 /* Version Desktop */
 @media (min-width: 992px) {
@@ -148,8 +175,7 @@ ion-badge {
   }
 
   ion-card {
-    flex: 1 1 22%;
-    margin: 16px;
+    flex: 1 1 calc(33.33% - 16px); /* 3 cards per row */
   }
 
   ion-card-content h1 {
@@ -160,7 +186,7 @@ ion-badge {
 /* Version Tablette */
 @media (max-width: 991px) and (min-width: 576px) {
   ion-card {
-    flex: 1 1 45%;
+    flex: 1 1 calc(50% - 16px);
   }
 }
 
@@ -170,8 +196,8 @@ ion-badge {
     padding: 0 16px;
   }
 
-  ion-card {
-    flex: 1 1 100%;
+  ion-card ion-card {
+    flex: 1 1 100%; /* 1 card per row */
     margin: 8px 0;
   }
 }

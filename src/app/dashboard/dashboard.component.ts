@@ -6,12 +6,7 @@ import {
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-<<<<<<< HEAD
-  IonLabel, IonNote, IonBadge, IonAlert, IonItem } from '@ionic/angular/standalone';
-=======
-  IonLabel, IonNote , IonBadge, IonAlert
-} from '@ionic/angular/standalone';
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
+  IonLabel, IonNote, IonBadge, IonAlert , IonItem } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
@@ -24,20 +19,14 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-=======
+import { connect } from 'mqtt';
 
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
-
-// Types d'alertes
 type AlertType = 
-  'EXTREME_RAIN' | 'FLOOD_WARNING' | 'STORM_WARNING' | 
-  'HIGH_WIND' | 'HEAT_WAVE' | 'COLD_WAVE' |
-  'AIR_QUALITY' | 'UV_ALERT' | 'SENSOR_ISSUE' |
-  'FIRE_RISK' | 'FROST_ALERT' | 'THUNDERSTORM' |
-  'SNOW_ALERT' | 'HAIL_WARNING' | 'DROUGHT_WARNING' |
-  'HUMIDITY_ALERT' | 'PRESSURE_DROP' | 'SENSOR_MAINTENANCE';
-
+'AIR_QUALITY' | 'UV_ALERT' | 'SENSOR_ISSUE' |
+'FIRE_RISK' | 'FROST_ALERT' | 'THUNDERSTORM' |
+'SNOW_ALERT' | 'HAIL_WARNING' | 'DROUGHT_WARNING' |
+'HUMIDITY_ALERT' | 'PRESSURE_DROP' | 'SENSOR_MAINTENANCE' |
+'HIGH_WIND';
 interface WeatherAlert {
   type: AlertType;
   severity: 'low' | 'medium' | 'high' | 'extreme';
@@ -63,15 +52,18 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
-<<<<<<< HEAD
+   // Navigate to the Home page
+   goToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  // Logout and navigate to the Login page
+  logout() {
+    this.router.navigate(['/login']);
+  }
 openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
-=======
-  logout() {
-    this.router.navigate(['/home']);
-  }
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
   // Variables de connectivité
   sensorData: any = {}; // Holds the sensor data
   // Removed duplicate declaration of lastUpdate
@@ -126,13 +118,10 @@ openConnectivity() {
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private platform: Platform,
-    private alertCtrl: AlertController,
-<<<<<<< HEAD
-    private router: Router// Ajout du Router dans le constructeur
-=======
-    private sensorService: SensorService,
-    private router: Router, // Inject Router service
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
+    private router: Router, // Ajout du Router dans le constructeur
+    private sensorService: SensorService, // Inject SensorService
+    private alertCtrl: AlertController // Inject AlertController
+    // Removed duplicate declaration of router
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -140,16 +129,7 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
-<<<<<<< HEAD
     addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
-=======
-    addIcons({
-      partlySunny, thermometer, water, speedometer, cloud, flag,
-      speedometerOutline, rainy, sunny, refresh, time,
-      settings, wifi,  remove, trendingUp, trendingDown,
-      arrowBack, compass, notifications
-    });
->>>>>>> efaf774711c2ae5bf1797f3e89288554cf8b9208
   }
 
   // Méthode pour naviguer vers la page historique
