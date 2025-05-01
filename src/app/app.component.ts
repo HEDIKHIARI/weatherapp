@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { Component, inject } from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ion-app>
-      <ion-router-outlet></ion-router-outlet>
-    </ion-app>
-  `,
+  templateUrl: 'app.component.html',
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  imports: [
+    IonApp,
+    IonRouterOutlet,
+    
+  ],
+  providers: [] // No need for provideHttpClient here
 })
-export class AppComponent {}
+export class AppComponent {
+}
