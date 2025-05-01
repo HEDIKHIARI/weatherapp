@@ -65,6 +65,7 @@ export class SettingsPage {
   }
 
   saveSettings() {
+    
     const settings = {
       general: {
         theme: this.theme,
