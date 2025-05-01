@@ -6,29 +6,20 @@
       </ion-button>
     </ion-buttons>
     <ion-title class="dashboard-title">{{ 'DASHBOARD.TITLE' | translate }}</ion-title>
-    </ion-buttons>
-    <ion-title>{{ 'DASHBOARD' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button class="refresh-button" (click)="refreshData()">
         <ion-icon slot="icon-only" name="refresh"></ion-icon>
       </ion-button>
-      <!-- Logout button -->
-      <ion-button (click)="logout()">Logout</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="cyber-neon ion-padding dashboard-content">
- 
-
-  <ion-grid fixed class="dashboard-grid">
+   <ion-grid fixed class="dashboard-grid">
     <!-- Last update time -->
     <ion-row class="ion-justify-content-center ion-margin-bottom last-update-row">
       <ion-col size="12" class="ion-text-center last-update-col">
         <small class="update-text">{{ 'DASHBOARD.LAST_UPDATE' | translate }}: {{lastUpdate | date:'mediumTime'}}</small>
-    <ion-row class="ion-justify-content-center ion-margin-bottom">
-      <ion-col size="12" class="ion-text-center">
-        <small>{{ 'LAST_UPDATE' | translate }}: {{lastUpdate | date:'mediumTime'}}</small>
       </ion-col>
     </ion-row>
 
@@ -41,12 +32,6 @@
             <ion-card-title class="card-title">
               <ion-icon name="thermometer" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.TEMPERATURE' | translate }}
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="thermometer"></ion-icon>
-              {{ 'TEMPERATURE' | translate }}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
@@ -62,12 +47,6 @@
             <ion-card-title class="card-title">
               <ion-icon name="flag" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.WIND' | translate }}
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="flag"></ion-icon>
-              {{ 'WIND' | translate }}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
@@ -92,12 +71,6 @@
             <ion-card-title class="card-title">
               <ion-icon name="water" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.HUMIDITY' | translate }}
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="water"></ion-icon>
-              {{ 'HUMIDITY' | translate }}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
@@ -108,20 +81,12 @@
       </ion-col>
 
       <!-- Pressure -->
-
       <ion-col size="12" size-md="6" size-lg="3" class="weather-card-col">
         <ion-card class="weather-card pressure-card">
           <ion-card-header class="card-header">
             <ion-card-title class="card-title">
               <ion-icon name="speedometer" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.PRESSURE' | translate }}
-
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="speedometer"></ion-icon>
-              {{ 'PRESSURE' | translate }}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
@@ -148,13 +113,7 @@
             <ion-card-title class="card-title">
               <ion-icon name="rainy" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.PRECIPITATION' | translate }}
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="rainy"></ion-icon>
-              {{ 'PRECIPITATION' | translate }}
-          </ion-card-title>
+            </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
             <h1 class="value-display">{{displayPrecipitation | number:'1.1-1'}} 
@@ -164,10 +123,6 @@
             <p class="additional-info">{{ 'DASHBOARD.RATE' | translate }}: {{displayPrecipitationRate | number:'1.1-1'}} 
               <span class="unit-text" *ngIf="precipitationUnit === 'mm'">mm/h</span>
               <span class="unit-text" *ngIf="precipitationUnit === 'in'">in/h</span>
-=======
-            <p>{{ 'RATE' | translate }}: {{displayPrecipitationRate | number:'1.1-1'}} 
-              <span *ngIf="precipitationUnit === 'mm'">mm/h</span>
-              <span *ngIf="precipitationUnit === 'in'">in/h</span>
             </p>
           </ion-card-content>
         </ion-card>
@@ -180,12 +135,6 @@
             <ion-card-title class="card-title">
               <ion-icon name="cloud" class="card-icon"></ion-icon>
               {{ 'DASHBOARD.AIR_QUALITY' | translate }}
-      <ion-col size="12" size-md="6" size-lg="3">
-        <ion-card [color]="airQualityColor">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon name="cloud"></ion-icon>
-              {{ 'AIR_QUALITY' | translate }}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
@@ -206,8 +155,8 @@
         </ion-button>
       </ion-col>
     </ion-row>
-
-
+  </ion-grid>
+</ion-content>
 
 <ion-footer class="dashboard-footer">
   <ion-toolbar class="footer-toolbar">
@@ -227,23 +176,6 @@
       <ion-segment-button value="connectivity" (click)="openConnectivity()" class="segment-button">
         <ion-icon [name]="connectivityIcon" [color]="connectivityColor" class="segment-icon"></ion-icon>
         <ion-label class="segment-label">{{ 'MENU.CONNECTIVITY' | translate }}</ion-label>
-
-    
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-segment>
-      <ion-segment-button value="history">
-        <ion-icon name="time"></ion-icon>
-        <ion-label>{{ 'HISTORY' | translate }}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="settings" (click)="openSettings()">
-        <ion-icon name="settings"></ion-icon>
-        <ion-label>{{ 'SETTINGS' | translate }}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="connectivity">
-        <ion-icon [name]="connectivityIcon" [color]="connectivityIcon"></ion-icon>
-        <ion-label>{{ 'CONNECTIVITY' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

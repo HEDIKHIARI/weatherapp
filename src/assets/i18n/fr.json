@@ -106,15 +106,18 @@
         "THU": "Jeudi",
         "FRI": "Vendredi",
         "SAT": "Samedi",
-        "SUN": "Dimanche"
-      },
+        "SUN": "Dimanche",
+        
       "WEEK": "Semaine"
-    }
-    {
+      },
+      
       "HOME": {
         "LOGIN": "Connexion",
         "COMMENCER": "Commencer"
       }
     }
+   
+      
+    
     
   

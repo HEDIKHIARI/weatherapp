@@ -102,21 +102,21 @@
             "THU": "Thursday",
             "FRI": "Friday",
             "SAT": "Saturday",
-            "SUN": "Sunday"
+            "SUN": "Sunday",
+            "WEEK": "Week"
           },
-          "WEEK": "Week"
-        }
-      
+          
     
-
-<<<<<<< HEAD
-  
-=======
-  }
-  {
-    "HOME": {
+          "HOME": {
       "LOGIN": "Login" ,
       "COMMENCER": "Start"
     }
   }
->>>>>>> chore/test
+       
+      
+    
+
+  
+  
+   
+  
