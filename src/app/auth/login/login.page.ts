@@ -1,33 +1,49 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule]
+  imports: [IonicModule, FormsModule],
+  templateUrl: './login.page.html',
 })
-export class LoginPage {
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
+export class LoginPage implements OnInit {
+  email = '';
+  password = '';
+  message = '';
 
-  constructor(private router: Router) {}
+  private auth = inject(Auth);
+  private router = inject(Router);
 
-  login() { 
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-    
-    // Simple authentication logic
-    if (this.username === 'admin' && this.password === 'password') {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.errorMessage = 'Invalid username or password';
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    onAuthStateChanged(this.auth, (user: User | null) => {
+      if (user) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
+
+  login() {
+    if (!this.email || !this.password || this.password.length < 6) {
+      this.message = 'Veuillez saisir un email valide et un mot de passe (min. 6 caractères).';
+      return;
     }
+
+    this.authService.login(this.email, this.password)
+      .then(() => {
+       
+        this.router.navigate(['/dashboard']);
+      })
+      .catch(err => {
+        console.error(err);
+        this.message = err.message;
+      });
   }
 
   register() {
@@ -35,12 +51,6 @@ export class LoginPage {
   }
 
   forgotPassword() {
-    if (!this.username) {
-      this.errorMessage = 'Please enter your username first';
-      return;
-    }
-    this.router.navigate(['/forgot-password'], {
-      state: { username: this.username }
-    });
+    this.router.navigate(['/forgot-password']);
   }
 }

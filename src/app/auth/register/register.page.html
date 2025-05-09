@@ -32,8 +32,7 @@
   <ion-button expand="block" fill="outline" (click)="goToLogin()">
     Already have an account? Login
   </ion-button>
-
-  <div *ngIf="errorMessage" class="error-message ion-text-center">
-    {{ errorMessage }}
+  <div *ngIf="message" class="message ion-text-center">
+    {{ message }}
   </div>
 </ion-content>
