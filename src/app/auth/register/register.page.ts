@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,25 +17,50 @@ export class RegisterPage {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-  errorMessage: string = '';
+  message: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastController: ToastController
+  ) {}
 
-  register() {
-    // Validation basique
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
+  async register() {
+    if (!this.email || !this.password || !this.username) {
+      this.message = 'Veuillez remplir tous les champs.';
       return;
     }
 
-    // Simulation d'enregistrement
-    console.log('Registering:', { 
-      username: this.username, 
-      email: this.email 
-    });
-    
-    // Redirection après "enregistrement"
-    this.router.navigate(['/dashboard']);
+    if (this.password !== this.confirmPassword) {
+      this.message = 'Les mots de passe ne correspondent pas.';
+      return;
+    }
+
+    try {
+      // ✅ Créer l'utilisateur
+      await this.authService.register(this.email, this.password, this.username);
+
+      // ✅ Déconnexion immédiate
+      const { getAuth, signOut } = await import('@angular/fire/auth');
+      await signOut(getAuth());
+
+      // ✅ Message de succès
+      const toast = await this.toastController.create({
+        message: 'Compte créé avec succès. Veuillez vous connecter.',
+        duration: 2500,
+        color: 'success'
+      });
+      await toast.present();
+
+      // ✅ Redirection forcée vers login (léger délai pour garantir le signOut complet)
+      setTimeout(() => {
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }, 100);
+
+    } catch (err: any) {
+      console.error(err);
+      this.message = err.message || 'Une erreur est survenue.';
+    }
   }
 
   goToLogin() {

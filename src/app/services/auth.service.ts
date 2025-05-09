@@ -1,88 +1,63 @@
 import { Injectable, inject } from '@angular/core';
-import { 
-  Auth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   sendPasswordResetEmail,
-  User 
+  signOut,
+  User
 } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import {
+  Firestore,
+  doc,
+  setDoc
+} from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
-  private router = inject(Router);
-
-  currentUser: User | null = null;
+  private user$ = new BehaviorSubject<User | null>(null);
 
   constructor() {
-    this.auth.onAuthStateChanged(user => {
-      this.currentUser = user;
-    });
+    // ❌ Supprimé: évite de capter automatiquement la connexion après inscription
+    // onAuthStateChanged(this.auth, user => this.user$.next(user));
   }
 
-  // Connexion
-  async login(email: string, password: string): Promise<void> {
-    try {
-      await signInWithEmailAndPassword(this.auth, email, password);
-      this.router.navigate(['/dashboard']);
-    } catch (error) {
-      throw this.handleAuthError(error);
-    }
-  }
+  /**
+   * Inscription d'un nouvel utilisateur + enregistrement dans Firestore
+   */
+  async register(email: string, password: string, username: string) {
+    const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+    const user = userCredential.user;
 
-  // Inscription
-  async register(email: string, password: string): Promise<void> {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      await this.storeUserData(userCredential.user);
-      this.router.navigate(['/dashboard']);
-    } catch (error) {
-      throw this.handleAuthError(error);
-    }
-  }
-
-  // Réinitialisation mot de passe
-  async forgotPassword(email: string): Promise<void> {
-    try {
-      await sendPasswordResetEmail(this.auth, email);
-    } catch (error) {
-      throw this.handleAuthError(error);
-    }
-  }
-
-  // Déconnexion
-  async logout(): Promise<void> {
-    await signOut(this.auth);
-    this.router.navigate(['/login']);
-  }
-
-  // Stockage données utilisateur
-  private async storeUserData(user: User): Promise<void> {
-    const userRef = doc(this.firestore, `users/${user.uid}`);
+    // Enregistrement du profil utilisateur dans Firestore
+    const userRef = doc(this.firestore, 'users', user.uid);
     await setDoc(userRef, {
       uid: user.uid,
       email: user.email,
-      lastLogin: new Date()
-    }, { merge: true });
+      username: username,
+      createdAt: new Date()
+    });
+
+    console.log("Utilisateur enregistré dans Firestore !");
+    return user;
   }
 
-  // Gestion des erreurs
-  private handleAuthError(error: any): string {
-    const errorMap: Record<string, string> = {
-      'auth/invalid-email': 'Email invalide',
-      'auth/user-disabled': 'Compte désactivé',
-      'auth/user-not-found': 'Aucun compte avec cet email',
-      'auth/wrong-password': 'Mot de passe incorrect',
-      'auth/email-already-in-use': 'Email déjà utilisé',
-      'auth/weak-password': 'Mot de passe trop faible (min. 6 caractères)',
-      'auth/too-many-requests': 'Trop de tentatives. Réessayez plus tard.'
-    };
-    return errorMap[error.code] || 'Erreur inconnue';
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  async logout() {
+    return signOut(this.auth);
+  }
+
+  resetPassword(email: string) {
+    return sendPasswordResetEmail(this.auth, email);
+  }
+
+  getCurrentUser() {
+    return this.user$.asObservable();
   }
 }

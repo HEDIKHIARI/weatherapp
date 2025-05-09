@@ -7,8 +7,8 @@
 <ion-content class="ion-padding">
   <form (ngSubmit)="login()">
     <ion-item>
-      <ion-label position="floating">Username</ion-label>
-      <ion-input [(ngModel)]="username" name="username" required></ion-input>
+      <ion-label position="floating">email</ion-label>
+      <ion-input [(ngModel)]="email" name="username" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -27,7 +27,12 @@
     Forgot Password?
   </ion-button>
 
-  <div class="ion-text-center ion-margin-top">
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <div *ngIf="message" class="ion-margin-top">
+    <ion-text color="danger" *ngIf="message.includes('Erreur') || message.includes('error')">
+      {{ message }}
+    </ion-text>
+    <ion-text color="success" *ngIf="!message.includes('Erreur') && !message.includes('error')">
+      {{ message }}
+    </ion-text>
   </div>
 </ion-content>

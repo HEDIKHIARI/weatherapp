@@ -11,13 +11,14 @@ import {
   partlySunny, thermometer, water, speedometer, cloud, flag, 
   speedometerOutline, rainy, sunny, refresh, home, time, 
   settings, wifi, remove, trendingUp, trendingDown,
-  arrowBack, compass, notifications, timeOutline, moon } from 'ionicons/icons';
+  arrowBack, compass, notifications, timeOutline, moon, logOutOutline } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 // Types d'alertes
 type AlertType = 
@@ -53,8 +54,11 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
+
   darkMode = false;
   private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+ 
+
   toggleDarkMode() {
     document.body.classList.toggle('dark', this.darkMode);
     localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
@@ -131,7 +135,8 @@ export class DashboardComponent implements OnInit {
     private translate: TranslateService,
     private platform: Platform,
     private alertCtrl: AlertController,
-    private router: Router// Ajout du Router dans le constructeur
+    private router: Router,
+    private AuthService: AuthService,
     
     
   ) {
@@ -142,7 +147,7 @@ export class DashboardComponent implements OnInit {
     }
 
     
-   addIcons({home,sunny,moon,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
+   addIcons({home,refresh,logOutOutline,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,sunny,moon,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
    this.prefersDark.addEventListener('change', (e) => {
     this.darkMode = e.matches;
     this.toggleDarkMode();
@@ -456,6 +461,14 @@ if (savedMode) {
     } else {
       this.pressureTrend = this.translate.instant('PRESSURE.STABLE');
       this.pressureTrendIcon = 'remove';
+    }
+  }
+  async logout() {
+    try {
+      await this.AuthService.logout();
+      this.router.navigate(['/home']); // ou '/login' si tu préfères
+    } catch (error) {
+      console.error('Erreur de déconnexion:', error);
     }
   }
 
