@@ -11,22 +11,19 @@ import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
+  templateUrl: './app.component.html',
   standalone: true,
   imports: [
     IonApp,
     IonRouterOutlet,
-    DashboardComponent
-  ],
-  providers: [] // No need for provideHttpClient here
-})
-@NgModule({
-  imports: [],
-  providers: [
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase()),
+    DashboardComponent, 
+  
   ],
 })
 export class AppComponent {
-  constructor() {}
+  constructor() {
+    const firebaseApp = initializeApp(environment.firebase);
+    const db = getDatabase(firebaseApp);
+    console.log('Firebase initialized:', firebaseApp.name);
+  }
 }

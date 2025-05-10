@@ -14,6 +14,7 @@ import {
   settings, wifi, remove, trendingUp, trendingDown,
   arrowBack, compass, notifications, timeOutline, moon } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -54,7 +55,16 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
-  sensorData: any;
+  sensorData: any = null;
+  humidity: number = 0;
+  rain: number = 0;
+  pressure:  number = 0;
+  temperature:  number = 0;
+  wind:  number = 0;
+
+  // Other variables
+  isLoading: boolean = true;
+
   
 
   darkMode = false;
@@ -106,11 +116,11 @@ export class DashboardComponent implements OnInit {
   displayPrecipitationRate: number = this._precipitationRate;
 
   // Other sensor values
-  humidity: number = 65;
+  // Removed duplicate declaration of 'humidity' with conflicting type
   pm25: number = 12;
   pm10: number = 24;
   windDirection: number = 45;
-  uvIndex: number = 4;
+  
   
   // Measurement units
   temperatureUnit: string = 'celsius';
@@ -178,27 +188,75 @@ export class DashboardComponent implements OnInit {
   
 
   ngOnInit() {
-    this.sensorService.sensorData$.subscribe((data: any) => {
-      if (data) {
-        console.log('Données des capteurs :', data);
-      } else {
-        console.log('Aucune donnée disponible');
-      }
-    });
+    // Fetch sensor data from Firebase
+    this.fetchSensorData();
+    
+  
+    // Subscribe to sensor data updates from the service
+    if (!this.sensorService.sensorData$) {
+      console.warn('SensorService is not emitting data.');
+    } else {
+      this.sensorService.sensorData$.subscribe((data: any) => {
+        if (data) {
+          console.log('Données des capteurs :', data);
+        } else {
+          console.log('Aucune donnée disponible');
+        }
+      });
+    }
+  
+    // Load initial data and setup periodic updates
     this.loadData();
     this.checkConnectivity();
     this.setupConnectivityListeners();
     this.checkForAlerts();
-    setInterval(() => this.loadData(), 300000);
-    setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
-    const savedMode = localStorage.getItem('darkMode');
-if (savedMode) {
-  this.darkMode = JSON.parse(savedMode);
-  document.body.classList.toggle('dark', this.darkMode);
-  this.loadThemePreference();
-  }
-}
   
+    // Periodic updates
+    setInterval(() => this.loadData(), 300000); // Every 5 minutes
+    setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Every 12 hours
+  
+    // Load dark mode preference
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode) {
+      this.darkMode = JSON.parse(savedMode);
+      document.body.classList.toggle('dark', this.darkMode);
+      this.loadThemePreference();
+    }
+  }
+  
+  fetchSensorData() {
+    const db = getDatabase(); // Initialize Firebase Realtime Database
+    const sensorsRef = ref(db, 'sensors/capteurs'); // Path to the "capteurs" node in Firebase
+  
+    // Listen for real-time updates
+    onValue(
+      sensorsRef,
+      (snapshot) => {
+        const data = snapshot.val();
+  
+        if (data) {
+          console.log('Sensor data fetched:', data);
+          this.sensorData = data;
+  
+          // Update UI with sensor data
+          this.humidity = parseFloat(data.humidite) || 0; // Ensure humidity is a number
+          this.rain = data.pluie || '--';
+          this.pressure = data.pression || '--';
+          this.wind = data.vent || '--';
+        } else {
+          console.log('No sensor data available.');
+          this.sensorData = null;
+        }
+  
+        this.isLoading = false;
+      },
+      (error: Error) => {
+        console.error('Error fetching sensor data:', error);
+        this.isLoading = false;
+      }
+    );
+  }
+
   checkForAlerts() {
     // Simulation d'alertes basées sur les conditions actuelles
     const newAlerts: WeatherAlert[] = [];

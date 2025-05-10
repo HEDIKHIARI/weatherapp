@@ -75,7 +75,7 @@
           </ion-card-header>
           <ion-card-content class="card-content">
             <h1 class="value-display">{{humidity}}%</h1>
-            <ion-progress-bar class="humidity-bar" [value]="humidity/100"></ion-progress-bar>
+            <ion-progress-bar class="humidity-bar" [value]="humidity ? humidity / 100 : 0"></ion-progress-bar>
           </ion-card-content>
         </ion-card>
       </ion-col>

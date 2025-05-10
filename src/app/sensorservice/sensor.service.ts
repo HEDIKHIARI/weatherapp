@@ -1,33 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, onValue, DataSnapshot } from '@angular/fire/database';
 import { BehaviorSubject } from 'rxjs';
-@Injectable({ providedIn: 'root',
+
+@Injectable({
+  providedIn: 'root',
 })
 export class SensorService {
   private sensorDataSubject = new BehaviorSubject<any>(null);
   sensorData$ = this.sensorDataSubject.asObservable();
 
   constructor(private db: Database) {
-    this.listenToSensorData();
+    this.listenToStationMeteoData();
+    this.logSensorData(); // Optionnel : juste pour debug dans la console
   }
 
-  private listenToSensorData() {
-    const sensorRef = ref(this.db, 'sensors'); // Chemin dans Firebase
-    onValue(ref(this.db, 'sensors'), (snapshot) => {
-      if (snapshot.exists()) {
-        snapshot.forEach((childSnapshot : DataSnapshot  & { key: string }) => {
-          const key = childSnapshot.key || ''; // Vérifiez que `key` est bien de type `string`
-          const value = childSnapshot.val();
-          // Vérifiez que les données ne sont pas des booléens
-      if (typeof value !== 'boolean') {
-        console.log(`Key: ${key}, Value:`, value);
+  // Écoute des données temps réel sur /station_meteo
+  private listenToStationMeteoData() {
+    const refPath = ref(this.db, '/station_meteo');
+    onValue(refPath, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        this.sensorDataSubject.next(data); // Met à jour l'observable
       } else {
-        console.error(`Invalid data type for key ${key}:`, value);
+        console.warn('Aucune donnée trouvée dans /station_meteo');
       }
     });
-  } else {
-    console.log('No data available');
   }
+
+  // Optionnel : simple console log des données /sensors pour debug
+  private logSensorData() {
+    const sensorRef = ref(this.db, 'sensors');
+    onValue(sensorRef, (snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot: DataSnapshot & { key: string }) => {
+          const key = childSnapshot.key || '';
+          const value = childSnapshot.val();
+          if (typeof value !== 'boolean') {
+            console.log(`Sensor [${key}] :`, value);
+          } else {
+            console.error(`Valeur invalide pour ${key} :`, value);
+          }
+        });
+      } else {
+        console.log('Aucune donnée disponible dans /sensors');
+      }
     });
   }
 }

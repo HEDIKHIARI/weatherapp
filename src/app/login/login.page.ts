@@ -7,8 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { RouterModule } from '@angular/router'; // Import RouterModule
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [CommonModule, IonicModule, FormsModule, RouterModule]
 })
