@@ -1,20 +1,26 @@
 import { Routes } from '@angular/router';
-
+import { AuthGuard } from './guards/auth.guard';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 export const routes: Routes = [
-  { 
+  {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full' 
+    pathMatch: 'full',
   },
-  { 
+  {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+    loadComponent: () => import('./home/home.component').then( m => m.HomePage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/login.component').then( m => m.LoginPage)
   },
   { 
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+    path: 'dashboard', 
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [AuthGuard]
   },
-  { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
   {
     path: 'history',
     loadComponent: () => import('./history/history.page').then(m => m.HistoryPage)
@@ -28,8 +34,12 @@ export const routes: Routes = [
     loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage)
   },
   // La route wildcard doit TOUJOURS être en dernier
-  { 
-    path: '**',
-    redirectTo: 'home'
-  }
+
 ];
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

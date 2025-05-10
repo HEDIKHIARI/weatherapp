@@ -12,7 +12,7 @@ import {
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app/app.routes';
-import { importProvidersFrom, ApplicationRef } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { 
   TranslateModule, 
   TranslateLoader,
@@ -22,24 +22,17 @@ import {
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Storage } from '@ionic/storage-angular';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient
+import { getDatabase } from "firebase/database";
+import { environment } from './environments/environment';
 
 // Import Firebase SDKs
 import { initializeApp as firebaseInitializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC0LWFdP8STa8sXEVBfz1zL9Tv_PAzdFuU",
-  authDomain: "weatherapp-a4506.firebaseapp.com",
-  projectId: "weatherapp-a4506",
-  storageBucket: "weatherapp-a4506.firebasestorage.app",
-  messagingSenderId: "781832787375",
-  appId: "1:781832787375:web:f1a228d7350b2fef0b4b5a",
-  measurementId: "G-4FCD0WBYH5"
-};
 
 // Initialize Firebase
-const firebaseApp = firebaseInitializeApp(firebaseConfig);
+const firebaseApp = firebaseInitializeApp(environment.firebase);
 const analytics = getAnalytics(firebaseApp);
+const database = getDatabase(firebaseApp);
 // Configuration améliorée du loader de traduction
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(

@@ -1,16 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-@Injectable({
-  providedIn: 'root',
+import { Database, ref, onValue, DataSnapshot } from '@angular/fire/database';
+import { BehaviorSubject } from 'rxjs';
+@Injectable({ providedIn: 'root',
 })
 export class SensorService {
-  private apiUrl = 'http://localhost:8100//sensors'; // Replace with the actual API URL
+  private sensorDataSubject = new BehaviorSubject<any>(null);
+  sensorData$ = this.sensorDataSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private db: Database) {
+    this.listenToSensorData();
+  }
 
-  getSensorData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  private listenToSensorData() {
+    const sensorRef = ref(this.db, 'sensors'); // Chemin dans Firebase
+    onValue(ref(this.db, 'sensors'), (snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot : DataSnapshot  & { key: string }) => {
+          const key = childSnapshot.key || ''; // Vérifiez que `key` est bien de type `string`
+          const value = childSnapshot.val();
+          // Vérifiez que les données ne sont pas des booléens
+      if (typeof value !== 'boolean') {
+        console.log(`Key: ${key}, Value:`, value);
+      } else {
+        console.error(`Invalid data type for key ${key}:`, value);
+      }
+    });
+  } else {
+    console.log('No data available');
+  }
+    });
   }
 }

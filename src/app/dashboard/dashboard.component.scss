@@ -1,142 +1,115 @@
-/* dashboard.component.scss - Version Web Responsive */
+/* dashboard.component.scss */
 
 /* Structure de base */
 ion-content {
-  --background: #f5f7fa;
-  --padding-top: 24px;
-  --padding-bottom: 24px;
-  max-width: 1200px; /* Largeur maximale pour les grands écrans */
-  margin: 0 auto; /* Centrage sur les grands écrans */
+  --background: #f5f7fa; /* Fond gris très clair */
+  --padding-top: 16px;
+  --padding-bottom: 16px;
 }
-.header-toolbar ion-buttons ion-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.header-toolbar ion-buttons {
-    display: flex;
-    align-items: center;
-  }
-.header-toolbar ion-buttons ion-icon {
-  margin: 0 5px;
-}
+
 /* En-tête */
 ion-toolbar {
   --background: #ffffff;
-  --color: #2d3748;
-  --border-color: #e2e8f0;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center; /* Center content vertically */
-  justify-content: space-between; /* Space out start and end buttons */
+  --color: #2d3748; /* Texte foncé */
+  --border-color: #e2e8f0; /* Bordure grise claire */
 }
 
 /* Grille principale */
 ion-grid {
-  padding: 0 16px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Ensure even spacing between columns */
+  padding: 0 12px;
 }
 
-/* Cartes de données - Version Web */
+/* Cartes de données */
 ion-card {
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin: 12px; /* Add consistent margin */
-  flex: 1 1 calc(33.33% - 16px); /* Ensure 4 cards per row with spacing */
-  min-width: 250px; /* Minimum width for smaller screens */
-  max-width: 100%;
-  transition: all 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin: 0 0 16px 0;
+  transition: transform 0.2s ease;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  &:active {
+    transform: scale(0.98);
   }
 }
 
-/* Conteneur de cartes pour alignement */
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 16px;
-  width: 100%;
-}
-
-/* En-tête des cartes - Version Web */
+/* En-tête des cartes */
 ion-card-header {
-  padding: 16px 24px 12px;
+  padding: 12px 16px 8px;
   border-bottom: 1px solid #edf2f7;
 
   ion-card-title {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: #4a5568;
+    color: #4a5568; /* Gris foncé */
     display: flex;
-    align-items: center; /* Align icon and text vertically */
+    align-items: center;
 
     ion-icon {
-      margin-right: 10px;
-      font-size: 1.2rem;
+      margin-right: 8px;
+      color: #4299e1; /* Bleu */
     }
   }
 }
 
-/* Contenu des cartes - Version Web */
+/* Contenu des cartes */
 ion-card-content {
-  padding: 16px 24px;
+  padding: 12px 16px;
 
   h1 {
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin: 12px 0;
+    color: #1a202c; /* Noir */
+    margin: 8px 0;
     
     span {
-      font-size: 1.1rem;
+      font-weight: 400;
+      font-size: 1rem;
+      color: #718096; /* Gris moyen */
     }
   }
 
   p {
-    font-size: 1rem;
-    margin-top: 8px;
+    color: #4a5568; /* Gris foncé */
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
 
     ion-icon {
-      margin-right: 8px;
+      margin-right: 6px;
+      color: #4299e1; /* Bleu */
     }
   }
 }
 
-/* Barre de progression - Version Web */
+/* Barre de progression */
 ion-progress-bar {
-  height: 8px;
-  border-radius: 4px;
-  margin-top: 16px;
+  --progress-background: #4299e1; /* Bleu */
+  --background: #ebf8ff; /* Bleu très clair */
+  height: 6px;
+  border-radius: 3px;
+  margin-top: 12px;
 }
 
-/* Pied de page - Version Web */
+/* Pied de page */
 ion-footer {
   ion-toolbar {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
+    --background: #ffffff;
+    border-top: 1px solid #e2e8f0;
 
     ion-segment {
-      justify-content: center;
-
       ion-segment-button {
-        min-width: 100px;
-        padding: 12px 0;
+        --color: #718096; /* Gris moyen */
+        --color-checked: #4299e1; /* Bleu */
+        --indicator-color: transparent;
 
         ion-icon {
-          font-size: 1.6rem;
+          font-size: 1.4rem;
         }
 
         ion-label {
-          font-size: 0.8rem;
-          margin-top: 6px;
+          font-size: 0.7rem;
+          margin-top: 4px;
         }
       }
     }
@@ -145,66 +118,29 @@ ion-footer {
 
 /* Badge de notification */
 ion-badge {
-  font-size: 12px;
-  padding: 4px 8px;
+  --background: #e53e3e; /* Rouge */
+  --color: #ffffff;
+  font-size: 11px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /* Dernière mise à jour */
 .last-update {
-  font-size: 0.9rem;
-  margin: 16px 0;
-}
-/* Align cards properly */
-ion-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Ensure rows are evenly spaced */
-  gap: 8px; /* Add spacing between rows */
-}
-ion-col {
-  display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
+  color: #718096; /* Gris moyen */
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 8px 0 16px;
 }
 
-/* Version Desktop */
-@media (min-width: 992px) {
-  ion-content {
-    --padding-top: 32px;
-    --padding-bottom: 32px;
-  }
-
+/* Version mobile */
+@media (max-width: 768px) {
   ion-card {
-    flex: 1 1 calc(33.33% - 16px); /* 3 cards per row */
+    margin-bottom: 12px;
   }
-
+  
   ion-card-content h1 {
-    font-size: 2.8rem;
-  }
-}
-
-/* Version Tablette */
-@media (max-width: 991px) and (min-width: 576px) {
-  ion-card {
-    flex: 1 1 calc(50% - 16px);
-  }
-}
-
-/* Version Mobile */
-@media (max-width: 575px) {
-  ion-grid {
-    padding: 0 16px;
-  }
-
-  ion-card ion-card {
-    flex: 1 1 100%; /* 1 card per row */
-    margin: 8px 0;
-  }
-}
-
-/* Pleine largeur pour les grands écrans */
-@media (min-width: 1600px) {
-  ion-content, ion-toolbar, ion-footer ion-toolbar {
-    max-width: 1400px;
+    font-size: 1.8rem;
   }
 }

@@ -1,32 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SensorService } from '../sensorservice/sensor.service'; // Removed as it is unused and causing errors
+// Removed duplicate import of SensorService
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, 
   IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
   IonCardContent, IonIcon, IonProgressBar, IonButtons,
   IonButton, IonFooter, IonSegment, IonSegmentButton, 
-  IonLabel, IonNote, IonBadge, IonAlert , IonItem } from '@ionic/angular/standalone';
+  IonLabel, IonNote, IonBadge, IonAlert, IonItem,IonToggle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   partlySunny, thermometer, water, speedometer, cloud, flag, 
   speedometerOutline, rainy, sunny, refresh, home, time, 
   settings, wifi, remove, trendingUp, trendingDown,
-  arrowBack, compass, notifications, timeOutline } from 'ionicons/icons';
+  arrowBack, compass, notifications, timeOutline, moon } from 'ionicons/icons';
 import { ModalController, AlertController } from '@ionic/angular/standalone';
 import { SettingsPage } from '../settings/settings.page';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { connect } from 'mqtt';
-
+import { SensorService } from '../sensorservice/sensor.service';
+// Types d'alertes
 type AlertType = 
-'AIR_QUALITY' | 'UV_ALERT' | 'SENSOR_ISSUE' |
-'FIRE_RISK' | 'FROST_ALERT' | 'THUNDERSTORM' |
-'SNOW_ALERT' | 'HAIL_WARNING' | 'DROUGHT_WARNING' |
-'HUMIDITY_ALERT' | 'PRESSURE_DROP' | 'SENSOR_MAINTENANCE' |
-'HIGH_WIND';
+  'EXTREME_RAIN' | 'FLOOD_WARNING' | 'STORM_WARNING' | 
+  'HIGH_WIND' | 'HEAT_WAVE' | 'COLD_WAVE' |
+  'AIR_QUALITY' | 'UV_ALERT' | 'SENSOR_ISSUE' |
+  'FIRE_RISK' | 'FROST_ALERT' | 'THUNDERSTORM' |
+  'SNOW_ALERT' | 'HAIL_WARNING' | 'DROUGHT_WARNING' |
+  'HUMIDITY_ALERT' | 'PRESSURE_DROP' | 'SENSOR_MAINTENANCE';
+
 interface WeatherAlert {
   type: AlertType;
   severity: 'low' | 'medium' | 'high' | 'extreme';
@@ -37,36 +39,50 @@ interface WeatherAlert {
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: 'dashboard.component.html',
-  styleUrls: ['dashboard.component.scss'],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   imports: [ 
     CommonModule,
     FormsModule,
     TranslateModule,
-    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid,
+    IonHeader, IonToolbar, IonTitle,  IonGrid,
     IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonIcon, IonProgressBar, IonButtons,
     IonButton, IonFooter, IonSegment, IonSegmentButton,
-    IonLabel, IonBadge, 
+    IonLabel, IonBadge, IonContent
   ]
 })
 export class DashboardComponent implements OnInit {
-   // Navigate to the Home page
-   goToHome() {
-    this.router.navigate(['/home']);
+  sensorData: any;
+  
+
+  darkMode = false;
+  private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  toggleDarkMode() {
+    document.body.classList.toggle('dark', this.darkMode);
+    localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
+    this.applyTheme();
+
   }
 
-  // Logout and navigate to the Login page
-  logout() {
-    this.router.navigate(['/login']);
+  private loadThemePreference() {
+    const savedMode = localStorage.getItem('darkMode');
+    this.darkMode = savedMode ? JSON.parse(savedMode) : this.prefersDark.matches;
+    this.toggleDarkMode();
   }
-openConnectivity() {
+
+  private applyTheme() {
+    const theme = this.darkMode ? 'dark' : 'light';
+    document.body.setAttribute('color-theme', theme);
+  }
+  
+
+ 
+ openConnectivity() {
   this.router.navigate(['/connectivity']); 
 }
   // Variables de connectivité
-  sensorData: any = {}; // Holds the sensor data
-  // Removed duplicate declaration of lastUpdate
   connectivityIcon: string = 'wifi';
   connectivityColor: string = 'success';
   isOnline: boolean = true;
@@ -106,22 +122,22 @@ openConnectivity() {
   airQualityText: string = '--';
   airQualityColor: string = 'medium';
   windDirectionText: string = '--';
-  uvText: string = '--';
-  uvColor: string = 'medium';
+
   pressureTrend: string = 'stable';
   pressureTrendIcon: string = 'remove';
   
   lastUpdate: Date = new Date();
   isRefreshing: boolean = false;
+  
 
   constructor(
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private platform: Platform,
+    private alertCtrl: AlertController,
     private router: Router, // Ajout du Router dans le constructeur
-    private sensorService: SensorService, // Inject SensorService
-    private alertCtrl: AlertController // Inject AlertController
-    // Removed duplicate declaration of router
+    private sensorService: SensorService
+    
   ) {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
@@ -129,8 +145,15 @@ openConnectivity() {
       document.body.classList.add('md');
     }
 
-    addIcons({home,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,timeOutline,settings,partlySunny,speedometerOutline,sunny,time,wifi,remove,trendingUp,trendingDown,arrowBack});
+    
+   addIcons({home,sunny,moon,refresh,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
+   this.prefersDark.addEventListener('change', (e) => {
+    this.darkMode = e.matches;
+    this.toggleDarkMode();
+  });
   }
+
+  
 
   // Méthode pour naviguer vers la page historique
   async openHistory() {
@@ -155,18 +178,27 @@ openConnectivity() {
   
 
   ngOnInit() {
+    this.sensorService.sensorData$.subscribe((data: any) => {
+      if (data) {
+        console.log('Données des capteurs :', data);
+      } else {
+        console.log('Aucune donnée disponible');
+      }
+    });
     this.loadData();
     this.checkConnectivity();
     this.setupConnectivityListeners();
     this.checkForAlerts();
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
-    this.sensorData(); // Fetch sensor data on initialization
-    setInterval(() => this.sensorData(), 300000); // Refresh every 5 minutes
+    const savedMode = localStorage.getItem('darkMode');
+if (savedMode) {
+  this.darkMode = JSON.parse(savedMode);
+  document.body.classList.toggle('dark', this.darkMode);
+  this.loadThemePreference();
   }
-
-  // ... [Le reste de votre code existant reste inchangé]
-  // Méthodes pour les notifications et alertes
+}
+  
   checkForAlerts() {
     // Simulation d'alertes basées sur les conditions actuelles
     const newAlerts: WeatherAlert[] = [];
@@ -208,17 +240,7 @@ openConnectivity() {
       });
     }
   }
-  loadSensorData() {
-    this.sensorService.getSensorData().subscribe(
-      (data) => {
-        this.sensorData = data; // Assign fetched data to sensorData
-        this.lastUpdate = new Date(); // Update the last update time
-      },
-      (error) => {
-        console.error('Error fetching sensor data:', error);
-      }
-    );
-  }
+
   addAlert(alert: WeatherAlert) {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
@@ -347,18 +369,21 @@ openConnectivity() {
     
     const { data } = await modal.onWillDismiss();
     
-    if (data) {
-      this.temperatureUnit = data.units.temperature;
-      this.windSpeedUnit = data.units.windSpeed;
-      this.pressureUnit = data.units.pressure;
-      this.precipitationUnit = data.units.precipitation;
+    this.sensorService.sensorData$.subscribe((data) => {
+      if (data) {
+        this.displayTemperature = data.temperature;
+        this.displayWindSpeed = data.windSpeed;
+        this.displayPressure = data.pressure;
+        this.humidity = data.humidity;
+        this._precipitation = data.precipitation;
+      }
       
       if (data.language) {
         this.translate.use(data.language);
       }
       
       this.convertDisplayValues();
-    }
+    });
   }
 
   private convertDisplayValues() {
@@ -449,6 +474,5 @@ openConnectivity() {
 
   refreshData() {
     this.loadData();
-    this.loadSensorData();
   }
 }

@@ -17,10 +17,9 @@
   </div>
   <!-- Updated Commencer button to navigate to the login page -->
   <ion-button 
-    class="cta-button" 
-    (click)="Login()" 
-    routerDirection="root">
-    {{ 'COMMENCER' | translate }}
-    <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
-  </ion-button>
-</ion-content>
+  class="cta-button" 
+  [routerLink]="'/login'"
+  routerDirection="root">
+  {{ 'COMMENCER' | translate }}
+  <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
+</ion-button>
