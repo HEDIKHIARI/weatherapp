@@ -1,5 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { environment } from '../environments/environment';
 
 
 @Component({
@@ -8,10 +11,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   standalone: true,
   imports: [
     IonApp,
-    IonRouterOutlet,
-    
-  ],
-  providers: [] // No need for provideHttpClient here
+    IonRouterOutlet, 
+  ],// No need for provideHttpClient here
 })
 export class AppComponent {
 }
