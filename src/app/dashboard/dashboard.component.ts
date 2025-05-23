@@ -19,8 +19,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+<<<<<<< HEAD
 import { FirebaseDbService } from '../services/firebase-db.services';
 
+=======
+import { FirebaseService } from '../services/firebase.services';
+import { Subscription } from 'rxjs';
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
 // Types d'alertes
 type AlertType = 
   'EXTREME_RAIN' | 'FLOOD_WARNING' | 'STORM_WARNING' | 
@@ -85,7 +90,35 @@ interface AlertThresholds {
 })
 export class DashboardComponent implements OnInit {
  
+<<<<<<< HEAD
    stationData: StationData = {}; 
+=======
+
+  toggleDarkMode() {
+    document.body.classList.toggle('dark', this.darkMode);
+    localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
+    this.applyTheme();
+
+  }
+temperature: number | null = null;
+humidity: number | null = null;
+pressure: number | null = null;
+rain: number | null = null;
+wind: number | null = null;
+
+  private loadThemePreference() {
+    const savedMode = localStorage.getItem('darkMode');
+    this.darkMode = savedMode ? JSON.parse(savedMode) : this.prefersDark.matches;
+    this.toggleDarkMode();
+  }
+
+  private applyTheme() {
+    const theme = this.darkMode ? 'dark' : 'light';
+    document.body.setAttribute('color-theme', theme);
+  }
+  
+
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
  
  openConnectivity() {
   this.router.navigate(['/connectivity']); 
@@ -100,6 +133,7 @@ export class DashboardComponent implements OnInit {
   alerts: WeatherAlert[] = [];
 
   // Sensor values (always stored in metric units)
+<<<<<<< HEAD
     private _temperature: number = 22.5;
   private _windSpeed: number = 15;
   private _pressure: number = 1013;
@@ -117,6 +151,24 @@ export class DashboardComponent implements OnInit {
   humidity: number = 65;
  windDirection: number = 45;
 
+=======
+  _temperature: number = 22.5; // Always in Celsius
+  private _windSpeed: number = 15; // Always in km/h
+  private _pressure: number = 1013; // Always in hPa
+  private _precipitation: number = 5.2; // Always in mm
+  private _precipitationRate: number = 0.5; // Always in mm/h
+   
+  // Display values (converted based on selected units)
+  displayTemperature: number = 0;
+  displayPressure: number = 0;
+  displayPrecipitation: number = 0;
+  displayPrecipitationRate: number = 0;
+  displayWindSpeed: number = 0;
+  pm25: number = 12;
+  pm10: number = 24;
+  windDirection: number = 45;
+  uvIndex: number = 4;
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
   
   // Measurement units
   temperatureUnit: string = 'celsius';
@@ -133,6 +185,7 @@ export class DashboardComponent implements OnInit {
   
   lastUpdate: Date = new Date();
   isRefreshing: boolean = false;
+<<<<<<< HEAD
  
     private alertThresholds: AlertThresholds = {
     temperature: {
@@ -152,6 +205,12 @@ export class DashboardComponent implements OnInit {
     precipitationRate: 10  // mm/h - extreme rain threshold
   };
  
+=======
+  
+  private Dataservice!: Subscription;
+  private dataInterval: any;
+  private sensorInterval: any; 
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
   constructor(
     private modalCtrl: ModalController,
     private translate: TranslateService,
@@ -159,16 +218,22 @@ export class DashboardComponent implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private AuthService: AuthService,
+<<<<<<< HEAD
     private firebaseDbService: FirebaseDbService
     
     
   ) 
   
   {
+=======
+    private firebaseService: FirebaseService ,
+  ) {
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
     } else if (this.platform.is('android')) {
       document.body.classList.add('md');
+     
     }
 
     
@@ -206,6 +271,7 @@ export class DashboardComponent implements OnInit {
     this.checkConnectivity();
     this.setupConnectivityListeners();
     this.checkForAlerts();
+<<<<<<< HEAD
 
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000);
@@ -223,6 +289,46 @@ export class DashboardComponent implements OnInit {
         this._precipitation = data.pluie_mm || 0;
         this._precipitationRate = data.rainfall_rate || 0;
         this.windDirection = data.wind_direction || 0;
+=======
+    setInterval(() => this.loadData(), 300000);
+    setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
+    const savedMode = localStorage.getItem('darkMode');
+if (savedMode) {
+  this.darkMode = JSON.parse(savedMode);
+  this.loadThemePreference();}
+  // Souscription aux données capteurs
+  this.Dataservice = this.firebaseService.sensorData$.subscribe((data) => {
+    if (data) {
+      this.temperature = data.temperature ?? null;
+      this.humidity = data.humidity ?? null;
+      this.pressure = data.pressure ?? null;
+      this.rain = data.rain ?? null;
+      this.wind = data.wind ?? null;
+
+      this.displayTemperature = this.temperature ?? 0;
+      this.displayPressure = this.pressure ?? 0;
+      this.displayPrecipitation = this.rain ?? 0;
+      this.displayPrecipitationRate = (this.rain ?? 0) * 0.1; // Exemple
+      this.displayWindSpeed = this.wind ?? 0;
+
+      this.pressureTrend = 'Stable'; // À calculer si plusieurs mesures
+      this.pressureTrendIcon = 'remove';
+
+      this.lastUpdate = new Date();
+    }
+  });
+  }
+ngOnDestroy() { clearInterval(this.dataInterval);
+  clearInterval(this.sensorInterval);
+  if (this.Dataservice) {
+    this.Dataservice.unsubscribe();
+  }
+}
+
+  checkForAlerts() {
+    // Simulation d'alertes basées sur les conditions actuelles
+    const newAlerts: WeatherAlert[] = [];
+>>>>>>> 55ff8a937f8ca92de54fd5fac55ea878d62cc011
     
         
         if (data.last_update) {
