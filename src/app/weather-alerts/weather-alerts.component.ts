@@ -39,28 +39,90 @@ export class WeatherAlertsComponent implements OnInit {
   }
 
   // Détection d'alertes
-  checkForAlerts() {
-    const sampleAlerts: WeatherAlert[] = [
-      {
-        type: 'STORM_WARNING',
-        severity: 'high',
-        message: 'Alerte orage violente prévue dans 2 heures',
-        timestamp: new Date(),
-        read: false
-      },
-      {
-        type: 'SENSOR_MAINTENANCE',
-        severity: 'medium',
-        message: 'Capteur d\'humidité nécessite calibration',
-        timestamp: new Date(Date.now() - 3600000),
-        read: false
-      }
-    ];
+ checkForAlerts() {
+  const sampleAlerts: WeatherAlert[] = [
+    {
+      type: 'EXTREME_RAIN',
+      severity: 'high',
+      message: '🌧️ Pluie extrême attendue cet après-midi',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'FLOOD_WARNING',
+      severity: 'extreme',
+      message: '🌊 Risque d’inondation imminent dans votre région',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'STORM_WARNING',
+      severity: 'high',
+      message: '⚡ Alerte orage violente prévue dans 2 heures',
+      timestamp: new Date(),
+      read: false
+    },
     
-    this.alerts = [...this.alerts, ...sampleAlerts];
-    this.updateUnreadCount();
-  }
+    
+   
+   
+    {
+      type: 'SENSOR_ISSUE',
+      severity: 'medium',
+      message: '⚠️ Capteur de température ne répond pas',
+      timestamp: new Date(),
+      read: false
+    },
+    
+     
+   
+    {
+      type: 'SNOW_ALERT',
+      severity: 'medium',
+      message: '❄️ Neige attendue dans la matinée',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'HAIL_WARNING',
+      severity: 'high',
+      message: '🌨️ Alerte grêle dans votre région',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'DROUGHT_WARNING',
+      severity: 'medium',
+      message: '🏜️ Sécheresse prolongée signalée',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'HUMIDITY_ALERT',
+      severity: 'low',
+      message: '💧 Humidité très élevée détectée',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'PRESSURE_DROP',
+      severity: 'low',
+      message: '📉 Baisse de pression atmosphérique soudaine',
+      timestamp: new Date(),
+      read: false
+    },
+    {
+      type: 'SENSOR_MAINTENANCE',
+      severity: 'medium',
+      message: '🔧 Capteur d\'humidité nécessite calibration',
+      timestamp: new Date(),
+      read: false
+    }
+  ];
 
+  this.alerts = [...this.alerts, ...sampleAlerts];
+  this.updateUnreadCount();
+}
   // Vérification périodique des capteurs
   checkSensorStatus() {
     setInterval(() => {

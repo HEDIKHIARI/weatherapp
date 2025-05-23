@@ -41,7 +41,7 @@
         "NEW_ALERTS": "{{count}} new alerts",
         "NO_NEW_ALERTS": "No new alerts",
         "MARK_READ": "Mark as read",
-        "HIGH_WIND": "High wind ({{speed}} km/h)",
+       
         "POOR_AIR_QUALITY": "Poor air quality",
         "SENSOR_CHECK": "Sensor check required",
         "EXTREME_RAIN": "Extreme rain",

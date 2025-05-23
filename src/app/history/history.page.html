@@ -1,42 +1,55 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/menu"></ion-back-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'HISTORY.DATA_HISTORY' | translate }}</ion-title>
+    <ion-title>Historique des données</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-segment [(ngModel)]="selectedWeek" (ionChange)="weekChanged($event)">
-    <ion-segment-button *ngFor="let week of weeks" [value]="week">
-      {{ 'WEEK' | translate }} {{ week }}
-    </ion-segment-button>
-  </ion-segment>
+<ion-content [class.loading]="isLoading">
+  <!-- Sélecteur de date -->
+  <ion-item>
+    <ion-label position="stacked">Date :</ion-label>
+    <ion-select 
+      [(ngModel)]="selectedDate" 
+      (ionChange)="dateChanged($event)" 
+      interface="popover"
+      [disabled]="isLoading"
+    >
+      <ion-select-option 
+        *ngFor="let date of availableDates" 
+        [value]="date"
+      >
+        {{ date }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <div class="chart-container">
-    <!-- Graphique de Température -->
-    <div class="chart-card">
-      <h2>{{ 'HISTORY.TEMPERATURE_LABEL' | translate }}</h2>
-      <canvas #temperatureChart></canvas>
+  <!-- Graphiques -->
+  <div class="chart-wrapper">
+    <div class="chart-container">
+      <h3>Température (°C)</h3>
+      <canvas #tempChart [hidden]="isLoading"></canvas>
+      <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
-    <!-- Graphique d'Humidité -->
-    <div class="chart-card">
-      <h2>{{ 'HISTORY.HUMIDITY_LABEL' | translate }}</h2>
-      <canvas #humidityChart></canvas>
+    <div class="chart-container">
+      <h3>Humidité (%)</h3>
+      <canvas #humidityChart [hidden]="isLoading"></canvas>
+      <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
-    <!-- Graphique de Pression -->
-    <div class="chart-card">
-      <h2>{{ 'HISTORY.PRESSURE_LABEL' | translate }}</h2>
-      <canvas #pressureChart></canvas>
+    <div class="chart-container">
+      <h3>Pression (hPa)</h3>
+      <canvas #pressureChart [hidden]="isLoading"></canvas>
+      <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
-    <!-- Graphique de Précipitation -->
-    <div class="chart-card">
-      <h2>{{ 'HISTORY.PRECIPITATION_LABEL' | translate }}</h2>
-      <canvas #precipitationChart></canvas>
+    <div class="chart-container">
+      <h3>Précipitation (mm)</h3>
+      <canvas #precipChart [hidden]="isLoading"></canvas>
+      <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
   </div>
 </ion-content>

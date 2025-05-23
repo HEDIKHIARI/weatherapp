@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
 })
 export class HomePage {
   constructor(private router: Router) {}
-  // Navigate to the login page
+
   Login() {
     this.router.navigate(['/login']);
   }

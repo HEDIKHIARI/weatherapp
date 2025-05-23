@@ -19,6 +19,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FirebaseDbService } from '../services/firebase-db.services';
 
 // Types d'alertes
 type AlertType = 
@@ -27,7 +28,8 @@ type AlertType =
   'AIR_QUALITY' | 'UV_ALERT' | 'SENSOR_ISSUE' |
   'FIRE_RISK' | 'FROST_ALERT' | 'THUNDERSTORM' |
   'SNOW_ALERT' | 'HAIL_WARNING' | 'DROUGHT_WARNING' |
-  'HUMIDITY_ALERT' | 'PRESSURE_DROP' | 'SENSOR_MAINTENANCE';
+  'HUMIDITY_ALERT' | 'PRESSURE_DROP'  | 'PRESSURE_HIGH' | 'SENSOR_MAINTENANCE' |
+  'HEAVY_RAIN' | 'HIGH_TEMPERATURE';
 
 interface WeatherAlert {
   type: AlertType;
@@ -35,6 +37,34 @@ interface WeatherAlert {
   message: string;
   timestamp: Date;
   read: boolean;
+}
+interface StationData {
+  température?: number;
+  humidité?: number;
+  pressure?: number;
+  wind?: number;
+  pluie_mm?: number;
+  wind_direction?: number;
+  rainfall_rate?: number;
+  battery_level?: number;
+  last_update?: string;
+}
+interface AlertThresholds {
+  temperature: {
+    high: number;
+    low: number;
+  };
+  windSpeed: number;
+  humidity: {
+    high: number;
+    low: number;
+  };
+  pressure: {
+    high: number;
+    low: number;
+  };
+  precipitation: number;
+  precipitationRate: number;
 }
 
 @Component({
@@ -54,30 +84,8 @@ interface WeatherAlert {
   ]
 })
 export class DashboardComponent implements OnInit {
-
-  darkMode = false;
-  private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
  
-
-  toggleDarkMode() {
-    document.body.classList.toggle('dark', this.darkMode);
-    localStorage.setItem('darkMode', JSON.stringify(this.darkMode));
-    this.applyTheme();
-
-  }
-
-  private loadThemePreference() {
-    const savedMode = localStorage.getItem('darkMode');
-    this.darkMode = savedMode ? JSON.parse(savedMode) : this.prefersDark.matches;
-    this.toggleDarkMode();
-  }
-
-  private applyTheme() {
-    const theme = this.darkMode ? 'dark' : 'light';
-    document.body.setAttribute('color-theme', theme);
-  }
-  
-
+   stationData: StationData = {}; 
  
  openConnectivity() {
   this.router.navigate(['/connectivity']); 
@@ -92,25 +100,23 @@ export class DashboardComponent implements OnInit {
   alerts: WeatherAlert[] = [];
 
   // Sensor values (always stored in metric units)
-  _temperature: number = 22.5; // Always in Celsius
-  private _windSpeed: number = 15; // Always in km/h
-  private _pressure: number = 1013; // Always in hPa
-  private _precipitation: number = 5.2; // Always in mm
-  private _precipitationRate: number = 0.5; // Always in mm/h
+    private _temperature: number = 22.5;
+  private _windSpeed: number = 15;
+  private _pressure: number = 1013;
+  private _precipitation: number = 5.2;
+  private _precipitationRate: number = 0.5;
   
   // Display values (converted based on selected units)
-  displayTemperature: number = this._temperature;
+   displayTemperature: number = this._temperature;
   displayWindSpeed: number = this._windSpeed;
   displayPressure: number = this._pressure;
   displayPrecipitation: number = this._precipitation;
   displayPrecipitationRate: number = this._precipitationRate;
 
-  // Other sensor values
+
   humidity: number = 65;
-  pm25: number = 12;
-  pm10: number = 24;
-  windDirection: number = 45;
-  uvIndex: number = 4;
+ windDirection: number = 45;
+
   
   // Measurement units
   temperatureUnit: string = 'celsius';
@@ -119,8 +125,7 @@ export class DashboardComponent implements OnInit {
   precipitationUnit: string = 'mm';
   
   // Calculated values
-  airQualityText: string = '--';
-  airQualityColor: string = 'medium';
+
   windDirectionText: string = '--';
 
   pressureTrend: string = 'stable';
@@ -128,8 +133,25 @@ export class DashboardComponent implements OnInit {
   
   lastUpdate: Date = new Date();
   isRefreshing: boolean = false;
-  
-
+ 
+    private alertThresholds: AlertThresholds = {
+    temperature: {
+      high: 35,   // °C - heat wave threshold
+      low: 0      // °C - frost threshold
+    },
+    windSpeed: 30, // km/h - strong wind threshold
+    humidity: {
+      high: 85,   // % - high humidity threshold
+      low: 20     // % - low humidity threshold
+    },
+    pressure: {
+      high: 1018, // hPa - high pressure threshold
+      low: 1008   // hPa - low pressure threshold
+    },
+    precipitation: 50,    // mm - heavy rain threshold
+    precipitationRate: 10  // mm/h - extreme rain threshold
+  };
+ 
   constructor(
     private modalCtrl: ModalController,
     private translate: TranslateService,
@@ -137,9 +159,12 @@ export class DashboardComponent implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private AuthService: AuthService,
+    private firebaseDbService: FirebaseDbService
     
     
-  ) {
+  ) 
+  
+  {
     if (this.platform.is('ios')) {
       document.body.classList.add('ios');
     } else if (this.platform.is('android')) {
@@ -148,10 +173,7 @@ export class DashboardComponent implements OnInit {
 
     
    addIcons({home,refresh,logOutOutline,thermometer,flag,compass,water,speedometer,rainy,cloud,notifications,time,settings,sunny,moon,timeOutline,partlySunny,speedometerOutline,wifi,remove,trendingUp,trendingDown,arrowBack});
-   this.prefersDark.addEventListener('change', (e) => {
-    this.darkMode = e.matches;
-    this.toggleDarkMode();
-  });
+   
   }
 
   
@@ -178,49 +200,180 @@ export class DashboardComponent implements OnInit {
   }
   
 
-  ngOnInit() {
-    this.loadData();
+   ngOnInit() {
+  this.subscribeToStationData();
+    this.loadData(); // si besoin de données initiales ou mock
     this.checkConnectivity();
     this.setupConnectivityListeners();
     this.checkForAlerts();
-    setInterval(() => this.loadData(), 300000);
-    setInterval(() => this.checkSensorStatus(), 12 * 3600000); // Vérif capteurs toutes les 12h
-    const savedMode = localStorage.getItem('darkMode');
-if (savedMode) {
-  this.darkMode = JSON.parse(savedMode);
-  document.body.classList.toggle('dark', this.darkMode);
-  this.loadThemePreference();
-}
-  }
 
-  
-  checkForAlerts() {
-    // Simulation d'alertes basées sur les conditions actuelles
-    const newAlerts: WeatherAlert[] = [];
+    setInterval(() => this.loadData(), 300000);
+    setInterval(() => this.checkSensorStatus(), 12 * 3600000);
+  }
+   subscribeToStationData() {
+    this.firebaseDbService.getStationData().subscribe((data: StationData) => {
+      if (data) {
+        this.stationData = data;
+        
+        // Mise à jour des valeurs internes
+        this._temperature = data.température || 0;
+        this.humidity = data.humidité || 0;
+        this._pressure = data.pressure || 0;
+        this._windSpeed = data.wind || 0;
+        this._precipitation = data.pluie_mm || 0;
+        this._precipitationRate = data.rainfall_rate || 0;
+        this.windDirection = data.wind_direction || 0;
     
-    if (this._windSpeed > 30) {
-      newAlerts.push({
-        type: 'HIGH_WIND',
-        severity: 'high',
-        message: this.translate.instant('ALERTS.HIGH_WIND', { speed: this._windSpeed }),
-        timestamp: new Date(),
-        read: false
-      });
+        
+        if (data.last_update) {
+          this.lastUpdate = new Date(data.last_update);
+        }
+
+        this.convertDisplayValues();
+        this.calculateDerivedValues();
+        this.checkForAlerts();
+      }
+
+
+    });
+    
+  }
+  
+ checkForAlerts() {
+    const newAlerts: WeatherAlert[] = [];
+    const now = new Date();
+    const twoHoursAgo = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+
+    // Helper function to check for recent alerts of the same type
+    const hasRecentAlert = (type: AlertType) => 
+      this.alerts.some(a => a.type === type && new Date(a.timestamp) > twoHoursAgo);
+
+    // Temperature alerts
+    if (this._temperature >= this.alertThresholds.temperature.high && !hasRecentAlert('HIGH_TEMPERATURE')) {
+      newAlerts.push(this.createTemperatureAlert('high'));
+    } 
+    else if (this._temperature <= this.alertThresholds.temperature.low && !hasRecentAlert('FROST_ALERT')) {
+      newAlerts.push(this.createTemperatureAlert('low'));
     }
 
-    if (this.pm25 > 35 || this.pm10 > 50) {
-      newAlerts.push({
-        type: 'AIR_QUALITY',
-        severity: 'medium',
-        message: this.translate.instant('ALERTS.POOR_AIR_QUALITY'),
-        timestamp: new Date(),
-        read: false
-      });
+    // Wind alerts
+    if (this._windSpeed >= this.alertThresholds.windSpeed) {
+      if (this._windSpeed > 50 && !hasRecentAlert('STORM_WARNING')) {
+        newAlerts.push(this.createWindAlert('extreme'));
+      } 
+      else if (!hasRecentAlert('HIGH_WIND')) {
+        newAlerts.push(this.createWindAlert('strong'));
+      }
+    }
+
+    // Precipitation alerts
+    if (this._precipitation >= this.alertThresholds.precipitation && !hasRecentAlert('HEAVY_RAIN')) {
+      newAlerts.push(this.createPrecipitationAlert('accumulated'));
+    }
+    if (this._precipitationRate >= this.alertThresholds.precipitationRate && !hasRecentAlert('EXTREME_RAIN')) {
+      newAlerts.push(this.createPrecipitationAlert('rate'));
+    }
+
+    // Humidity alerts
+    if (this.humidity >= this.alertThresholds.humidity.high && !hasRecentAlert('HUMIDITY_ALERT')) {
+      newAlerts.push(this.createHumidityAlert('high'));
+    }
+    else if (this.humidity <= this.alertThresholds.humidity.low && !hasRecentAlert('DROUGHT_WARNING')) {
+      newAlerts.push(this.createHumidityAlert('low'));
+    }
+
+    // Pressure alerts
+    if (this._pressure >= this.alertThresholds.pressure.high && !hasRecentAlert('PRESSURE_HIGH')) {
+      newAlerts.push(this.createPressureAlert('high'));
+    }
+    else if (this._pressure <= this.alertThresholds.pressure.low && !hasRecentAlert('PRESSURE_DROP')) {
+      newAlerts.push(this.createPressureAlert('low'));
     }
 
     if (newAlerts.length > 0) {
       this.addAlerts(newAlerts);
     }
+  }
+    private createTemperatureAlert(type: 'high' | 'low'): WeatherAlert {
+    return {
+      type: type === 'high' ? 'HIGH_TEMPERATURE' : 'FROST_ALERT',
+      severity: type === 'high' ? 'high' : 'medium',
+      message: this.translate.instant(
+        type === 'high' ? 'ALERTS.HIGH_TEMPERATURE' : 'ALERTS.FROST_ALERT',
+        { 
+          temp: this.displayTemperature.toFixed(1),
+          unit: this.temperatureUnit === 'celsius' ? '°C' : '°F'
+        }
+      ),
+      timestamp: new Date(),
+      read: false
+    };
+  }
+
+  private createWindAlert(type: 'strong' | 'extreme'): WeatherAlert {
+    return {
+      type: type === 'extreme' ? 'STORM_WARNING' : 'HIGH_WIND',
+      severity: type === 'extreme' ? 'extreme' : 'high',
+      message: this.translate.instant(
+        type === 'extreme' ? 'ALERTS.STORM' : 'ALERTS.HIGH_WIND',
+        { 
+          speed: this.displayWindSpeed.toFixed(1),
+          unit: this.windSpeedUnit
+        }
+      ),
+      timestamp: new Date(),
+      read: false
+    };
+  }
+
+  private createPrecipitationAlert(type: 'accumulated' | 'rate'): WeatherAlert {
+    return {
+      type: type === 'rate' ? 'EXTREME_RAIN' : 'HEAVY_RAIN',
+      severity: type === 'rate' ? 'extreme' : 'high',
+      message: this.translate.instant(
+        type === 'rate' ? 'ALERTS.EXTREME_RAIN' : 'ALERTS.HEAVY_RAIN',
+        { 
+          amount: type === 'rate' 
+            ? this.displayPrecipitationRate.toFixed(1)
+            : this.displayPrecipitation.toFixed(1),
+          unit: this.precipitationUnit === 'mm' 
+            ? (type === 'rate' ? 'mm/h' : 'mm')
+            : (type === 'rate' ? 'in/h' : 'in')
+        }
+      ),
+      timestamp: new Date(),
+      read: false
+    };
+  }
+
+  private createHumidityAlert(type: 'high' | 'low'): WeatherAlert {
+    return {
+      type: type === 'high' ? 'HUMIDITY_ALERT' : 'DROUGHT_WARNING',
+      severity: 'medium',
+      message: this.translate.instant(
+        type === 'high' ? 'ALERTS.HUMIDITY_HIGH' : 'ALERTS.HUMIDITY_LOW',
+        { humidity: this.humidity.toFixed(0) }
+      ),
+      timestamp: new Date(),
+      read: false
+    };
+  }
+
+  private createPressureAlert(type: 'high' | 'low'): WeatherAlert {
+    return {
+      type: type === 'high' ? 'PRESSURE_HIGH' : 'PRESSURE_DROP',
+      severity: 'medium',
+      message: this.translate.instant(
+        type === 'high' ? 'ALERTS.PRESSURE_HIGH' : 'ALERTS.PRESSURE_DROP',
+        { 
+          pressure: this.displayPressure.toFixed(1),
+          unit: this.pressureUnit === 'hpa' ? 'hPa' : 
+                this.pressureUnit === 'mmhg' ? 'mmHg' : 'inHg'
+        }
+      ),
+      timestamp: new Date(),
+      read: false
+    };
   }
 
   checkSensorStatus() {
@@ -283,17 +436,21 @@ if (savedMode) {
   }
 
   async presentAlertNotification(alert: WeatherAlert) {
-    const alertPopup = await this.alertCtrl.create({
-      header: this.getAlertTitle(alert.type),
-      message: alert.message,
-      buttons: ['OK'],
-      cssClass: `alert-${alert.severity}`
-    });
-    await alertPopup.present();
-  }
+     await new Promise(resolve => setTimeout(resolve, 300));
+  
+  const alertPopup = await this.alertCtrl.create({
+    header: this.getAlertTitle(alert.type),
+   
+    message: alert.message,
+    buttons: ['OK'],
+    cssClass: `alert-${alert.severity}`
+  });
+  await alertPopup.present();
+}
+
 
   getAlertIcon(type: AlertType): string {
-    const icons = {
+    const icons: Record<AlertType, string> = {
       'EXTREME_RAIN': '🌧️',
       'FLOOD_WARNING': '🌊',
       'STORM_WARNING': '⚡',
@@ -311,7 +468,10 @@ if (savedMode) {
       'DROUGHT_WARNING': '🏜️',
       'HUMIDITY_ALERT': '💧',
       'PRESSURE_DROP': '📉',
-      'SENSOR_MAINTENANCE': '🔧'
+       'PRESSURE_HIGH': '📈', 
+      'SENSOR_MAINTENANCE': '🔧',
+      'HEAVY_RAIN': '🌧️',
+      'HIGH_TEMPERATURE': '🌡️'
     };
     return icons[type] || '⚠️';
   }
@@ -410,21 +570,17 @@ if (savedMode) {
   }
 
   private loadData() {
-    this.isRefreshing = true;
-    
-    // Simulate new data (always in metric units)
-    this._temperature = this.getRandomInRange(15, 30, 1);
+   this._temperature = this.getRandomInRange(15, 30, 1);
     this._windSpeed = this.getRandomInRange(0, 40, 1);
     this._pressure = this.getRandomInRange(980, 1030, 0);
     this._precipitation = this.getRandomInRange(0, 20, 1);
     this._precipitationRate = this.getRandomInRange(0, 5, 1);
-    
-    // Update display values
+
     this.convertDisplayValues();
     this.calculateDerivedValues();
     this.checkForAlerts();
     this.lastUpdate = new Date();
-    
+
     this.isRefreshing = false;
   }
 
@@ -435,17 +591,7 @@ if (savedMode) {
 
   private calculateDerivedValues() {
     // Air quality
-    const aqi = Math.max(this.pm25 / 25, this.pm10 / 50) * 100;
-    if (aqi < 50) {
-      this.airQualityText = this.translate.instant('AIR_QUALITY.GOOD');
-      this.airQualityColor = 'success';
-    } else if (aqi < 100) {
-      this.airQualityText = this.translate.instant('AIR_QUALITY.MODERATE');
-      this.airQualityColor = 'warning';
-    } else {
-      this.airQualityText = this.translate.instant('AIR_QUALITY.POOR');
-      this.airQualityColor = 'danger';
-    }
+  
 
     // Wind direction
     const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];

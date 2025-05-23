@@ -14,11 +14,7 @@
       "CURRENT_CONDITIONS": "Conditions actuelles",
       "FEELS_LIKE": "Ressenti"
     },
-    "AIR_QUALITY": {
-      "GOOD": "Bon",
-      "MODERATE": "Modéré",
-      "POOR": "Mauvais"
-    },
+   
     
     "PRESSURE": {
       "HIGH": "Élevée",
@@ -61,7 +57,15 @@
         "DROUGHT_WARNING": "Sécheresse",
         "HUMIDITY_ALERT": "Humidité extrême",
         "PRESSURE_DROP": "Chute de pression",
-        "SENSOR_MAINTENANCE": "Maintenance capteur"
+        "SENSOR_MAINTENANCE": "Maintenance capteur",   
+        "HEAVY_RAIN": "Forte pluie : {{amount}} mm",
+        "HIGH_TEMPERATURE": "Température élevée : {{temp}}°C",
+       "PRESSURE_HIGH": "Pression élevée",
+    
+    "STORM": "Vents violents détectés: {{speed}} {{unit}}", 
+    "HUMIDITY_HIGH": "Humidité très élevée: {{humidity}}%",
+    "HUMIDITY_LOW": "Humidité très basse: {{humidity}}%"
+    
       },
       "COMMON": {
         "CLOSE": "Fermer",

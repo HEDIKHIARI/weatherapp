@@ -143,4 +143,30 @@ ion-badge {
   ion-card-content h1 {
     font-size: 1.8rem;
   }
+  .alert-low {
+  --background: var(--ion-color-warning);
+  --color: var(--ion-color-warning-contrast);
+}
+
+.alert-medium {
+  --background: var(--ion-color-warning);
+  --color: var(--ion-color-warning-contrast);
+}
+
+.alert-high {
+  --background: var(--ion-color-danger);
+  --color: var(--ion-color-danger-contrast);
+}
+
+.alert-extreme {
+  --background: var(--ion-color-dark);
+  --color: var(--ion-color-dark-contrast);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
 }
