@@ -149,6 +149,11 @@
     },
     "@angular-eslint/schematics:library": {
       "setParserOptionsProject": true
-    }
+    },
+    "allowedCommonJsDependencies": [
+  "@firebase/app",
+  "@firebase/auth",
+  "@firebase/firestore"
+]
   }
 }

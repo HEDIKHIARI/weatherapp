@@ -18,11 +18,11 @@
 </ion-header>
 
 <ion-content class="cyber-neon ion-padding dashboard-content">
-   <ion-grid fixed class="dashboard-grid">
+  <ion-grid fixed class="dashboard-grid">
     <!-- Last update time -->
     <ion-row class="ion-justify-content-center ion-margin-bottom last-update-row">
       <ion-col size="12" class="ion-text-center last-update-col">
-        <small class="update-text">{{ 'DASHBOARD.LAST_UPDATE' | translate }}: {{lastUpdate | date:'mediumTime'}}</small>
+        <small class="update-text">{{ 'DASHBOARD.LAST_UPDATE' | translate }}: {{ lastUpdate | date:'mediumTime' }}</small>
       </ion-col>
     </ion-row>
 
@@ -38,7 +38,9 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <h1 class="value-display">{{displayTemperature | number:'1.1-1'}}°{{temperatureUnit === 'celsius' ? 'C' : 'F'}}</h1>
+            <h1 class="value-display">
+              {{ displayTemperature != null ? (displayTemperature | number:'1.1-1') : '--' }}°{{ temperatureUnit === 'celsius' ? 'C' : 'F' }}
+            </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -53,7 +55,8 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <h1 class="value-display">{{displayWindSpeed | number:'1.1-1'}} 
+            <h1 class="value-display">
+              {{ displayWindSpeed != null ? (displayWindSpeed | number:'1.1-1') : '--' }}
               <span class="unit-text" *ngIf="windSpeedUnit === 'kmh'">km/h</span>
               <span class="unit-text" *ngIf="windSpeedUnit === 'mph'">mph</span>
               <span class="unit-text" *ngIf="windSpeedUnit === 'ms'">m/s</span>
@@ -61,7 +64,7 @@
             </h1>
             <p class="additional-info">
               <ion-icon name="compass" class="info-icon"></ion-icon>
-              {{windDirection}}° {{windDirectionText}}
+              {{ windDirection ?? '--' }}° {{ windDirectionText ?? '' }}
             </p>
           </ion-card-content>
         </ion-card>
@@ -77,8 +80,8 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <h1 class="value-display">{{humidity}}%</h1>
-            <ion-progress-bar class="humidity-bar" [value]="humidity/100"></ion-progress-bar>
+            <h1 class="value-display">{{ humidity ?? '--' }}%</h1>
+            <ion-progress-bar class="humidity-bar" *ngIf="humidity != null" [value]="humidity / 100"></ion-progress-bar>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -93,14 +96,15 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <h1 class="value-display">{{displayPressure | number:'1.1-1'}} 
+            <h1 class="value-display">
+              {{ displayPressure != null ? (displayPressure | number:'1.1-1') : '--' }}
               <span class="unit-text" *ngIf="pressureUnit === 'hpa'">hPa</span>
               <span class="unit-text" *ngIf="pressureUnit === 'mmhg'">mmHg</span>
               <span class="unit-text" *ngIf="pressureUnit === 'inhg'">inHg</span>
             </h1>
             <p class="additional-info">
               <ion-icon [name]="pressureTrendIcon" class="info-icon"></ion-icon>
-              {{pressureTrend}}
+              {{ pressureTrend | translate }}
             </p>
           </ion-card-content>
         </ion-card>
@@ -119,11 +123,14 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <h1 class="value-display">{{displayPrecipitation | number:'1.1-1'}} 
+            <h1 class="value-display">
+              {{ displayPrecipitation != null ? (displayPrecipitation | number:'1.1-1') : '--' }}
               <span class="unit-text" *ngIf="precipitationUnit === 'mm'">mm</span>
               <span class="unit-text" *ngIf="precipitationUnit === 'in'">in</span>
             </h1>
-            <p class="additional-info">{{ 'DASHBOARD.RATE' | translate }}: {{displayPrecipitationRate | number:'1.1-1'}} 
+            <p class="additional-info">
+              {{ 'DASHBOARD.RATE' | translate }}: 
+              {{ displayPrecipitationRate != null ? (displayPrecipitationRate | number:'1.1-1') : '--' }}
               <span class="unit-text" *ngIf="precipitationUnit === 'mm'">mm/h</span>
               <span class="unit-text" *ngIf="precipitationUnit === 'in'">in/h</span>
             </p>
@@ -131,29 +138,12 @@
         </ion-card>
       </ion-col>
 
-      <!-- Air Quality -->
-      <ion-col size="12" size-md="6" size-lg="3" class="weather-card-col">
-        <ion-card class="weather-card air-quality-card" [color]="airQualityColor">
-          <ion-card-header class="card-header">
-            <ion-card-title class="card-title">
-              <ion-icon name="cloud" class="card-icon"></ion-icon>
-              {{ 'DASHBOARD.AIR_QUALITY' | translate }}
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content class="card-content">
-            <h1 class="value-display">{{airQualityText}}</h1>
-            <p class="additional-info">PM2.5: {{pm25}} µg/m³</p>
-            <p class="additional-info">PM10: {{pm10}} µg/m³</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      
       <!-- Notifications Button -->
       <ion-col size="12" size-md="6" size-lg="3" class="notification-col">
         <ion-button class="notification-button" (click)="presentNotifications()">
           <ion-icon name="notifications" class="notification-icon"></ion-icon>
           <ion-badge *ngIf="unreadNotifications > 0" color="danger" class="notification-badge">
-            {{unreadNotifications}}
+            {{ unreadNotifications }}
           </ion-badge>
         </ion-button>
       </ion-col>

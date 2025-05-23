@@ -16,13 +16,11 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private auth = inject(Auth);
-  private firestore = inject(Firestore);
+ 
   private user$ = new BehaviorSubject<User | null>(null);
 
-  constructor() {
-    // ❌ Supprimé: évite de capter automatiquement la connexion après inscription
-    // onAuthStateChanged(this.auth, user => this.user$.next(user));
+  constructor(private auth: Auth,private firestore :Firestore) {
+    
   }
 
   /**

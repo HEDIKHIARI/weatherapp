@@ -21,6 +21,8 @@
     "module": "es2020",
     "lib": ["es2020", "es2020.intl", "dom"],
     "useDefineForClassFields": false, 
+    
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
