@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
-import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseMessagingService {
-  constructor(private afMessaging: AngularFireMessaging) {}
 
-  requestPermission() {
-    return this.afMessaging.requestToken.pipe(
-      mergeMap(token => {
-        console.log('FCM Token:', token);
-        // Envoyez ce token à votre backend pour enregistrement
-        if (token) {
-          return this.saveToken(token);
-        } else {
-          // Gérez le cas où le token est null
-          return of(null);
+  constructor(
+    private firestore: AngularFirestore,
+    private functions: AngularFireFunctions
+  ) {}
+
+  async sendWeatherAlert(alertData: any) {
+    // Utiliser une Cloud Function Firebase pour envoyer la notification
+    const sendNotification = this.functions.httpsCallable('sendWeatherAlert');
+    
+    try {
+      const result = await sendNotification({
+        title: 'Alerte Météorologique',
+        body: `${alertData.type}: ${alertData.message}`,
+        data: {
+          alertType: alertData.type,
+          severity: alertData.severity,
+          timestamp: new Date().toISOString()
         }
-      })
-    );
-  }
-
-  private saveToken(token: string) {
-    // Implémentez l'envoi du token à votre API
-    return of(null);
-  }
-
-  receiveMessages() {
-    return this.afMessaging.messages;
+      }).toPromise();
+      
+      console.log('Notification envoyée:', result);
+    } catch (error) {
+      console.error('Erreur envoi notification:', error);
+    }
   }
 }

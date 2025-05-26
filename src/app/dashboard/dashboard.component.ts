@@ -20,6 +20,7 @@ import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FirebaseDbService } from '../services/firebase-db.services';
+import { PushNotificationService } from '../services/push-notification.service';
 
 // Types d'alertes
 type AlertType = 
@@ -159,7 +160,9 @@ export class DashboardComponent implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private AuthService: AuthService,
-    private firebaseDbService: FirebaseDbService
+    private firebaseDbService: FirebaseDbService,
+        private pushNotificationService: PushNotificationService,
+ 
     
     
   ) 
@@ -210,6 +213,9 @@ export class DashboardComponent implements OnInit {
 
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000);
+     this.pushNotificationService.initializePushNotifications();
+    
+    
   }
    subscribeToStationData() {
     this.firebaseDbService.getStationData().subscribe((data: StationData) => {
@@ -432,9 +438,10 @@ export class DashboardComponent implements OnInit {
         }
       ]
     });
-
+     
     await alert.present();
   }
+  
 
   async presentAlertNotification(alert: WeatherAlert) {
      await new Promise(resolve => setTimeout(resolve, 300));

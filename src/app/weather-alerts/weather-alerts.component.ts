@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertController, IonBadge } from '@ionic/angular/standalone';
+import { AlertController, IonBadge, IonHeader, IonToolbar } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 // Types d'alertes possibles
 export type AlertType = 
@@ -25,7 +26,7 @@ export interface WeatherAlert {
   templateUrl: './weather-alerts.component.html',
   styleUrls: ['./weather-alerts.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonBadge]
+  imports: [IonToolbar, IonHeader, CommonModule, FormsModule, IonBadge]
 })
 export class WeatherAlertsComponent implements OnInit {
   @Input() alerts: WeatherAlert[] = [];
