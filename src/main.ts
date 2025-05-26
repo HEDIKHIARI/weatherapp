@@ -19,6 +19,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { provideMessaging, getMessaging } from '@angular/fire/messaging';
   const firebaseApp = initializeApp(environment.firebase);
 const auth = getAuth(firebaseApp);
 // Fonction pour charger les traductions
@@ -50,6 +51,7 @@ console.log('Firebase initialisé avec succès');
       provideAuth(() => getAuth()),
       provideFirestore(() => getFirestore()),
       provideDatabase(() => getDatabase()),
+     
       // Storage & langue par défaut
       { provide: Storage, useValue: storage },
       { provide: 'defaultLanguage', useValue: defaultLang },
