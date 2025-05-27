@@ -4,11 +4,19 @@ const config: CapacitorConfig = {
   appId: 'com.weatherstationapp.app',
   appName: 'weather-station-app',
   webDir: 'www',
-   plugins: {
+  server: {
+    androidScheme: 'https'
+  },
+  plugins: {
+     Keyboard: {
+      resize: 'body',
+      style: 'dark',
+      resizeOnFullScreen: true
+    },
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"]
     }
   }
 };
- 
+
 export default config;

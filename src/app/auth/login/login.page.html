@@ -7,19 +7,36 @@
 <ion-content class="ion-padding">
   <form (ngSubmit)="login()">
     <ion-item>
-      <ion-label position="floating">email</ion-label>
-      <ion-input [(ngModel)]="email" name="username" required></ion-input>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input 
+        [(ngModel)]="email" 
+        name="email" 
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        clearInput="true"
+        required>
+      </ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+      <ion-input 
+        [(ngModel)]="password" 
+        name="password" 
+        type="password"
+        autocomplete="current-password"
+        clearInput="true"
+        required>
+      </ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit">Login</ion-button>
+    <ion-button expand="block" type="submit" class="ion-margin-top">
+      Login
+    </ion-button>
   </form>
 
-  <ion-button expand="block" fill="outline" (click)="register()">
+  <ion-button expand="block" fill="outline" (click)="register()" class="ion-margin-top">
     Create Account
   </ion-button>
 

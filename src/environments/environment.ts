@@ -13,7 +13,9 @@ export const environment = {
   storageBucket: "weatherapp-a4506.firebasestorage.app",
   messagingSenderId: "781832787375",
   appId: "1:781832787375:web:f1a228d7350b2fef0b4b5a",
-  measurementId: "G-4FCD0WBYH5"
+  measurementId: "G-4FCD0WBYH5",
+      vapidKey: "BLEf240qal8zUWRkuCprETFXOmjvEDdUMuxjkek8EFmbrV6i16oBO4RzQ77g33cTYsoShv4GhS21uXuP2Q9XUaI" // Ajoutez votre clé VAPID ici
+
   }
 } 
 
