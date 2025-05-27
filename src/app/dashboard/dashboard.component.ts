@@ -400,12 +400,25 @@ export class DashboardComponent implements OnInit {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
     this.presentAlertNotification(alert);
+     this.pushNotificationService.sendWeatherAlert({
+    type: alert.type,
+    severity: alert.severity,
+    message: alert.message
+  });
   }
+  
 
   addAlerts(alerts: WeatherAlert[]) {
     this.alerts.unshift(...alerts);
     this.updateUnreadCount();
-    alerts.forEach(alert => this.presentAlertNotification(alert));
+    alerts.forEach(alert => {
+      this.presentAlertNotification(alert);
+      this.pushNotificationService.sendWeatherAlert({
+        type: alert.type,
+        severity: alert.severity,
+        message: alert.message
+      });
+    });
   }
 
   updateUnreadCount() {
