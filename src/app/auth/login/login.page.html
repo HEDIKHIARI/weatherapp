@@ -9,25 +9,34 @@
     <ion-item>
       <ion-label position="floating">Email</ion-label>
       <ion-input 
+        #emailInput
         [(ngModel)]="email" 
         name="email" 
         type="email"
         inputmode="email"
+        enterkeyhint="next"
         autocomplete="email"
         clearInput="true"
-        required>
+        required
+        (ionFocus)="focusInput(emailInput)"
+      >
       </ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Password</ion-label>
       <ion-input 
+        #passwordInput
         [(ngModel)]="password" 
         name="password" 
         type="password"
+        inputmode="text"
+        enterkeyhint="done"
         autocomplete="current-password"
         clearInput="true"
-        required>
+        required
+        (ionFocus)="focusInput(passwordInput)"
+      >
       </ion-input>
     </ion-item>
 

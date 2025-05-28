@@ -1,17 +1,21 @@
-ion-content {
-  display: flex;
-  flex-direction: column; /* Ensure content is stacked vertically */
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.keyboard-open {
+  ion-content {
+    --keyboard-offset: 0px;
+  }
 }
 
-form {
-  width: 100%;
-  max-width: 400px;
-  margin: auto; /* Center the form horizontally and vertically */
-  padding: 20px; /* Add some padding for better spacing */
-  box-shadow: 0 4px 6px #ffbf00; /* Optional: Add a subtle shadow */
-  border-radius: 8px; /* Optional: Add rounded corners */
-  background-color: #007BFF; /* Optional: Add a background color */
+ion-item {
+  --background: transparent;
+  --border-style: none;
+  --inner-border-width: 0;
+  
+  ion-input {
+    --placeholder-opacity: 0.6;
+  }
+}
+
+// Ensure inputs are properly styled for mobile
+ion-input {
+  --color: var(--ion-text-color);
+  --placeholder-color: var(--ion-text-color);
 }
