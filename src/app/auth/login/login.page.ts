@@ -1,43 +1,78 @@
-import { Component, OnInit, inject, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IonicModule, IonInput, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [IonicModule, FormsModule],
+  imports: [IonicModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
   @ViewChild('emailInput') emailInput!: IonInput;
+  @ViewChild('passwordInput') passwordInput!: IonInput;
   
   email = '';
   password = '';
   message = '';
+  loginForm: FormGroup;
 
-  private auth = inject(Auth);
-  private router = inject(Router);
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private auth: Auth,
+    private formBuilder: FormBuilder,
+    private platform: Platform
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit() {
+  async ngOnInit() {
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
         this.router.navigate(['/dashboard']);
       }
     });
+
+    // Handle keyboard events on mobile
+    if (this.platform.is('capacitor')) {
+      await this.setupKeyboardHandling();
+    }
   }
 
-  ionViewDidEnter() {
-    // Force le focus sur le champ email après 500ms
-    setTimeout(() => {
-      if (this.emailInput) {
-        this.emailInput.setFocus();
-      }
-    }, 500);
+  private async setupKeyboardHandling() {
+    try {
+      // Add keyboard event listeners
+      Keyboard.addListener('keyboardWillShow', () => {
+        document.body.classList.add('keyboard-open');
+      });
+
+      Keyboard.addListener('keyboardWillHide', () => {
+        document.body.classList.remove('keyboard-open');
+      });
+
+      // Set keyboard configuration
+      await Keyboard.setAccessoryBarVisible({ isVisible: true });
+      await Keyboard.setScroll({ isDisabled: false });
+    } catch (error) {
+      console.error('Keyboard setup error:', error);
+    }
+  }
+
+  async focusInput(inputElement: IonInput) {
+    if (this.platform.is('capacitor')) {
+      setTimeout(async () => {
+        await inputElement.setFocus();
+      }, 150);
+    }
   }
 
   login() {
@@ -62,5 +97,12 @@ export class LoginPage implements OnInit {
 
   forgotPassword() {
     this.router.navigate(['/forgot-password']);
+  }
+
+  ngOnDestroy() {
+    // Clean up keyboard listeners
+    if (this.platform.is('capacitor')) {
+      Keyboard.removeAllListeners();
+    }
   }
 }

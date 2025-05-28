@@ -6,13 +6,6 @@
     "no-inline-styles": "off",
     "typescript-config/is-valid": "off",
     "meta-viewport": "off",
-    "compat-api/html": [
-      "default",
-      {
-        "ignore": [
-          "meta[name=color-scheme]"
-        ]
-      }
-    ]
+    "compat-api/html": "off"
   }
 }
