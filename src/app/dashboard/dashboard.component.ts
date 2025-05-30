@@ -40,14 +40,13 @@ interface WeatherAlert {
   read: boolean;
 }
 interface StationData {
-  température?: number;
-  humidité?: number;
+  temperature?: number;
+  humidity?: number;
   pressure?: number;
-  wind?: number;
+  vent_kmh?: number;
   pluie_mm?: number;
   wind_direction?: number;
   rainfall_rate?: number;
-  battery_level?: number;
   last_update?: string;
 }
 interface AlertThresholds {
@@ -223,10 +222,10 @@ export class DashboardComponent implements OnInit {
         this.stationData = data;
         
         // Mise à jour des valeurs internes
-        this._temperature = data.température || 0;
-        this.humidity = data.humidité || 0;
+        this._temperature = data.temperature || 0;
+        this.humidity = data.humidity || 0;
         this._pressure = data.pressure || 0;
-        this._windSpeed = data.wind || 0;
+        this._windSpeed = data.vent_kmh || 0;
         this._precipitation = data.pluie_mm || 0;
         this._precipitationRate = data.rainfall_rate || 0;
         this.windDirection = data.wind_direction || 0;

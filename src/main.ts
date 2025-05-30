@@ -20,8 +20,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { provideMessaging, getMessaging } from '@angular/fire/messaging';
-  const firebaseApp = initializeApp(environment.firebase);
+
+// AJOUT IMPORTANT: Import des modules de formulaires
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+const firebaseApp = initializeApp(environment.firebase);
 const auth = getAuth(firebaseApp);
+
 // Fonction pour charger les traductions
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,9 +43,8 @@ async function initializeAppConfig() {
 
 // Bootstrap de l'application
 initializeAppConfig().then(({ storage, defaultLang }) => {
-
-
-console.log('Firebase initialisé avec succès');
+  console.log('Firebase initialisé avec succès');
+  
   bootstrapApplication(AppComponent, {
     providers: [
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -55,10 +59,11 @@ console.log('Firebase initialisé avec succès');
       // Storage & langue par défaut
       { provide: Storage, useValue: storage },
       { provide: 'defaultLanguage', useValue: defaultLang },
-          { provide: 'FIREBASE_AUTH', useValue: auth },
+      { provide: 'FIREBASE_AUTH', useValue: auth },
 
-      // Firebase modular v9+
-     
+      // AJOUT IMPORTANT: Providers pour les formulaires
+      importProvidersFrom(FormsModule),
+      importProvidersFrom(ReactiveFormsModule),
 
       // ngx-translate
       importProvidersFrom(
@@ -71,9 +76,6 @@ console.log('Firebase initialisé avec succès');
           }
         })
       ),
-
-      // Si vous utilisez encore des services compat AngularFire (v8)
-      // Assurez-vous qu'ils sont correctement configurés ou migrez-les vers Firebase v9 modular
     ]
   }).catch((err) => console.error('Bootstrap error:', err));
 });

@@ -30,6 +30,8 @@ export class HistoryPage implements OnInit, OnDestroy {
   @ViewChild('humidityChart') humidityChartRef!: ElementRef;
   @ViewChild('pressureChart') pressureChartRef!: ElementRef;
   @ViewChild('precipChart') precipChartRef!: ElementRef;
+  @ViewChild('windChart') windChartRef!: ElementRef;
+
 
   selectedDate: string = new Date().toISOString().split('T')[0];
   availableDates: string[] = [];
@@ -72,6 +74,8 @@ export class HistoryPage implements OnInit, OnDestroy {
     this.updateChart(this.humidityChartRef, data.humidity || []);
     this.updateChart(this.pressureChartRef, data.pressure || []);
     this.updateChart(this.precipChartRef, data.precipitation || []);
+     this.updateChart(this.windChartRef, data.windspeed || []);
+
   }
 
   private updateChart(chartRef: ElementRef, newData: number[]) {
@@ -145,12 +149,20 @@ export class HistoryPage implements OnInit, OnDestroy {
         'line'
       ));
 
+
       // Précipitation
       this.charts.push(this.createChart(
         this.precipChartRef,
         'Précipitation (mm)',
         weatherData.precipitation || Array(24).fill(0),
         'rgba(75, 192, 192, 0.8)',
+        'bar'
+      ));
+      this.charts.push(this.createChart(
+        this.windChartRef,
+        'vent (kmh)',
+        weatherData.windspeed || Array(24).fill(0),
+        'rgba(194, 14, 125, 0.8)',
         'bar'
       ));
     } catch (error) {

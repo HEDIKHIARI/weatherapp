@@ -1,38 +1,111 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create Account</ion-title>
+    <ion-title>Créer un compte</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="register()">
-    <ion-item>
-      <ion-label position="floating">Username</ion-label>
-      <ion-input [(ngModel)]="username" name="username" required></ion-input>
-    </ion-item>
+  <div class="register-container">
+    
+    <!-- Illustration cohérente -->
+    <div class="register-illustration">
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background circle -->
+        <circle cx="140" cy="100" r="75" fill="#F8F9FA" stroke="#E1E8ED" stroke-width="2"/>
+        
+        <!-- User profile creation -->
+        <g transform="translate(110, 50)">
+          <!-- Profile card -->
+          <rect x="0" y="0" width="60" height="80" rx="8" fill="#FFFFFF" stroke="#E1E8ED" stroke-width="1"/>
+          
+          <!-- Profile picture placeholder -->
+          <circle cx="30" cy="25" r="12" fill="#F4B942"/>
+          <circle cx="30" cy="25" r="8" fill="#E6A435"/>
+          
+          <!-- Profile lines -->
+          <rect x="10" y="45" width="40" height="2" rx="1" fill="#E1E8ED"/>
+          <rect x="10" y="52" width="30" height="2" rx="1" fill="#E1E8ED"/>
+          <rect x="10" y="59" width="35" height="2" rx="1" fill="#E1E8ED"/>
+          
+          <!-- Plus icon for adding -->
+          <g transform="translate(45, 5)">
+            <circle cx="7" cy="7" r="7" fill="#27AE60"/>
+            <rect x="4" y="6" width="6" height="2" rx="1" fill="white"/>
+            <rect x="6" y="4" width="2" height="6" rx="1" fill="white"/>
+          </g>
+        </g>
+        
+        <!-- Form elements -->
+        <g transform="translate(70, 140)">
+          <!-- Input fields representation -->
+          <rect x="0" y="0" width="45" height="8" rx="4" fill="#F4B942" opacity="0.3"/>
+          <rect x="50" y="0" width="45" height="8" rx="4" fill="#2C3E50" opacity="0.3"/>
+          <rect x="100" y="0" width="45" height="8" rx="4" fill="#27AE60" opacity="0.3"/>
+          
+          <!-- Checkmarks -->
+          <circle cx="22" cy="15" r="3" fill="#27AE60"/>
+          <path d="M20 15 L21.5 16.5 L24 14" stroke="white" stroke-width="1" fill="none"/>
+          
+          <circle cx="72" cy="15" r="3" fill="#27AE60"/>
+          <path d="M70 15 L71.5 16.5 L74 14" stroke="white" stroke-width="1" fill="none"/>
+          
+          <circle cx="122" cy="15" r="3" fill="#F4B942"/>
+          <text x="122" y="17" text-anchor="middle" font-size="6" fill="white">!</text>
+        </g>
+        
+        <!-- Floating elements -->
+        <circle cx="60" cy="40" r="2" fill="#F4B942" opacity="0.6"/>
+        <circle cx="220" cy="50" r="1.5" fill="#27AE60" opacity="0.7"/>
+        <circle cx="50" cy="160" r="1.5" fill="#E74C3C" opacity="0.5"/>
+        <circle cx="230" cy="150" r="2" fill="#3498DB" opacity="0.6"/>
+        
+        <!-- Security shield -->
+        <g transform="translate(200, 70)">
+          <path d="M10 5 Q10 2 15 2 Q20 2 20 5 L20 15 Q15 20 10 15 Z" fill="#2C3E50"/>
+          <path d="M12 8 L14 10 L18 6" stroke="#F4B942" stroke-width="1.5" fill="none"/>
+        </g>
+      </svg>
+    </div>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
-    </ion-item>
+    <!-- Titre -->
+    <h1 class="register-title">Créer votre compte</h1>
+    <p class="register-subtitle">Rejoignez BWS pour accéder à toutes les données météo</p>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
-    </ion-item>
+    <!-- Formulaire -->
+    <form (ngSubmit)="register()">
+      <ion-item>
+        <ion-label position="floating">👤 Nom d'utilisateur</ion-label>
+        <ion-input [(ngModel)]="username" name="username" required></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirm Password</ion-label>
-      <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">📧 Email</ion-label>
+        <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+      </ion-item>
 
-    <ion-button expand="block" type="submit">Register</ion-button>
-  </form>
+      <ion-item>
+        <ion-label position="floating">🔒 Mot de passe</ion-label>
+        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+      </ion-item>
 
-  <ion-button expand="block" fill="outline" (click)="goToLogin()">
-    Already have an account? Login
-  </ion-button>
-  <div *ngIf="message" class="message ion-text-center">
-    {{ message }}
+      <ion-item>
+        <ion-label position="floating">🔐 Confirmer le mot de passe</ion-label>
+        <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit">
+        Créer mon compte
+      </ion-button>
+    </form>
+
+    <ion-button expand="block" fill="outline" (click)="goToLogin()">
+      Déjà un compte ? Se connecter
+    </ion-button>
+    
+    <!-- Message -->
+    <div *ngIf="message" class="message ion-text-center">
+      {{ message }}
+    </div>
+    
   </div>
 </ion-content>
