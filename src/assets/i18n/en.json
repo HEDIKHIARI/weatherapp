@@ -14,11 +14,7 @@
       "CURRENT_CONDITIONS": "Current conditions",
       "FEELS_LIKE": "Feels like"
     },
-    "AIR_QUALITY": {
-      "GOOD": "Good",
-      "MODERATE": "Moderate",
-      "POOR": "Poor"
-    },
+    
     
     "PRESSURE": {
       "HIGH": "High",

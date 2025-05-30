@@ -1,64 +1,115 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>s'inscrire</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="login()">
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input 
-        #emailInput
-        [(ngModel)]="email" 
-        name="email" 
-        type="email"
-        inputmode="email"
-        enterkeyhint="next"
-        autocomplete="email"
-        clearInput="true"
-        required
-        (ionFocus)="focusInput(emailInput)"
-      >
-      </ion-input>
-    </ion-item>
+  <div class="login-container">
+    
+    <!-- Illustration moderne -->
+    <div class="login-illustration">
+      <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background circle -->
+        <circle cx="200" cy="140" r="120" fill="#F8F9FA" stroke="#E1E8ED" stroke-width="2"/>
+        
+        <!-- Phone mockup -->
+        <rect x="160" y="60" width="80" height="140" rx="15" fill="#2C3E50"/>
+        <rect x="165" y="70" width="70" height="120" rx="8" fill="#FFFFFF"/>
+        
+        <!-- Weather icon in phone -->
+        <circle cx="200" cy="110" r="15" fill="#F4B942"/>
+        <path d="M185 125 Q190 120 195 125 Q200 120 205 125 Q210 120 215 125" 
+              stroke="#E1E8ED" stroke-width="2" fill="none"/>
+        <path d="M180 135 Q185 130 190 135 Q195 130 200 135 Q205 130 210 135 Q215 130 220 135" 
+              stroke="#E1E8ED" stroke-width="2" fill="none"/>
+        
+        <!-- Birds -->
+        <path d="M150 90 Q155 85 160 90" stroke="#7F8C8D" stroke-width="1.5" fill="none"/>
+        <path d="M155 100 Q160 95 165 100" stroke="#7F8C8D" stroke-width="1.5" fill="none"/>
+        <path d="M240 85 Q245 80 250 85" stroke="#7F8C8D" stroke-width="1.5" fill="none"/>
+        
+        <!-- Phone button indicator -->
+        <rect x="185" y="165" width="30" height="15" rx="7" fill="#F4B942"/>
+        <rect x="190" y="168" width="20" height="2" fill="white"/>
+        <rect x="190" y="172" width="15" height="2" fill="white"/>
+        
+        <!-- Person illustration -->
+        <g transform="translate(280, 100)">
+          <!-- Head -->
+          <circle cx="20" cy="20" r="12" fill="#FFAB91"/>
+          <!-- Hair -->
+          <path d="M8 15 Q20 5 32 15 Q32 8 20 8 Q8 8 8 15" fill="#2C3E50"/>
+          <!-- Body -->
+          <rect x="10" y="32" width="20" height="35" rx="3" fill="#F4B942"/>
+          <!-- Arms -->
+          <rect x="5" y="40" width="8" height="20" rx="4" fill="#FFAB91"/>
+          <rect x="27" y="40" width="8" height="20" rx="4" fill="#FFAB91"/>
+          <!-- Legs -->
+          <rect x="12" y="67" width="6" height="25" rx="3" fill="#2C3E50"/>
+          <rect x="22" y="67" width="6" height="25" rx="3" fill="#2C3E50"/>
+          <!-- Feet -->
+          <ellipse cx="15" cy="95" rx="4" ry="2" fill="#2C3E50"/>
+          <ellipse cx="25" cy="95" rx="4" ry="2" fill="#2C3E50"/>
+        </g>
+        
+        <!-- Floating elements -->
+        <circle cx="120" cy="80" r="3" fill="#F4B942" opacity="0.6"/>
+        <circle cx="300" cy="70" r="2" fill="#E74C3C" opacity="0.7"/>
+        <circle cx="100" cy="200" r="2" fill="#27AE60" opacity="0.5"/>
+        <circle cx="320" cy="190" r="3" fill="#3498DB" opacity="0.6"/>
+        
+        <!-- Background decoration -->
+        <path d="M50 50 Q100 30 150 50" stroke="#E1E8ED" stroke-width="1" fill="none" opacity="0.5"/>
+        <path d="M250 220 Q300 200 350 220" stroke="#E1E8ED" stroke-width="1" fill="none" opacity="0.5"/>
+      </svg>
+    </div>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input 
-        #passwordInput
-        [(ngModel)]="password" 
-        name="password" 
-        type="password"
-        inputmode="text"
-        enterkeyhint="done"
-        autocomplete="current-password"
-        clearInput="true"
-        required
-        (ionFocus)="focusInput(passwordInput)"
-      >
-      </ion-input>
-    </ion-item>
+    <!-- Titre -->
+    <h1 class="login-title">Bienvenue</h1>
+    <p class="login-subtitle">Connectez-vous à votre compte </p>
 
-    <ion-button expand="block" type="submit" class="ion-margin-top">
-      Login
+    <!-- Formulaire -->
+    <form (ngSubmit)="login()">
+      <ion-item>
+        <ion-label position="floating">📧 Email</ion-label>
+        <ion-input 
+          [(ngModel)]="email"
+          name="email"
+          type="email"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">🔒 Mot de passe</ion-label>
+        <ion-input 
+          [(ngModel)]="password"
+          name="password"
+          type="password"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" class="ion-margin-top">
+        Se connecter
+      </ion-button>
+    </form>
+
+    <ion-button expand="block" fill="outline" (click)="register()" class="ion-margin-top">
+      Créer un compte
     </ion-button>
-  </form>
 
-  <ion-button expand="block" fill="outline" (click)="register()" class="ion-margin-top">
-    Create Account
-  </ion-button>
+    <ion-button expand="block" fill="clear" (click)="forgotPassword()">
+      Mot de passe oublié ?
+    </ion-button>
 
-  <ion-button expand="block" fill="clear" (click)="forgotPassword()">
-    Forgot Password?
-  </ion-button>
-
-  <div *ngIf="message" class="ion-margin-top">
-    <ion-text color="danger" *ngIf="message.includes('Erreur') || message.includes('error')">
-      {{ message }}
-    </ion-text>
-    <ion-text color="success" *ngIf="!message.includes('Erreur') && !message.includes('error')">
-      {{ message }}
-    </ion-text>
+    <!-- Messages -->
+    <div *ngIf="message" class="ion-margin-top">
+      <ion-text [color]="message.includes('Erreur') || message.includes('error') ? 'danger' : 'success'">
+        {{ message }}
+      </ion-text>
+    </div>
+    
   </div>
 </ion-content>

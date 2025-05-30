@@ -50,6 +50,11 @@
       <h3>Précipitation (mm)</h3>
       <canvas #precipChart [hidden]="isLoading"></canvas>
       <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
+      <div class="chart-container">
+       <h3>Vitesse du vent (km/h)</h3>
+      <canvas #windChart [hidden]="isLoading"></canvas>
+     <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
+   </div>
     </div>
   </div>
 </ion-content>

@@ -2,7 +2,10 @@
 <ion-header>
   <ion-toolbar style="--background: #FFC107; --color: #021645;">
     <ion-title>
-      BWS : Be Wireless Solution
+      <div class="header-title">
+        <img src="assets/icon/bws-logo.png" alt="BWS Logo" class="header-logo">
+        BWS : Be Wireless Solution
+      </div>
     </ion-title>
     <ion-buttons slot="end">
     </ion-buttons>
@@ -10,10 +13,16 @@
 </ion-header>
 
 <ion-content class="ion-padding" color="light">
+  <!-- Logo principal dans le contenu -->
+  <div class="logo-container">
+    <img src="assets/icon/bws-logo.png" alt="BWS Logo" class="main-logo">
+  </div>
+  
   <div class="hero-text">
     <h1>Bienvenue dans BWS</h1>
     <p class="tagline">Votre solution connectée pour la météo intelligente</p>
   </div>
+  
   <!-- Updated Commencer button to navigate to the login page -->
   <ion-button 
     class="cta-button" 

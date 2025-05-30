@@ -1,122 +1,73 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonCard, 
   IonCardHeader, IonCardTitle, IonCardContent, IonItem, 
-  IonIcon, IonLabel, IonProgressBar, IonButton, IonButtons,
-  IonBackButton, ToastController
+  IonIcon, IonLabel, IonProgressBar, IonButton
 } from '@ionic/angular/standalone';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { Subscription } from 'rxjs';
 import { addIcons } from 'ionicons';
 import { 
-  checkmarkCircle, closeCircle, cloudDone, cloudOffline,
-  wifi, refresh, informationCircle, alertCircle, time
+  checkmarkCircle, closeCircle, wifi, refresh
 } from 'ionicons/icons';
 
+import { ESP32MinimalService, ESP32Data } from '..//services/esp32.service';
+
 @Component({
-  selector: 'app-connectivity',
+  selector: 'app-connectivity-minimal',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    TranslateModule,
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-    IonItem, IonIcon, IonLabel, IonProgressBar,
-    IonButton, IonButtons, IonBackButton
+    IonItem, IonIcon, IonLabel, IonProgressBar, IonButton
   ],
   templateUrl: './connectivity.page.html',
-  styleUrls: ['./connectivity.page.scss'],
-  
+  styleUrls: ['./connectivity.page.scss']
 })
 export class ConnectivityPage implements OnInit, OnDestroy {
-  // Services
- 
-  private toastCtrl = inject(ToastController);
-  private translate = inject(TranslateService);
-
-  // Connection states
-  esp32Status: 'connected' | 'disconnected' = 'disconnected';
-  lastConnectionTime: string | null = null;
+  private esp32Service = inject(ESP32MinimalService);
   
-  // WiFi
+  esp32Connected = false;
+  wifiConnected = false;
   wifiStrength = 0;
-  wifiStrengthIcon = 'wifi-outline';
   
-  // MQTT
-  mqttConnected = false;
-  private mqttSub?: Subscription;
+  private subscription?: Subscription;
 
   constructor() {
-    addIcons({
-      checkmarkCircle, closeCircle, cloudDone, cloudOffline,
-      wifi, refresh, informationCircle, alertCircle, time
-    });
+    addIcons({ checkmarkCircle, closeCircle, wifi, refresh });
   }
 
   ngOnInit(): void {
-    this.initMQTT();
-    this.translate.setDefaultLang('fr'); // Défaut français
+    this.subscription = this.esp32Service.data$.subscribe((data: ESP32Data) => {
+      this.esp32Connected = data.esp32_connected;
+      this.wifiConnected = data.wifi_connected;
+      this.wifiStrength = data.wifi_strength;
+    });
   }
 
   ngOnDestroy(): void {
-    this.mqttSub?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
-  private initMQTT(): void {
-    try {
-      this.mqttConnected = true;
-      
-     
-
-      // Simulation de connexion (à remplacer par vos topics réels)
-      setTimeout(() => {
-        this.esp32Status = 'connected';
-        this.lastConnectionTime = new Date().toLocaleTimeString();
-        this.wifiStrength = 85;
-        this.mqttConnected = true;
-      }, 1500);
-      
-    } catch (error) {
-      console.error('MQTT initialization error:', error);
-      this.mqttConnected = false;
-      this.showToast(this.translate.instant('IOT.MQTT_CONNECT_FAIL'), 'danger');
-    }
-  }
-
-  getWifiStrengthColor(): string {
-    if (this.wifiStrength > 75) return 'success';
-    if (this.wifiStrength > 50) return 'success';
-    if (this.wifiStrength > 25) return 'warning';
+  getWifiColor(): string {
+    if (!this.wifiConnected) return 'danger';
+    if (this.wifiStrength > 70) return 'success';
+    if (this.wifiStrength > 40) return 'warning';
     return 'danger';
   }
 
-  async reconnect(): Promise<void> {
-    this.esp32Status = 'disconnected';
-    this.mqttConnected = false;
-    this.wifiStrength = 0;
-    
-    await this.showToast(this.translate.instant('IOT.RECONNECTING'), 'warning');
-    
-    setTimeout(() => {
-      this.esp32Status = 'connected';
-      this.lastConnectionTime = new Date().toLocaleTimeString();
-      this.wifiStrength = 85;
-      this.mqttConnected = true;
-      this.showToast(this.translate.instant('IOT.RECONNECT_SUCCESS'), 'success');
-    }, 2000);
-  }
+  // Simulation pour test
+  async simulate(): Promise<void> {
+    const esp32 = Math.random() > 0.5;
+    const wifi = esp32 ? Math.random() > 0.3 : false;
+    const strength = wifi ? Math.floor(Math.random() * 100) : 0;
 
-  private async showToast(message: string, color: 'success'|'warning'|'danger'): Promise<void> {
-    const toast = await this.toastCtrl.create({
-      message,
-      duration: 2000,
-      color,
-      position: 'top'
+    await this.esp32Service.updateData({
+      esp32_connected: esp32,
+      wifi_connected: wifi,
+      wifi_strength: strength
     });
-    await toast.present();
   }
 }

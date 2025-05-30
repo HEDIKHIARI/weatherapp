@@ -32,7 +32,8 @@ export class FirebaseDbService {
     temperature: number[], 
     humidity: number[], 
     pressure: number[], 
-    precipitation: number[] 
+    precipitation: number[],
+    windspeed: number[]
   }> {
     const snapshot = await get(ref(this.db, `historicalData/${date}`));
     
@@ -41,7 +42,8 @@ export class FirebaseDbService {
         temperature: [], 
         humidity: [], 
         pressure: [], 
-        precipitation: [] 
+        precipitation: [],
+        windspeed: []
       };
     }
 
@@ -52,7 +54,8 @@ export class FirebaseDbService {
       temperature: data.temperature || Array(24).fill(0),
       humidity: data.humidity || Array(24).fill(0),
       pressure: data.pressure || Array(24).fill(0),
-      precipitation: data.precipitation || Array(24).fill(0)
+      precipitation: data.precipitation || Array(24).fill(0),
+      windspeed: data.windspeed || Array(24).fill(0)
     };
   }
 
