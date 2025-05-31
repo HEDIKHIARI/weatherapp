@@ -3,58 +3,77 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
-    <ion-title>Historique des données</ion-title>
+    <ion-title>{{ 'HISTORY.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [class.loading]="isLoading">
   <!-- Sélecteur de date -->
-  <ion-item>
-    <ion-label position="stacked">Date :</ion-label>
-    <ion-select 
-      [(ngModel)]="selectedDate" 
-      (ionChange)="dateChanged($event)" 
-      interface="popover"
-      [disabled]="isLoading"
-    >
-      <ion-select-option 
-        *ngFor="let date of availableDates" 
-        [value]="date"
+  <div class="date-selector-section">
+    <ion-item>
+      <ion-label position="stacked">{{ 'HISTORY.DATE_LABEL' | translate }}</ion-label>
+      <ion-select 
+        [(ngModel)]="selectedDate"
+        (ionChange)="dateChanged($event)"
+        interface="popover"
+        [disabled]="isLoading"
+        [placeholder]="'HISTORY.SELECT_DATE' | translate"
       >
-        {{ date }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+        <ion-select-option 
+          *ngFor="let date of availableDates" 
+          [value]="date"
+        >
+          {{ date }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
   <!-- Graphiques -->
-  <div class="chart-wrapper">
+  <div class="charts-wrapper">
     <div class="chart-container">
-      <h3>Température (°C)</h3>
+      <div class="chart-header">
+        <ion-icon name="thermometer-outline"></ion-icon>
+        <h3>{{ 'HISTORY.TEMPERATURE' | translate }}</h3>
+      </div>
       <canvas #tempChart [hidden]="isLoading"></canvas>
       <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
     <div class="chart-container">
-      <h3>Humidité (%)</h3>
+      <div class="chart-header">
+        <ion-icon name="water-outline"></ion-icon>
+        <h3>{{ 'HISTORY.HUMIDITY' | translate }}</h3>
+      </div>
       <canvas #humidityChart [hidden]="isLoading"></canvas>
       <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
     <div class="chart-container">
-      <h3>Pression (hPa)</h3>
+      <div class="chart-header">
+        <ion-icon name="speedometer-outline"></ion-icon>
+        <h3>{{ 'HISTORY.PRESSURE' | translate }}</h3>
+      </div>
       <canvas #pressureChart [hidden]="isLoading"></canvas>
       <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
 
     <div class="chart-container">
-      <h3>Précipitation (mm)</h3>
+      <div class="chart-header">
+        <ion-icon name="rainy-outline"></ion-icon>
+        <h3>{{ 'HISTORY.PRECIPITATION' | translate }}</h3>
+      </div>
       <canvas #precipChart [hidden]="isLoading"></canvas>
       <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
-      <div class="chart-container">
-       <h3>Vitesse du vent (km/h)</h3>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-header">
+        <ion-icon name="analytics-outline"></ion-icon>
+        <h3>{{ 'HISTORY.WIND_SPEED' | translate }}</h3>
+      </div>
       <canvas #windChart [hidden]="isLoading"></canvas>
-     <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
-   </div>
+      <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
     </div>
   </div>
 </ion-content>

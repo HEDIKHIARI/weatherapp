@@ -1,6 +1,6 @@
 {
     "DASHBOARD": {
-      "TITLE": "Weather Dashboard",
+      "TITLE": "Dashboard",
       "TEMPERATURE": "Temperature",
       "WIND": "Wind",
       "HUMIDITY": "Humidity",
@@ -63,34 +63,35 @@
         "OK": "OK"
       },
       
-        "IOT": {
-          "TITLE": "📡 IoT Connection & Configuration",
-          "ESP32_STATUS": "ESP32 Status",
-          "STATUS_LABEL": "Status",
-          "CONNECTED": "Connected",
-          "OFFLINE": "Offline",
-          "LAST_CONNECTION": "Last connection",
-          "NO_CONNECTION": "No recent connection",
-          "WIFI_TITLE": "WiFi Network",
-          "SIGNAL_STRENGTH": "Signal strength",
-          "MQTT_TITLE": "MQTT Connection",
-          "CONNECTED_TO": "Connected to ThingSpeak",
-          "DISCONNECTED": "Disconnected",
-          "BROKER": "Broker",
-          "FORCE_RECONNECT": "Force Reconnection",
-          "MQTT_ERROR": "MQTT Error: {error}",
-          "MQTT_CONNECT_FAIL": "Failed to connect to MQTT",
-          "RECONNECTING": "Attempting reconnection...",
-          "RECONNECT_SUCCESS": "Reconnected successfully"
-        },
+      "CONNECTIVITY": {
+    "TITLE": "ESP32 Connectivity",
+    "ESP32": {
+      "TITLE": "ESP32",
+      "CONNECTED": "Connected",
+      "DISCONNECTED": "Disconnected",
+      "STATUS": "ESP32 Status"
+    },
+    "WIFI": {
+      "TITLE": "WiFi",
+      "CONNECTED": "Connected",
+      "DISCONNECTED": "Disconnected",
+      "SIGNAL": "Signal",
+      "STRENGTH": "Signal Strength"
+    },
+    "ACTIONS": {
+      "SIMULATE": "Simulate Data",
+      "REFRESH": "Refresh",
+      "TEST_CONNECTION": "Test Connection"
+    },
+    "STATUS": {
+      "ONLINE": "Online",
+      "OFFLINE": "Offline",
+      "CONNECTING": "Connecting...",
+      "ERROR": "Connection Error"
+    }
+  },
         
-          "HISTORY": {
-            "DATA_HISTORY": "Data History",
-            "TEMPERATURE_LABEL": "Temperature (°C)",
-            "HUMIDITY_LABEL": "Humidity (%)",
-            "PRESSURE_LABEL": "Pressure (hPa)",
-            "PRECIPITATION_LABEL": "Precipitation (mm)"
-          },
+          
           "DAYS": {
             "MON": "Monday",
             "TUE": "Tuesday",
@@ -106,7 +107,26 @@
           "HOME": {
       "LOGIN": "Login" ,
       "COMMENCER": "Start"
-    }
+    },
+    "HISTORY": {
+    "TITLE": "History Weather",
+    "DATE_LABEL": "Date:",
+    "SELECT_DATE": "Select a date",
+    "TEMPERATURE": "Temperature (°C)",
+    "HUMIDITY": "Humidity (%)",
+    "PRESSURE": "Pressure (hPa)",
+    "PRECIPITATION": "Precipitation (mm)",
+    "WIND_SPEED": "Wind Speed (km/h)",
+    "LOADING": "Loading data...",
+    "NO_DATA": "No data available for this date",
+    "ERROR": "Error loading data",
+    "TODAY": "Today",
+    "YESTERDAY": "Yesterday",
+    "LAST_7_DAYS": "Last 7 days",
+    "LAST_30_DAYS": "Last 30 days",
+    "EXPORT": "Export",
+    "REFRESH": "Refresh"
+  }
   }
        
       

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Database, ref, onValue, set } from '@angular/fire/database';
 import { BehaviorSubject } from 'rxjs';
 
-export interface ESP32Data {
+export interface esp32_data {
   esp32_connected: boolean;
   wifi_connected: boolean;
   wifi_strength: number; // 0-100%
@@ -15,7 +15,7 @@ export class ESP32MinimalService {
   private database = inject(Database);
   private esp32Ref = ref(this.database, 'esp32_data');
   
-  private dataSubject = new BehaviorSubject<ESP32Data>({
+  private dataSubject = new BehaviorSubject<esp32_data>({
     esp32_connected: false,
     wifi_connected: false,
     wifi_strength: 0
@@ -37,7 +37,7 @@ export class ESP32MinimalService {
   }
 
   // Pour simulation/test
-  async updateData(data: Partial<ESP32Data>): Promise<void> {
+  async updateData(data: Partial<esp32_data>): Promise<void> {
     const current = this.dataSubject.value;
     await set(this.esp32Ref, { ...current, ...data });
   }

@@ -1,15 +1,25 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>ESP32 Connectivité</ion-title>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'CONNECTIVITY.TITLE' | translate }}</ion-title>
+   
+     
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   
   <!-- ESP32 Status -->
-  <ion-card>
+  <ion-card class="status-card">
     <ion-card-header>
-      <ion-card-title>ESP32</ion-card-title>
+      <ion-card-title>
+        <ion-icon name="hardware-chip"></ion-icon>
+        {{ 'CONNECTIVITY.ESP32.TITLE' | translate }}
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none">
@@ -19,16 +29,25 @@
           [color]="esp32Connected ? 'success' : 'danger'">
         </ion-icon>
         <ion-label>
-          <h2>{{ esp32Connected ? 'Connecté' : 'Déconnecté' }}</h2>
+          <h2>{{ esp32Connected ? ('CONNECTIVITY.ESP32.CONNECTED' | translate) : ('CONNECTIVITY.ESP32.DISCONNECTED' | translate) }}</h2>
+          <p class="status-subtitle">{{ 'CONNECTIVITY.ESP32.STATUS' | translate }}</p>
         </ion-label>
+        <ion-badge 
+          slot="end" 
+          [color]="esp32Connected ? 'success' : 'danger'">
+          {{ esp32Connected ? ('CONNECTIVITY.STATUS.ONLINE' | translate) : ('CONNECTIVITY.STATUS.OFFLINE' | translate) }}
+        </ion-badge>
       </ion-item>
     </ion-card-content>
   </ion-card>
 
   <!-- WiFi Status -->
-  <ion-card>
+  <ion-card class="status-card">
     <ion-card-header>
-      <ion-card-title>WiFi</ion-card-title>
+      <ion-card-title>
+        <ion-icon name="wifi"></ion-icon>
+        {{ 'CONNECTIVITY.WIFI.TITLE' | translate }}
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none">
@@ -38,23 +57,38 @@
           [color]="getWifiColor()">
         </ion-icon>
         <ion-label>
-          <h2>{{ wifiConnected ? 'Connecté' : 'Déconnecté' }}</h2>
-          <div *ngIf="wifiConnected">
-            <p>Signal: {{ wifiStrength }}%</p>
+          <h2>{{ wifiConnected ? ('CONNECTIVITY.WIFI.CONNECTED' | translate) : ('CONNECTIVITY.WIFI.DISCONNECTED' | translate) }}</h2>
+          <div *ngIf="wifiConnected" class="wifi-details">
+            <p>{{ 'CONNECTIVITY.WIFI.SIGNAL' | translate }}: {{ wifiStrength }}%</p>
             <ion-progress-bar 
               [value]="wifiStrength/100" 
               [color]="getWifiColor()">
             </ion-progress-bar>
           </div>
+          <p *ngIf="!wifiConnected" class="status-subtitle">{{ 'CONNECTIVITY.STATUS.OFFLINE' | translate }}</p>
         </ion-label>
+        <ion-badge 
+          slot="end" 
+          [color]="getWifiColor()" 
+          *ngIf="wifiConnected">
+          {{ wifiStrength }}%
+        </ion-badge>
       </ion-item>
     </ion-card-content>
   </ion-card>
 
-  <!-- Simulation Button -->
-  <ion-button expand="block" color="secondary" (click)="simulate()">
-    <ion-icon slot="start" name="refresh"></ion-icon>
-    Simuler données
-  </ion-button>
+  <!-- Actions -->
+  <div class="actions-section">
+    <ion-button 
+      expand="block" 
+      fill="outline" 
+      class="action-button"
+      (click)="simulate()">
+      <ion-icon slot="start" name="refresh"></ion-icon>
+      {{ 'CONNECTIVITY.ACTIONS.SIMULATE' | translate }}
+    </ion-button>
+    
+    
+  </div>
 
 </ion-content>

@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, 
-  IonButtons, IonBackButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonSpinner
-} from '@ionic/angular/standalone';
+  IonButtons, IonBackButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonSpinner, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,13 +9,21 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseDbService } from '../services/firebase-db.services';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { addIcons } from 'ionicons';
+import { 
+  thermometerOutline, 
+  waterOutline, 
+  speedometerOutline, 
+  rainyOutline, 
+  analyticsOutline 
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.page.html',
   styleUrls: ['./history.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonIcon, 
     IonLabel, IonItem, IonButtons, IonBackButton,
     CommonModule,
     TranslateModule,
@@ -32,7 +39,6 @@ export class HistoryPage implements OnInit, OnDestroy {
   @ViewChild('precipChart') precipChartRef!: ElementRef;
   @ViewChild('windChart') windChartRef!: ElementRef;
 
-
   selectedDate: string = new Date().toISOString().split('T')[0];
   availableDates: string[] = [];
   isLoading = true;
@@ -41,6 +47,15 @@ export class HistoryPage implements OnInit, OnDestroy {
 
   constructor(private firebaseDb: FirebaseDbService, private router: Router) {
     Chart.register(...registerables);
+    
+    // Ajout des icônes
+    addIcons({
+      thermometerOutline,
+      waterOutline,
+      speedometerOutline,
+      rainyOutline,
+      analyticsOutline
+    });
   }
 
   async ngOnInit() {
@@ -74,8 +89,7 @@ export class HistoryPage implements OnInit, OnDestroy {
     this.updateChart(this.humidityChartRef, data.humidity || []);
     this.updateChart(this.pressureChartRef, data.pressure || []);
     this.updateChart(this.precipChartRef, data.precipitation || []);
-     this.updateChart(this.windChartRef, data.windspeed || []);
-
+    this.updateChart(this.windChartRef, data.windspeed || []);
   }
 
   private updateChart(chartRef: ElementRef, newData: number[]) {
@@ -149,7 +163,6 @@ export class HistoryPage implements OnInit, OnDestroy {
         'line'
       ));
 
-
       // Précipitation
       this.charts.push(this.createChart(
         this.precipChartRef,
@@ -158,9 +171,11 @@ export class HistoryPage implements OnInit, OnDestroy {
         'rgba(75, 192, 192, 0.8)',
         'bar'
       ));
+
+      // Vent
       this.charts.push(this.createChart(
         this.windChartRef,
-        'vent (kmh)',
+        'Vent (km/h)',
         weatherData.windspeed || Array(24).fill(0),
         'rgba(194, 14, 125, 0.8)',
         'bar'

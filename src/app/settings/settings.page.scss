@@ -1,31 +1,486 @@
+/* CSS Moderne Settings - Sans variables root, couleurs RGBA */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Background principal */
 ion-content {
-    --background: var(--ion-color-light);
+  --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%) !important;
+  font-family: 'Inter', sans-serif;
+  --padding-top: 0;
+  --padding-bottom: 40px;
+}
+
+/* Header moderne avec double toolbar */
+ion-header {
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  
+  /* Première toolbar - Navigation */
+  ion-toolbar:first-child {
+    --background: rgba(244, 185, 66, 1) !important;
+    color: rgba(44, 62, 80, 1) !important;
+    font-family: 'Inter', sans-serif;
+    
+    ion-title {
+      color: rgba(44, 62, 80, 1) !important;
+      font-weight: 800 !important;
+      font-size: 1.4rem !important;
+      letter-spacing: 0.5px !important;
+    }
+    
+    ion-buttons {
+      ion-button {
+        color: rgba(44, 62, 80, 1) !important;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        text-transform: none;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.05);
+          background: rgba(44, 62, 80, 0.1);
+          border-radius: 8px;
+        }
+        
+        ion-icon {
+          color: rgba(44, 62, 80, 1) !important;
+          font-size: 1.4rem !important;
+        }
+        
+        /* Bouton "Enregistrer" */
+        &[strong="true"] {
+          font-weight: 800 !important;
+          padding: 8px 16px;
+          background: rgba(44, 62, 80, 0.1);
+          border-radius: 12px;
+          border: 1px solid rgba(44, 62, 80, 0.2);
+          
+          &:hover {
+            background: rgba(44, 62, 80, 1);
+            color: rgba(244, 185, 66, 1) !important;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+  
+  /* Deuxième toolbar - Segments */
+  ion-toolbar:last-child {
+    --background: linear-gradient(135deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%) !important;
+   
+    border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+    padding: 8px 0;
+  }
+}
+
+/* Segments ultra-modernes */
+ion-segment {
+  margin: 8px 20px !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1) !important;
+  padding: 4px !important;
+  
+  ion-segment-button {
+    --color: rgba(44, 62, 80, 1) !important;
+    --color-checked: rgba(44, 62, 80, 1) !important;
+    --indicator-color: rgba(255, 255, 255, 1) !important;
+    --indicator-box-shadow: 0 4px 16px rgba(255, 255, 255, 0.4) !important;
+    
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.4px !important;
+    text-transform: none !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 12px !important;
+    min-height: 48px !important;
+    
+    &.segment-button-checked {
+      transform: translateY(-2px) !important;
+      background: rgba(255, 255, 255, 1) !important;
+      box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15) !important;
+      
+      ion-label {
+        color: rgba(44, 62, 80, 1) !important;
+        font-weight: 800 !important;
+      }
+    }
+    
+    &:not(.segment-button-checked) {
+      ion-label {
+        color: rgba(44, 62, 80, 0.8) !important;
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        transform: translateY(-1px) !important;
+      }
+    }
+    
+    ion-label {
+      margin: 12px 8px !important;
+      font-family: 'Inter', sans-serif !important;
+      transition: all 0.3s ease !important;
+    }
+  }
+}
+
+/* Listes avec espacement moderne */
+ion-list {
+  background: transparent !important;
+  padding: 24px 20px !important;
+  margin: 0 !important;
+}
+
+/* Headers de sections élégants */
+ion-list-header {
+  background: transparent !important;
+  padding: 24px 12px 16px 12px !important;
+  margin-bottom: 20px !important;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(244, 185, 66, 0.3);
+  }
+  
+  ion-label {
+    color: rgba(44, 62, 80, 1) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* Items cards premium */
+ion-item {
+  --background: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 1) !important;
+  --border-radius: 16px !important;
+  --min-height: 72px !important;
+  --padding-start: 24px !important;
+  --padding-end: 24px !important;
+  --border-color: transparent !important;
+  --inner-border-width: 0 !important;
+  
+  margin-bottom: 16px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08) !important;
+  border: 1px solid rgba(232, 236, 240, 1) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  
+  /* Effet de hover premium */
+  &:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 4px 20px rgba(44, 62, 80, 0.12) !important;
+    border-color: rgba(244, 185, 66, 0.5) !important;
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-2px) scale(0.98) !important;
+  }
+  
+  /* Effet de lueur au hover */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Labels stylisés */
+  ion-label {
+    color: rgba(44, 62, 80, 1) !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.3px !important;
+    margin: 16px 0 !important;
+  }
+}
+
+/* Radio Group moderne */
+ion-radio-group {
+  ion-item {
+    ion-radio {
+      --color: rgba(244, 185, 66, 1) !important;
+      --color-checked: rgba(244, 185, 66, 1) !important;
+      --border-color: rgba(232, 236, 240, 1) !important;
+      --border-color-checked: rgba(244, 185, 66, 1) !important;
+      --border-width: 2px !important;
+      margin-right: 20px !important;
+      width: 24px !important;
+      height: 24px !important;
+      transition: all 0.3s ease !important;
+      
+      &.radio-checked {
+        transform: scale(1.1) !important;
+        box-shadow: 0 0 0 4px rgba(244, 185, 66, 0.2) !important;
+        
+        &::part(container) {
+          background: rgba(244, 185, 66, 1) !important;
+          border-color: rgba(244, 185, 66, 1) !important;
+        }
+      }
+      
+      &:hover {
+        transform: scale(1.05) !important;
+      }
+    }
+  }
+}
+
+/* Selects ultra-modernes */
+ion-select {
+  --color: rgba(44, 62, 80, 1) !important;
+  --placeholder-color: rgba(44, 62, 80, 0.6) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  justify-content: flex-end !important;
+  
+  /* Wrapper du texte sélectionné */
+  &::part(text) {
+    color: rgba(44, 62, 80, 1) !important;
+    background: linear-gradient(135deg, rgba(244, 185, 66, 0.15) 0%, rgba(248, 198, 104, 0.1) 100%) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    border: 2px solid rgba(244, 185, 66, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-weight: 600 !important;
+
+  }
+  
+  /* Icône dropdown */
+  &::part(icon) {
+    color: rgba(244, 185, 66, 1) !important;
+    font-size: 1.4rem !important;
+    margin-left: 12px !important;
+    transition: transform 0.3s ease !important;
+  }
+  
+  /* États d'interaction */
+  &:hover {
+    &::part(text) {
+      background: linear-gradient(135deg, rgba(244, 185, 66, 0.25) 0%, rgba(248, 198, 104, 0.15) 100%) !important;
+      border-color: rgba(244, 185, 66, 0.6) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(244, 185, 66, 0.2) !important;
+    }
+    
+    &::part(icon) {
+      transform: rotate(180deg) !important;
+    }
+  }
+  
+  &:focus {
+    &::part(text) {
+      border-color: rgba(244, 185, 66, 1) !important;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2) !important;
+    }
+  }
+}
+
+/* Customisation Action Sheet */
+.action-sheet-md {
+  .action-sheet-wrapper {
+    background: rgba(255, 255, 255, 1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    box-shadow: 0 -8px 32px rgba(44, 62, 80, 0.15) !important;
+    
+    .action-sheet-container {
+      .action-sheet-group {
+        background: transparent !important;
+        
+        .action-sheet-button {
+          color: rgba(44, 62, 80, 1) !important;
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 500 !important;
+          font-size: 1.1rem !important;
+          padding: 16px 24px !important;
+          transition: all 0.3s ease !important;
+          
+          &:hover {
+            background: rgba(244, 185, 66, 0.1) !important;
+          }
+          
+          &.action-sheet-selected {
+            color: rgba(244, 185, 66, 1) !important;
+            font-weight: 700 !important;
+            background: rgba(244, 185, 66, 0.15) !important;
+            position: relative;
+            
+            &::before {
+              content: '✓';
+              position: absolute;
+              right: 24px;
+              color: rgba(244, 185, 66, 1);
+              font-weight: 800;
+            }
+          }
+        }
+      }
+      
+      .action-sheet-cancel {
+        background: rgba(255, 255, 255, 1) !important;
+        border-radius: 16px !important;
+        margin: 8px 16px 16px 16px !important;
+        box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08) !important;
+        
+        .action-sheet-button {
+          color: rgba(44, 62, 80, 0.8) !important;
+          font-weight: 600 !important;
+        }
+      }
+    }
+  }
+}
+
+/* Animations d'entrée */
+ion-list {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ion-item {
+  animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: backwards;
+}
+
+ion-item:nth-child(1) { animation-delay: 0.1s; }
+ion-item:nth-child(2) { animation-delay: 0.2s; }
+ion-item:nth-child(3) { animation-delay: 0.3s; }
+ion-item:nth-child(4) { animation-delay: 0.4s; }
+ion-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  ion-header ion-toolbar:first-child {
+    ion-title {
+      font-size: 1.3rem !important;
+    }
+    
+    ion-buttons ion-button {
+      font-size: 0.9rem !important;
+      
+      ion-icon {
+        font-size: 1.3rem !important;
+      }
+    }
   }
   
   ion-segment {
-    margin: 16px 0;
+    margin: 6px 16px !important;
+    
+    ion-segment-button {
+      font-size: 0.95rem !important;
+      min-height: 44px !important;
+      
+      ion-label {
+        margin: 10px 6px !important;
+      }
+    }
   }
   
   ion-list {
-    background: transparent;
-    margin-top: 16px;
+    padding: 20px 16px !important;
   }
   
   ion-item {
-    --background: var(--ion-color-light);
-    --border-radius: 8px;
-    margin-bottom: 8px;
+    --min-height: 68px !important;
+    --padding-start: 20px !important;
+    --padding-end: 20px !important;
+    margin-bottom: 14px !important;
   }
   
-  .settings-footer {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  ion-list-header {
+    padding: 20px 8px 14px 8px !important;
+    
+    ion-label {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  ion-segment {
+    margin: 4px 12px !important;
+    
+    ion-segment-button {
+      font-size: 0.9rem !important;
+      min-height: 40px !important;
+    }
   }
   
   ion-select {
-    max-width: 100%;
-    width: 100%;
-    justify-content: flex-end;
+    font-size: 0.95rem !important;
+    
+    &::part(text) {
+      padding: 10px 14px !important;
+    }
   }
+  
+  ion-item {
+    --min-height: 64px !important;
+  }
+}
+
+/* Mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: linear-gradient(135deg, rgba(26, 37, 47, 1) 0%, rgba(44, 62, 80, 1) 100%) !important;
+  }
+  
+  ion-item {
+    --background: rgba(44, 62, 80, 1) !important;
+    background: rgba(44, 62, 80, 1) !important;
+    border-color: rgba(52, 73, 94, 1) !important;
+  }
+}
