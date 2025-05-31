@@ -1,16 +1,517 @@
-ion-progress-bar {
-    margin-top: 8px;
+/* Connectivity CSS Moderne - Thème BWS avec RGBA */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Background principal */
+ion-content {
+  --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%) !important;
+  font-family: 'Inter', sans-serif;
+  --padding-top: 0;
+  --padding-bottom: 40px;
+}
+
+/* Header moderne BWS */
+ion-header {
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  
+  ion-toolbar {
+    --background: rgba(244, 185, 66, 1) !important;
+    --color: rgba(19, 8, 51, 0.9) !important;
+    font-family: 'Inter', sans-serif;
+    
+    ion-title {
+      color: rgba(19, 8, 51, 0.9) !important;
+      font-weight: 800 !important;
+      font-size: 1.4rem !important;
+      letter-spacing: 0.5px !important;
+    }
+    
+    ion-buttons ion-button {
+      --color: rgba(19, 8, 51, 0.9) !important;
+      color: rgba(19, 8, 51, 0.9) !important;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700 !important;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+        background: rgba(44, 62, 80, 0.1);
+        border-radius: 8px;
+      }
+      
+      ion-icon {
+        color: rgba(19, 8, 51, 0.9) !important;
+        font-size: 1.4rem !important;
+      }
+    }
+  }
+}
+
+/* Cards de statut premium */
+.status-card {
+  background: rgba(255, 255, 255, 1) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08) !important;
+  border: 1px solid rgba(232, 236, 240, 1) !important;
+  margin-bottom: 20px !important;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  
+  /* Barre colorée en haut */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%);
+    z-index: 1;
+  }
+  
+  /* Effet hover premium */
+  &:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.16) !important;
+    border-color: rgba(244, 185, 66, 0.4) !important;
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  /* Effet de lueur */
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, rgba(244, 185, 66, 0.8), rgba(248, 198, 104, 0.8), rgba(244, 185, 66, 0.8));
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: blur(8px);
+  }
+  
+  /* Header de la card */
+  ion-card-header {
+    background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+    padding: 20px 24px 16px 24px !important;
+    border-bottom: 1px solid rgba(232, 236, 240, 1);
+    
+    ion-card-title {
+      color: rgba(44, 62, 80, 1) !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 1.2rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.3px !important;
+      display: flex !important;
+      align-items: center !important;
+      margin: 0 !important;
+      
+      ion-icon {
+        color: rgba(244, 185, 66, 1) !important;
+        font-size: 1.4rem !important;
+        margin-right: 12px !important;
+        padding: 8px;
+        background: rgba(244, 185, 66, 0.15);
+        border-radius: 10px;
+      }
+    }
+  }
+  
+  /* Contenu de la card */
+  ion-card-content {
+    padding: 24px !important;
+    
+    ion-item {
+      --background: transparent !important;
+      --padding-start: 0 !important;
+      --padding-end: 0 !important;
+      --inner-border-width: 0 !important;
+      --border-width: 0 !important;
+      margin: 0 !important;
+      
+      ion-icon {
+        font-size: 2rem !important;
+        margin-right: 16px !important;
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        
+        &[color="success"] {
+          background: rgba(39, 174, 96, 0.15) !important;
+          color: rgba(39, 174, 96, 1) !important;
+        }
+        
+        &[color="danger"] {
+          background: rgba(231, 76, 60, 0.15) !important;
+          color: rgba(231, 76, 60, 1) !important;
+        }
+        
+        &[color="warning"] {
+          background: rgba(243, 156, 18, 0.15) !important;
+          color: rgba(243, 156, 18, 1) !important;
+        }
+      }
+      
+      ion-label {
+        margin: 8px 0 !important;
+        
+        h2 {
+          color: rgba(19, 8, 51, 0.9) !important;
+          font-family: 'Inter', sans-serif !important;
+          font-size: 1.3rem !important;
+          font-weight: 700 !important;
+          margin: 0 0 8px 0 !important;
+          letter-spacing: 0.2px;
+        }
+        
+        p, .status-subtitle {
+          color: rgba(19, 8, 51, 0.6) !important;
+          font-size: 0.95rem !important;
+          font-weight: 500 !important;
+          margin: 4px 0 !important;
+        }
+        
+        .wifi-details {
+          margin-top: 12px;
+          
+          p {
+            margin-bottom: 8px !important;
+            font-weight: 600 !important;
+          }
+          
+          ion-progress-bar {
+            height: 8px !important;
+            border-radius: 4px !important;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            
+            &::part(progress) {
+              border-radius: 4px;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+      }
+      
+      ion-badge {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        padding: 6px 12px !important;
+        border-radius: 12px !important;
+        letter-spacing: 0.5px;
+        
+        &[color="success"] {
+          background: rgba(39, 174, 96, 1) !important;
+          color: rgba(255, 255, 255, 1) !important;
+          box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+        }
+        
+        &[color="danger"] {
+          background: rgba(231, 76, 60, 1) !important;
+          color: rgba(255, 255, 255, 1) !important;
+          box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+        
+        &[color="warning"] {
+          background: rgba(243, 156, 18, 1) !important;
+          color: rgba(255, 255, 255, 1) !important;
+          box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+        }
+      }
+    }
+  }
+}
+
+/* Section d'actions moderne */
+.actions-section {
+  margin-top: 32px;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Boutons d'action premium */
+.action-button {
+  --border-radius: 16px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  text-transform: none !important;
+  letter-spacing: 0.4px !important;
+  height: 60px !important;
+  margin: 0 !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  
+  /* Bouton outline */
+  &:not(.primary) {
+    --border-color: rgba(244, 185, 66, 1) !important;
+    --border-width: 2px !important;
+    --color: rgba(244, 185, 66, 1) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08) !important;
+    
+    &:hover {
+      --background: rgba(244, 185, 66, 1) !important;
+      --color: rgba(44, 62, 80, 1) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 4px 20px rgba(44, 62, 80, 0.12) !important;
+    }
+  }
+  
+  /* Bouton principal */
+  &.primary {
+    --background: linear-gradient(135deg, rgba(244, 185, 66, 1) 0%, rgba(230, 164, 53, 1) 100%) !important;
+    --color: rgba(44, 62, 80, 1) !important;
+    box-shadow: 0 6px 20px rgba(244, 185, 66, 0.4) !important;
+    
+    &:hover {
+      --background: linear-gradient(135deg, rgba(248, 198, 104, 1) 0%, rgba(244, 185, 66, 1) 100%) !important;
+      transform: translateY(-4px) scale(1.02) !important;
+      box-shadow: 0 8px 28px rgba(244, 185, 66, 0.5) !important;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98) !important;
+  }
+  
+  /* Effet de brillance */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+  }
+  
+  &:hover::before {
+    left: 100%;
   }
   
   ion-icon {
-    font-size: 24px;
+    font-size: 1.3rem !important;
+    margin-right: 8px !important;
+    transition: transform 0.3s ease;
   }
   
-  ion-card {
-    margin-bottom: 20px;
+  &:hover ion-icon {
+    transform: rotate(180deg);
+  }
+}
+
+/* Animations d'entrée */
+.status-card {
+  animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: backwards;
+}
+
+.status-card:nth-child(1) { animation-delay: 0.1s; }
+.status-card:nth-child(2) { animation-delay: 0.2s; }
+
+.actions-section {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* États de connexion spécialisés */
+.status-card.esp32-connected {
+  &::before {
+    background: linear-gradient(90deg, rgba(39, 174, 96, 1) 0%, rgba(46, 204, 113, 1) 100%);
   }
   
-  ion-item {
-    --padding-start: 0;
-    --inner-padding-end: 0;
+  &:hover::after {
+    background: linear-gradient(45deg, rgba(39, 174, 96, 0.8), rgba(46, 204, 113, 0.8), rgba(39, 174, 96, 0.8));
   }
+}
+
+.status-card.wifi-excellent {
+  &::before {
+    background: linear-gradient(90deg, rgba(39, 174, 96, 1) 0%, rgba(46, 204, 113, 1) 100%);
+  }
+}
+
+.status-card.wifi-good {
+  &::before {
+    background: linear-gradient(90deg, rgba(243, 156, 18, 1) 0%, rgba(241, 196, 15, 1) 100%);
+  }
+}
+
+.status-card.wifi-poor {
+  &::before {
+    background: linear-gradient(90deg, rgba(231, 76, 60, 1) 0%, rgba(236, 112, 99, 1) 100%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  ion-header ion-toolbar ion-title {
+    font-size: 1.3rem !important;
+  }
+  
+  .status-card {
+    margin-bottom: 16px !important;
+    border-radius: 16px !important;
+    
+    ion-card-header {
+      padding: 16px 20px 12px 20px !important;
+      
+      ion-card-title {
+        font-size: 1.1rem !important;
+        
+        ion-icon {
+          font-size: 1.3rem !important;
+          margin-right: 10px !important;
+          padding: 6px;
+        }
+      }
+    }
+    
+    ion-card-content {
+      padding: 20px !important;
+      
+      ion-item {
+        ion-icon {
+          font-size: 1.8rem !important;
+          margin-right: 14px !important;
+          padding: 10px;
+        }
+        
+        ion-label h2 {
+          font-size: 1.2rem !important;
+        }
+      }
+    }
+  }
+  
+  .actions-section {
+    margin-top: 24px;
+    gap: 12px;
+  }
+  
+  .action-button {
+    height: 56px !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-card {
+    border-radius: 12px !important;
+    
+    &::after {
+      border-radius: 14px !important;
+    }
+  }
+  
+  .action-button {
+    height: 52px !important;
+    font-size: 0.95rem !important;
+    
+    ion-icon {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+
+/* Mode sombre support */
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: linear-gradient(135deg, rgba(26, 37, 47, 1) 0%, rgba(44, 62, 80, 1) 100%) !important;
+  }
+  
+  .status-card {
+    background: rgba(44, 62, 80, 0.9) !important;
+    border: 1px solid rgba(52, 73, 94, 1) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+    
+    &:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+      border-color: rgba(244, 185, 66, 0.5) !important;
+    }
+    
+    ion-card-header {
+      background: linear-gradient(135deg, rgba(52, 73, 94, 0.5) 0%, rgba(44, 62, 80, 0.5) 100%);
+      border-bottom: 1px solid rgba(52, 73, 94, 0.8);
+      
+      ion-card-title {
+        color: rgba(255, 255, 255, 0.95) !important;
+        
+        ion-icon {
+          background: rgba(244, 185, 66, 0.2);
+        }
+      }
+    }
+    
+    ion-card-content {
+      ion-item {
+        ion-icon {
+          background: rgba(52, 73, 94, 0.5);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        ion-label {
+          h2 {
+            color: rgba(255, 255, 255, 0.9) !important;
+          }
+          
+          p, .status-subtitle {
+            color: rgba(255, 255, 255, 0.6) !important;
+          }
+        }
+      }
+    }
+  }
+  
+  .action-button {
+    &:not(.primary) {
+      background: rgba(44, 62, 80, 0.8) !important;
+      --border-color: rgba(244, 185, 66, 0.8) !important;
+      --color: rgba(244, 185, 66, 1) !important;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+      
+      &:hover {
+        --background: rgba(244, 185, 66, 0.9) !important;
+        --color: rgba(26, 37, 47, 1) !important;
+        box-shadow: 0 4px 20px rgba(244, 185, 66, 0.3) !important;
+      }
+    }
+  }
+}

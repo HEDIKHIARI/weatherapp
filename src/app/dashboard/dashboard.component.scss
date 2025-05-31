@@ -1,172 +1,498 @@
-/* dashboard.component.scss */
+/* Dashboard BWS - Design Moderne avec couleurs RGBA */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Variables BWS en RGBA */
+:root {
+  --bws-yellow: rgba(244, 185, 66, 1);
+  --bws-yellow-light: rgba(248, 198, 104, 1);
+  --bws-yellow-dark: rgba(230, 164, 53, 1);
+  --bws-blue: rgba(44, 62, 80, 1);
+  --bws-blue-light: rgba(52, 73, 94, 1);
+  --bws-blue-dark: rgba(26, 37, 47, 1);
+  --white: rgba(255, 255, 255, 1);
+  --light-bg: rgba(248, 249, 250, 1);
+  --card-bg: rgba(255, 255, 255, 1);
+  --text-primary: rgba(44, 62, 80, 1);
+  --text-secondary: rgba(44, 62, 80, 0.8);
+  --text-muted: rgba(44, 62, 80, 0.6);
+  --border-light: rgba(232, 236, 240, 1);
+  --shadow-light: rgba(44, 62, 80, 0.08);
+  --shadow-medium: rgba(44, 62, 80, 0.12);
+  --shadow-strong: rgba(44, 62, 80, 0.16);
+}
 
 /* Structure de base */
 ion-content {
-  --background: #f5f7fa; /* Fond gris très clair */
-  --padding-top: 16px;
-  --padding-bottom: 16px;
+  --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  --padding-top: 0;
+  --padding-bottom: 0;
+  font-family: 'Inter', sans-serif;
+  
+  &::part(scroll) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 
-/* En-tête */
-ion-toolbar {
-  --background: #ffffff;
-  --color: #2d3748; /* Texte foncé */
-  --border-color: #e2e8f0; /* Bordure grise claire */
+/* Header moderne BWS - Sélecteurs spécifiques */
+ion-header ion-toolbar {
+  --background: rgba(244, 185, 66, 1) !important;
+  --color: rgba(44, 62, 80, 1) !important;
+  --border-color: transparent !important;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  
+  ion-title {
+    font-weight: 700 !important;
+    font-size: 1.3rem !important;
+    letter-spacing: 0.3px !important;
+    color: rgba(44, 62, 80, 1) !important;
+  }
+  
+  ion-buttons ion-button {
+    --color: rgba(44, 62, 80, 1) !important;
+    color: rgb(80, 77, 44) !important;
+    font-weight: 600 !important;
+    
+    ion-icon {
+      color: rgba(44, 62, 80, 1) !important;
+    }
+  }
+}
+
+/* Footer moderne BWS - Sélecteurs spécifiques */
+ion-footer ion-toolbar {
+  --background: rgba(244, 185, 66, 1) !important;
+  --color: rgba(44, 62, 80, 1) !important;
+  border-top: none !important;
+  box-shadow: 0 -2px 12px rgba(44, 62, 80, 0.08);
+  
+  ion-segment {
+    background: transparent !important;
+    
+    ion-segment-button {
+      --color: rgba(216, 187, 23, 0.829) !important;
+      --color-checked: rgba(44, 62, 80, 1) !important;
+      --indicator-color:rgba(244, 185, 66, 1) !important;
+      --indicator-box-shadow: 0 2px 8px rgba(44, 62, 80, 0.3) !important;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      
+      &.segment-button-checked {
+        transform: translateY(-2px);
+        
+        ion-icon {
+          color: rgba(44, 62, 80, 1) !important;
+        }
+        
+        ion-label {
+          color: rgba(44, 62, 80, 1) !important;
+        }
+      }
+      
+      ion-icon {
+        font-size: 1.5rem !important;
+        margin-bottom: 2px !important;
+        color: rgba(44, 62, 80, 0.7) !important;
+      }
+      
+      ion-label {
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        margin-top: 4px !important;
+        color: rgba(44, 62, 80, 0.7) !important;
+      }
+    }
+  }
 }
 
 /* Grille principale */
 ion-grid {
-  padding: 0 12px;
+  padding: 0 16px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Cartes de données */
+/* Cartes modernes - Sélecteurs spécifiques */
 ion-card {
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin: 0 0 16px 0;
-  transition: transform 0.2s ease;
-
+  background: rgba(255, 255, 255, 1) !important;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  margin: 0 0 20px 0;
+  border: 1px solid rgba(232, 236, 240, 1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  
+  /* Effet de hover moderne */
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.16);
+    border-color: rgba(244, 185, 66, 0.3);
+  }
+  
   &:active {
-    transform: scale(0.98);
+    transform: translateY(-2px) scale(0.98);
+  }
+  
+  /* Barre colorée en haut */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%);
+  }
+  
+  /* Forcer les couleurs dans les cartes */
+  * {
+    color: rgba(44, 62, 80, 1) !important;
+  }
+  
+  ion-card-title {
+    color: rgba(44, 62, 80, 1) !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: rgba(44, 62, 80, 1) !important;
+  }
+  
+  p, span, div {
+    color: rgba(44, 62, 80, 0.8) !important;
+  }
+  
+  ion-icon {
+    color: rgba(244, 185, 66, 1) !important;
   }
 }
 
 /* En-tête des cartes */
 ion-card-header {
-  padding: 12px 16px 8px;
-  border-bottom: 1px solid #edf2f7;
-
+  padding: 20px 20px 12px;
+  background: linear-gradient(135deg, rgba(251, 252, 253, 1) 0%, rgba(248, 249, 250, 1) 100%);
+  border-bottom: 1px solid rgba(232, 236, 240, 1);
+  
   ion-card-title {
-    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
     font-weight: 600;
-    color: #4a5568; /* Gris foncé */
+    color: rgba(44, 62, 80, 1) !important;
     display: flex;
     align-items: center;
-
+    letter-spacing: 0.2px;
+    margin: 0;
+    
     ion-icon {
-      margin-right: 8px;
-      color: #4299e1; /* Bleu */
+      margin-right: 10px;
+      color: rgba(244, 185, 66, 1) !important;
+      font-size: 1.2rem;
+      padding: 8px;
+      background: rgba(244, 185, 66, 0.1);
+      border-radius: 8px;
     }
   }
 }
 
 /* Contenu des cartes */
 ion-card-content {
-  padding: 12px 16px;
-
+  padding: 20px;
+  
   h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1a202c; /* Noir */
-    margin: 8px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: rgba(44, 62, 80, 1) !important;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
     
     span {
       font-weight: 400;
-      font-size: 1rem;
-      color: #718096; /* Gris moyen */
+      font-size: 1.1rem;
+      color: rgba(44, 62, 80, 0.8) !important;
+      margin-left: 8px;
     }
   }
-
+  
   p {
-    color: #4a5568; /* Gris foncé */
-    font-size: 0.9rem;
+    color: rgba(44, 62, 80, 0.8) !important;
+    font-size: 0.95rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
-    margin-top: 4px;
-
+    margin: 12px 0 0 0;
+    line-height: 1.4;
+    
     ion-icon {
-      margin-right: 6px;
-      color: #4299e1; /* Bleu */
+      margin-right: 8px;
+      color: rgba(244, 185, 66, 1) !important;
+      font-size: 1.1rem;
     }
   }
-}
-
-/* Barre de progression */
-ion-progress-bar {
-  --progress-background: #4299e1; /* Bleu */
-  --background: #ebf8ff; /* Bleu très clair */
-  height: 6px;
-  border-radius: 3px;
-  margin-top: 12px;
-}
-
-/* Pied de page */
-ion-footer {
-  ion-toolbar {
-    --background: #ffffff;
-    border-top: 1px solid #e2e8f0;
-
-    ion-segment {
-      ion-segment-button {
-        --color: #718096; /* Gris moyen */
-        --color-checked: #4299e1; /* Bleu */
-        --indicator-color: transparent;
-
-        ion-icon {
-          font-size: 1.4rem;
-        }
-
-        ion-label {
-          font-size: 0.7rem;
-          margin-top: 4px;
-        }
+  
+  /* Statistiques secondaires */
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(232, 236, 240, 1);
+    
+    .stat-item {
+      text-align: center;
+      flex: 1;
+      
+      .stat-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: rgba(44, 62, 80, 1) !important;
+        display: block;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+        color: rgba(44, 62, 80, 0.6) !important;
+        font-weight: 500;
+        margin-top: 2px;
       }
     }
   }
 }
 
-/* Badge de notification */
+/* Barre de progression moderne */
+ion-progress-bar {
+  --progress-background: linear-gradient(90deg, rgb(34, 158, 61) 0%, rgb(203, 20, 20) 100%);
+  --background: rgba(244, 185, 66, 0.1);
+  height: 8px;
+  border-radius: 4px;
+  margin-top: 16px;
+  overflow: hidden;
+  
+  /* Effet d'animation */
+  &::part(progress) {
+    border-radius: 4px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Badge de notification moderne */
 ion-badge {
-  --background: #e53e3e; /* Rouge */
-  --color: #ffffff;
+  --background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%);
+  --color: rgba(255, 255, 255, 1) !important;
   font-size: 11px;
+  font-weight: 700;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -5px;
+  right: -5px;
+  border-radius: 12px;
+  padding: 4px 8px;
+  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 /* Dernière mise à jour */
 .last-update {
-  color: #718096; /* Gris moyen */
-  font-size: 0.8rem;
+  color: rgba(44, 62, 80, 0.6) !important;
+  font-size: 0.85rem;
+  font-weight: 500;
   text-align: center;
-  margin: 8px 0 16px;
+  margin: 16px 0 24px;
+  padding: 12px 20px;
+  background: rgba(244, 185, 66, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(244, 185, 66, 0.1);
+  
+  ion-icon {
+    margin-right: 6px;
+    color: rgba(244, 185, 66, 1) !important;
+  }
+}
+
+/* Alertes météo avec thème BWS */
+.alert-low {
+  --background: linear-gradient(135deg, rgba(255, 243, 205, 1) 0%, rgba(255, 248, 225, 1) 100%);
+  --color: rgba(44, 62, 80, 1) !important;
+  border-left: 4px solid rgba(255, 193, 7, 1);
+}
+
+.alert-medium {
+  --background: linear-gradient(135deg, rgba(255, 229, 180, 1) 0%, rgba(255, 237, 204, 1) 100%);
+  --color: rgba(44, 62, 80, 1) !important;
+  border-left: 4px solid rgba(255, 152, 0, 1);
+}
+
+.alert-high {
+  --background: linear-gradient(135deg, rgba(255, 235, 238, 1) 0%, rgba(255, 205, 210, 1) 100%);
+  --color: rgba(44, 62, 80, 1) !important;
+  border-left: 4px solid rgba(244, 67, 54, 1);
+}
+
+.alert-extreme {
+  --background: linear-gradient(135deg, rgba(26, 37, 47, 1) 0%, rgba(44, 62, 80, 1) 100%);
+  --color: rgba(255, 255, 255, 1) !important;
+  border-left: 4px solid rgba(255, 23, 68, 1);
+  animation: pulse-extreme 1.5s infinite;
+}
+
+@keyframes pulse-extreme {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.9; 
+    transform: scale(1.02);
+  }
+}
+
+/* Cartes spéciales */
+.weather-card {
+  background: linear-gradient(135deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%) !important;
+  
+  ion-card-header {
+    background: rgba(255, 255, 255, 0.2);
+    
+    ion-card-title {
+      color: rgba(44, 62, 80, 1) !important;
+      
+      ion-icon {
+        background: rgba(255, 255, 255, 0.2);
+        color: rgba(44, 62, 80, 1) !important;
+      }
+    }
+  }
+  
+  ion-card-content {
+    h1, p {
+      color: rgba(44, 62, 80, 1) !important;
+    }
+    
+    .stats-row .stat-item {
+      .stat-value {
+        color: rgba(44, 62, 80, 1) !important;
+      }
+      
+      .stat-label {
+        color: rgba(44, 62, 80, 0.8) !important;
+      }
+    }
+  }
 }
 
 /* Version mobile */
 @media (max-width: 768px) {
-  ion-card {
-    margin-bottom: 12px;
+  ion-grid {
+    padding: 0 12px;
   }
   
+  ion-card {
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+  
+  ion-card-header {
+    padding: 16px 16px 10px;
+    
+    ion-card-title {
+      font-size: 0.9rem;
+      
+      ion-icon {
+        font-size: 1.1rem;
+        padding: 6px;
+      }
+    }
+  }
+  
+  ion-card-content {
+    padding: 16px;
+    
+    h1 {
+      font-size: 2rem;
+      
+      span {
+        font-size: 1rem;
+      }
+    }
+    
+    p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .stats-row {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
   ion-card-content h1 {
     font-size: 1.8rem;
   }
-  .alert-low {
-  --background: var(--ion-color-warning);
-  --color: var(--ion-color-warning-contrast);
+  
+  .stats-row {
+    flex-direction: column;
+    gap: 8px;
+    
+    .stat-item {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
 }
 
-.alert-medium {
-  --background: var(--ion-color-warning);
-  --color: var(--ion-color-warning-contrast);
+/* Animation d'entrée */
+ion-card {
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.alert-high {
-  --background: var(--ion-color-danger);
-  --color: var(--ion-color-danger-contrast);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.alert-extreme {
-  --background: var(--ion-color-dark);
-  --color: var(--ion-color-dark-contrast);
-  animation: pulse 1s infinite;
+/* Loading state */
+.loading-skeleton {
+  background: linear-gradient(90deg, rgba(240, 240, 240, 1) 25%, rgba(224, 224, 224, 1) 50%, rgba(240, 240, 240, 1) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+  height: 20px;
+  margin: 8px 0;
 }
 
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.8; }
-  100% { opacity: 1; }
-}
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

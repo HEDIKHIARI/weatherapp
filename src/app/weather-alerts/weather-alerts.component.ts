@@ -26,7 +26,7 @@ export interface WeatherAlert {
   templateUrl: './weather-alerts.component.html',
   styleUrls: ['./weather-alerts.component.scss'],
   standalone: true,
-  imports: [IonToolbar, IonHeader, CommonModule, FormsModule, IonBadge]
+  imports: [ CommonModule, FormsModule, IonBadge]
 })
 export class WeatherAlertsComponent implements OnInit {
   @Input() alerts: WeatherAlert[] = [];
