@@ -6,6 +6,12 @@
     "no-inline-styles": "off",
     "typescript-config/is-valid": "off",
     "meta-viewport": "off",
-    "compat-api/html": "off"
+    "compat-api/html": "off",
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
+      }
+    ]
   }
 }

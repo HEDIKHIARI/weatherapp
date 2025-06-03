@@ -1,8 +1,7 @@
-/* CSS Register - Style BWS identique au Login */
+/* CSS Login Modern & Simple - Style BWS */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Variables BWS */
+/* Variables */
 :root {
   --bws-yellow: #F4B942;
   --bws-blue: #2C3E50;
@@ -30,8 +29,8 @@ ion-content {
 /* Header jaune BWS */
 ion-header {
   ion-toolbar {
-      --background: rgba(255, 193, 7, 0.95) !important;
-      color: rgba(19, 8, 51, 0.9) !important;
+     --background: rgba(255, 193, 7, 0.95) !important;
+   color: rgba(19, 8, 51, 0.9) !important;
     --border-color: transparent;
     
     ion-title {
@@ -44,48 +43,88 @@ ion-header {
 }
 
 /* Container principal */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Container register */
 .register-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Illustration pour cohérence */
+/* Illustration en haut */
+.login-illustration {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 50px 0;
+  
+  svg {
+    width: 280px;
+    height: 200px;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
+  }
+}
+
+/* Illustration register */
 .register-illustration {
   display: flex;
   justify-content: center;
-  margin: 30px 0 40px 0;
+  margin: 40px 0 50px 0;
   
   svg {
-    width: 220px;
-    height: 160px;
+    width: 280px;
+    height: 200px;
     filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
   }
 }
 
 /* Titre */
+.login-title {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgba(19, 8, 51, 0.9) !important;
+  margin-bottom: 8px;
+}
+
+/* Titre register */
 .register-title {
   text-align: center;
   font-family: 'Inter', sans-serif;
   font-size: 1.75rem;
   font-weight: 700;
-   color: rgba(19, 8, 51, 0.9) !important;
+  color: rgba(19, 8, 51, 0.9) !important;
   margin-bottom: 8px;
 }
 
+.login-subtitle {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+color: rgba(19, 8, 51, 0.9) !important;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+/* Subtitle register */
 .register-subtitle {
   text-align: center;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   color: rgba(19, 8, 51, 0.9) !important;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
   font-weight: 400;
 }
 
-/* Items modernes identiques au login */
+/* Items modernes */
 ion-item {
   --background: var(--white);
-   color: rgba(19, 8, 51, 0.9) !important;
+  --border-color: var(--border-color);
   --border-radius: 12px;
   --border-width: 1px;
   --inner-border-width: 0;
@@ -93,7 +132,7 @@ ion-item {
   --padding-end: 20px;
   --min-height: 56px;
   
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   box-shadow: var(--shadow);
   border-radius: 12px;
   transition: all 0.3s ease;
@@ -102,6 +141,13 @@ ion-item {
     --border-color: var(--bws-yellow);
     box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.1), var(--shadow);
     transform: translateY(-1px);
+    
+    // Fix curseur pour focus
+    ion-input input {
+      caret-color: #F4B942 !important;
+      border-right: 2px solid #F4B942;
+      animation: blink-caret 1s step-end infinite;
+    }
   }
 }
 
@@ -127,17 +173,52 @@ ion-input {
     font-size: 16px !important;
     font-weight: 400;
     letter-spacing: 0.2px;
+    // Forcer l'affichage du curseur sur mobile
+    cursor: text !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    
+    // Fix spécifique pour Galaxy et Android 13
+    caret-color: #2C3E50 !important;
+    -webkit-text-fill-color: #2C3E50 !important;
+    color: #2C3E50 !important;
+    
+    // Propriétés pour Galaxy
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    
+    // Background pour s'assurer que le champ est visible
+    background-color: transparent !important;
+    
+    // Hauteur minimale
+    min-height: 24px !important;
+    
+    &:focus {
+      cursor: text !important;
+      caret-color: #F4B942 !important;
+      -webkit-text-fill-color: #2C3E50 !important;
+      color: #2C3E50 !important;
+      outline: none !important;
+      
+      // Animation du curseur
+      animation: blink-caret 1s step-end infinite;
+    }
+    
+    &:active {
+      caret-color: #F4B942 !important;
+      cursor: text !important;
+    }
   }
 }
 
 /* Bouton principal */
 ion-button:not(.button-outline):not(.button-clear) {
   --background: linear-gradient(135deg, var(--bws-yellow) 0%, #E6A435 100%);
-   color: rgba(19, 8, 51, 0.9) !important;
+color: rgba(19, 8, 51, 0.9) !important;;
   --border-radius: 12px;
   --box-shadow: 0 4px 16px rgba(244, 185, 66, 0.3);
   
-  margin-top: 25px;
+  margin-top: 30px;
   height: 56px;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -158,8 +239,8 @@ ion-button:not(.button-outline):not(.button-clear) {
 
 /* Bouton outline */
 ion-button.button-outline {
-  color: rgba(19, 8, 51, 0.9) !important;
-  --border-color: var(--bws-yellow);
+  --background: var(--bws-yellow);
+ --color: rgba(19, 8, 51, 0.9) !important;
   --border-width: 2px;
   --color: var(--white);
   --border-radius: 12px;
@@ -178,8 +259,21 @@ ion-button.button-outline {
   }
 }
 
+/* Bouton clear */
+ion-button.button-clear {
+  --color: rgba(19, 8, 51, 0.9) !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: none;
+  
+  &:hover {
+    --color: var(--primary-text);
+  }
+}
+
 /* Messages */
-.message {
+ion-text {
   display: block;
   text-align: center;
   padding: 16px 20px;
@@ -188,9 +282,31 @@ ion-button.button-outline {
   font-weight: 500;
   font-size: 0.9rem;
   margin-top: 20px;
-  background: rgba(39, 174, 96, 0.1);
-  color: var(--success);
-  border: 1px solid rgba(39, 174, 96, 0.2);
+  
+  &[color="danger"] {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--danger);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+  }
+  
+  &[color="success"] {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(39, 174, 96, 0.2);
+  }
+}
+
+/* Messages pour register */
+.message {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(231, 76, 60, 0.2);
 }
 
 /* Fix clavier mobile */
@@ -202,19 +318,160 @@ ion-button.button-outline {
   }
 }
 
+// Améliorer la zone tactile
+ion-item {
+  --min-height: 60px;
+  
+  ion-input {
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+  }
+}
+
+// Styles spécifiques pour mobile
+.platform-android {
+  ion-input {
+    input {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      
+      // Forcer le curseur sur Samsung
+      text-shadow: none !important;
+      -webkit-text-stroke: 0 !important;
+      
+      &:focus {
+        // Double curseur pour Galaxy
+        box-shadow: none !important;
+        text-shadow: none !important;
+        
+        // Curseur forcé
+        caret-color: #F4B942 !important;
+        border-right: 1px solid #F4B942;
+        animation: blink-caret 1s step-end infinite;
+      }
+    }
+  }
+}
+
+// Animation pour le curseur
+@keyframes blink-caret {
+  from, to { 
+    border-right-color: transparent; 
+  }
+  50% { 
+    border-right-color: #F4B942; 
+  }
+}
+
+// Styles pour les inputs natifs qui remplacent Ionic
+.native-input-container {
+  margin-bottom: 20px;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  transition: all 0.3s ease;
+  
+  &:focus-within {
+    border: none;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.native-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--bws-blue) !important;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.native-input {
+  width: 100% !important;
+  border: none !important;
+  border-bottom: 2px solid var(--border-color) !important;
+  outline: none !important;
+  background: transparent !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: var(--primary-text) !important;
+  padding: 8px 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+  // Curseur forcé pour Galaxy
+  caret-color: #F4B942 !important;
+  cursor: text !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  
+  &::placeholder {
+    color: var(--secondary-text) !important;
+    opacity: 0.7 !important;
+  }
+  
+  &:focus {
+    caret-color: #F4B942 !important;
+    outline: none !important;
+    cursor: text !important;
+    border-bottom: 2px solid var(--bws-yellow) !important;
+  }
+  
+  &:active {
+    caret-color: #F4B942 !important;
+    cursor: text !important;
+  }
+}
+
+// Spécial Galaxy pour les inputs natifs
+.platform-android {
+  .native-input {
+    -webkit-text-fill-color: var(--primary-text) !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0 !important;
+    
+    &:focus {
+      caret-color: #F4B942 !important;
+      -webkit-text-fill-color: var(--primary-text) !important;
+    }
+  }
+}
+
 /* Responsive */
 @media (max-height: 600px) {
   ion-header { 
     display: none; 
   }
   
-  .register-illustration {
-    margin: 15px 0 25px 0;
+  .login-illustration {
+    margin: 20px 0 30px 0;
     
     svg {
-      width: 150px;
-      height: 110px;
+      width: 200px;
+      height: 140px;
     }
+  }
+  
+  .register-illustration {
+    margin: 20px 0 30px 0;
+    
+    svg {
+      width: 200px;
+      height: 140px;
+    }
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
   }
   
   .register-title {
@@ -222,14 +479,24 @@ ion-button.button-outline {
     margin-bottom: 5px;
   }
   
+  .login-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+  }
+  
   .register-subtitle {
     font-size: 0.9rem;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
   }
   
   ion-item {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     --min-height: 52px;
+  }
+  
+  .native-input-container {
+    margin-bottom: 16px;
+    padding: 12px 16px;
   }
   
   ion-button {
@@ -239,25 +506,30 @@ ion-button.button-outline {
 }
 
 @media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+  }
+  
   .register-container {
     padding: 15px;
   }
   
+  .login-illustration svg {
+    width: 220px;
+    height: 160px;
+  }
+  
   .register-illustration svg {
-    width: 170px;
-    height: 120px;
-  }
-  
-  .register-title {
-    font-size: 1.4rem;
-  }
-  
-  .register-subtitle {
-    font-size: 0.85rem;
+    width: 220px;
+    height: 160px;
   }
 }
 
 /* Animation d'entrée */
+.login-container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
 .register-container {
   animation: fadeInUp 0.6s ease-out;
 }

@@ -6,7 +6,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
+    
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -21,8 +21,9 @@
     "module": "es2020",
     "lib": ["es2020", "es2020.intl", "dom"],
     "useDefineForClassFields": false, 
-    
-    "skipLibCheck": true
+     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

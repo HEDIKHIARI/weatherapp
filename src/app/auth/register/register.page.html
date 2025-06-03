@@ -71,32 +71,81 @@
     <h1 class="register-title">Créer votre compte</h1>
     <p class="register-subtitle">Rejoignez BWS pour accéder à toutes les données météo</p>
 
-    <!-- Formulaire -->
+    <!-- Formulaire avec inputs HTML natifs (solution) -->
     <form (ngSubmit)="register()">
-      <ion-item>
-        <ion-label position="floating">👤 Nom d'utilisateur</ion-label>
-        <ion-input [(ngModel)]="username" name="username" required></ion-input>
-      </ion-item>
+      <!-- Username Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">👤 Nom d'utilisateur</label>
+        <div class="input-placeholder">Votre nom d'utilisateur</div>
+        <input 
+          #usernameInput
+          [(ngModel)]="username"
+          name="username"
+          type="text"
+          class="native-input"
+          required
+          (focus)="onUsernameFocus()"
+          (input)="onUsernameInputNative($event)"
+        >
+      </div>
 
-      <ion-item>
-        <ion-label position="floating">📧 Email</ion-label>
-        <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
-      </ion-item>
+      <!-- Email Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">📧 Email</label>
+        <div class="input-placeholder">Votre email</div>
+        <input 
+          #emailInput
+          [(ngModel)]="email"
+          name="email"
+          type="email"
+          class="native-input"
+          required
+          (focus)="onEmailFocus()"
+          (input)="onEmailInputNative($event)"
+        >
+      </div>
 
-      <ion-item>
-        <ion-label position="floating">🔒 Mot de passe</ion-label>
-        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
-      </ion-item>
+      <!-- Password Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">🔒 Mot de passe</label>
+        <div class="input-placeholder">Votre mot de passe</div>
+        <input 
+          #passwordInput
+          [(ngModel)]="password"
+          name="password"
+          type="password"
+          class="native-input"
+          required
+          (focus)="onPasswordFocus()"
+          (input)="onPasswordInputNative($event)"
+        >
+      </div>
 
-      <ion-item>
-        <ion-label position="floating">🔐 Confirmer le mot de passe</ion-label>
-        <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
-      </ion-item>
+      <!-- Confirm Password Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">🔐 Confirmer le mot de passe</label>
+        <div class="input-placeholder">Confirmer votre mot de passe</div>
+        <input 
+          #confirmPasswordInput
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          class="native-input"
+          required
+          (focus)="onConfirmPasswordFocus()"
+          (input)="onConfirmPasswordInputNative($event)"
+        >
+      </div>
 
       <ion-button expand="block" type="submit">
         Créer mon compte
       </ion-button>
     </form>
+
+    <!-- Bouton de test pour le curseur -->
+    <ion-button expand="block" fill="clear" color="warning" (click)="testUsernameFocus()">
+      🧪 Test Focus Username (Debug)
+    </ion-button>
 
     <ion-button expand="block" fill="outline" (click)="goToLogin()">
       Déjà un compte ? Se connecter

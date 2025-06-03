@@ -69,32 +69,48 @@
     <h1 class="login-title">Bienvenue</h1>
     <p class="login-subtitle">Connectez-vous à votre compte </p>
 
-    <!-- Formulaire -->
+    
+    <!-- Formulaire avec inputs HTML natifs (solution) -->
     <form (ngSubmit)="login()">
-      <ion-item>
-        <ion-label position="floating">📧 Email</ion-label>
-        <ion-input 
+      <!-- Email Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">📧 Email</label>
+        <input 
+          #emailInput
           [(ngModel)]="email"
           name="email"
           type="email"
+          class="native-input"
+          placeholder="Votre email"
           required
-        ></ion-input>
-      </ion-item>
+          (focus)="onEmailFocus()"
+          (input)="onEmailInputNative($event)"
+        >
+      </div>
 
-      <ion-item>
-        <ion-label position="floating">🔒 Mot de passe</ion-label>
-        <ion-input 
+      <!-- Password Input Natif Stylisé -->
+      <div class="native-input-container">
+        <label class="native-label">🔒 Mot de passe</label>
+        <input 
+          #passwordInput
           [(ngModel)]="password"
           name="password"
           type="password"
+          class="native-input"
+          placeholder="Votre mot de passe"
           required
-        ></ion-input>
-      </ion-item>
+          (focus)="onPasswordFocus()"
+          (input)="onPasswordInputNative($event)"
+        >
+      </div>
 
       <ion-button expand="block" type="submit" class="ion-margin-top">
         Se connecter
       </ion-button>
     </form>
+
+    <!-- Bouton de test pour le curseur -->
+ 
 
     <ion-button expand="block" fill="outline" (click)="register()" class="ion-margin-top">
       Créer un compte

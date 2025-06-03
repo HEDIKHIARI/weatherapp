@@ -26,85 +26,177 @@
 ion-content {
   --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
   --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-bottom: 80px; /* Espace pour le footer */
   font-family: 'Inter', sans-serif;
   
   &::part(scroll) {
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 90px; /* Plus d'espace pour le footer */
   }
 }
 
-/* Header moderne BWS - Sélecteurs spécifiques */
-ion-header ion-toolbar {
-  --background: rgba(244, 185, 66, 1) !important;
-  --color: rgba(44, 62, 80, 1) !important;
-  --border-color: transparent !important;
-  font-family: 'Inter', sans-serif;
-  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+/* Header moderne BWS - Baissé et aligné */
+ion-header {
+  position: relative !important;
+  top: 10px !important; /* Baissé légèrement */
   
-  ion-title {
-    font-weight: 700 !important;
-    font-size: 1.3rem !important;
-    letter-spacing: 0.3px !important;
-    color: rgba(44, 62, 80, 1) !important;
-  }
-  
-  ion-buttons ion-button {
+  ion-toolbar {
+    --background: rgba(244, 185, 66, 1) !important;
     --color: rgba(44, 62, 80, 1) !important;
-    color: rgb(80, 77, 44) !important;
-    font-weight: 600 !important;
+    --border-color: transparent !important;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+    height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
     
-    ion-icon {
+    ion-title {
+      font-weight: 700 !important;
+      font-size: 1.3rem !important;
+      letter-spacing: 0.3px !important;
       color: rgba(44, 62, 80, 1) !important;
+      text-align: center !important;
+      position: absolute !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: 0 !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
-  }
-}
-
-/* Footer moderne BWS - Sélecteurs spécifiques */
-ion-footer ion-toolbar {
-  --background: rgba(244, 185, 66, 1) !important;
-  --color: rgba(44, 62, 80, 1) !important;
-  border-top: none !important;
-  box-shadow: 0 -2px 12px rgba(44, 62, 80, 0.08);
-  
-  ion-segment {
-    background: transparent !important;
     
-    ion-segment-button {
-      --color: rgba(216, 187, 23, 0.829) !important;
-      --color-checked: rgba(44, 62, 80, 1) !important;
-      --indicator-color:rgba(244, 185, 66, 1) !important;
-      --indicator-box-shadow: 0 2px 8px rgba(44, 62, 80, 0.3) !important;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.3s ease;
+    /* Boutons alignés sur la même ligne */
+    ion-buttons {
+      position: absolute !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 10 !important;
+      height: auto !important;
       
-      &.segment-button-checked {
-        transform: translateY(-2px);
+      &[slot="start"] {
+        left: 12px !important;
+      }
+      
+      &[slot="end"] {
+        right: 12px !important;
+      }
+      
+      ion-button {
+        --color: rgba(44, 62, 80, 1) !important;
+        color: rgba(44, 62, 80, 1) !important;
+        font-weight: 600 !important;
+        height: 40px !important;
+        width: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         
         ion-icon {
           color: rgba(44, 62, 80, 1) !important;
+          font-size: 24px !important;
         }
-        
-        ion-label {
-          color: rgba(44, 62, 80, 1) !important;
-        }
-      }
-      
-      ion-icon {
-        font-size: 1.5rem !important;
-        margin-bottom: 2px !important;
-        color: rgba(44, 62, 80, 0.7) !important;
-      }
-      
-      ion-label {
-        font-size: 0.75rem !important;
-        font-weight: 600 !important;
-        margin-top: 4px !important;
-        color: rgba(44, 62, 80, 0.7) !important;
       }
     }
   }
+}
+
+/* Footer moderne BWS - Monté et plus visible */
+ion-footer {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 20 !important;
+  
+  ion-toolbar {
+    --background: rgba(244, 185, 66, 1) !important;
+    --color: rgba(44, 62, 80, 1) !important;
+    border-top: none !important;
+    box-shadow: 0 -2px 12px rgba(44, 62, 80, 0.08);
+    height: 70px !important; /* Plus haut pour accommoder texte et badge */
+    padding: 0 !important;
+    
+    ion-segment {
+      background: transparent !important;
+      height: 100% !important;
+      
+      ion-segment-button {
+        --color: rgba(44, 62, 80, 0.7) !important;
+        --color-checked: rgba(44, 62, 80, 1) !important;
+        --indicator-color: transparent !important;
+        --indicator-box-shadow: none !important;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease;
+        position: relative !important;
+        overflow: visible !important; /* Important pour le badge */
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        
+        &.segment-button-checked {
+          transform: translateY(-2px);
+          
+          ion-icon {
+            color: rgba(44, 62, 80, 1) !important;
+          }
+          
+          ion-label {
+            color: rgba(44, 62, 80, 1) !important;
+            font-weight: 700 !important;
+          }
+        }
+        
+        ion-icon {
+          font-size: 26px !important;
+          margin-bottom: 4px !important;
+          color: rgba(44, 62, 80, 0.7) !important;
+        }
+        
+        ion-label {
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          margin-top: 4px !important;
+          color: rgba(44, 62, 80, 0.7) !important;
+          display: block !important;
+          line-height: 1.2 !important;
+        }
+      }
+    }
+  }
+}
+
+/* Badge de notification moderne - Totalement visible */
+ion-badge,
+.badge,
+ion-segment-button ion-badge {
+  --background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%);
+  background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%) !important;
+  --color: rgba(255, 255, 255, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  position: absolute !important;
+  top: 4px !important;
+  right: calc(50% - 22px) !important; /* Centré sur l'icône */
+  border-radius: 12px !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  padding: 0 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+  z-index: 30 !important;
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 /* Grille principale */
@@ -293,26 +385,6 @@ ion-progress-bar {
   100% { transform: translateX(100%); }
 }
 
-/* Badge de notification moderne */
-ion-badge {
-  --background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%);
-  --color: rgba(255, 255, 255, 1) !important;
-  font-size: 11px;
-  font-weight: 700;
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  border-radius: 12px;
-  padding: 4px 8px;
-  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
-  animation: pulse-badge 2s infinite;
-}
-
-@keyframes pulse-badge {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
 /* Dernière mise à jour */
 .last-update {
   color: rgba(44, 62, 80, 0.6) !important;
@@ -445,6 +517,21 @@ ion-badge {
   .stats-row {
     margin-top: 12px;
     padding-top: 12px;
+  }
+  
+  /* Footer mobile */
+  ion-footer ion-toolbar {
+    height: 65px !important;
+    
+    ion-segment ion-segment-button {
+      ion-icon {
+        font-size: 22px !important;
+      }
+      
+      ion-label {
+        font-size: 10px !important;
+      }
+    }
   }
 }
 

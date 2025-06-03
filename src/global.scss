@@ -29,5 +29,548 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+.keyboard-open {
+  ion-content {
+    padding-bottom: var(--keyboard-offset, 0px);
+  }
+  
+  ion-footer {
+    transform: translateY(calc(-1 * var(--keyboard-offset, 0px)));
+    transition: transform 0.3s ease-in-out;
+  }
+}
 
+// Améliorer les inputs sur mobile
+ion-input {
+  --color: var(--ion-text-color, #000);
+  --placeholder-color: var(--ion-text-color, #999);
+  --placeholder-opacity: 0.6;
+  
+  input {
+    cursor: text !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+}
 
+// Forcer l'affichage du curseur sur mobile
+.native-input {
+  cursor: text !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+// Support tactile amélioré
+ion-item {
+  --min-height: 48px;
+  
+  ion-input, ion-textarea {
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+  }
+}
+
+/* Forcer la visibilité de tous les headers */
+ion-header {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  position: relative !important;
+  top: 20px !important; /* Baisser de 20px */
+  margin-bottom: 20px !important; /* Compenser l'espace */
+  z-index: 10 !important;
+  
+  ion-toolbar {
+    opacity: 1 !important;
+    visibility: visible !important;
+    --background: rgba(255, 193, 7, 1) !important; /* Opacité 100% au lieu de 0.95 */
+    background: rgba(255, 193, 7, 1) !important;
+    --min-height: 50px !important; /* Réduire la hauteur */
+    height: 50px !important;
+    
+    ion-title {
+      opacity: 1 !important;
+      visibility: visible !important;
+      color: rgba(19, 8, 51, 1) !important; /* Opacité 100% au lieu de 0.9 */
+      font-weight: 700 !important; /* Plus bold */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important; /* Ombre pour contraste */
+      font-size: 1.2rem !important; /* Légèrement plus petit */
+      line-height: 50px !important; /* Centrer verticalement */
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+}
+
+/* Ajuster les ion-footer (remonter pour mieux voir les icônes) */
+ion-footer {
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+  bottom: 45px !important; /* Remonté de 30px à 45px */
+  margin-top: -45px !important; /* Compenser l'espace */
+  z-index: 15 !important; /* S'assurer qu'il reste visible */
+  
+  ion-toolbar {
+    opacity: 1 !important;
+    visibility: visible !important;
+    --background: rgba(255, 255, 255, 1) !important;
+    background: rgba(255, 255, 255, 1) !important;
+    --min-height: 45px !important; /* Réduire la hauteur */
+    height: 45px !important;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1) !important; /* Ombre pour visibilité */
+    
+    /* Forcer la visibilité du texte dans le footer */
+    ion-title,
+    ion-buttons,
+    ion-button,
+    p,
+    span,
+    div {
+      opacity: 1 !important;
+      visibility: visible !important;
+      color: rgba(19, 8, 51, 1) !important; /* Couleur visible */
+      font-weight: 600 !important; /* Plus bold */
+      font-size: 0.9rem !important;
+    }
+    
+    /* Forcer la visibilité des icônes dans le footer */
+    ion-icon {
+      opacity: 1 !important;
+      visibility: visible !important;
+      color: rgba(19, 8, 51, 1) !important; /* Couleur sombre */
+      font-size: 24px !important; /* Taille plus grande */
+      width: 24px !important;
+      height: 24px !important;
+      fill: rgba(19, 8, 51, 1) !important;
+      stroke: rgba(19, 8, 51, 1) !important;
+    }
+    
+    /* Icônes actives */
+    ion-icon.active,
+    ion-icon[color="primary"],
+    .active ion-icon {
+      color: rgba(244, 185, 66, 1) !important; /* Jaune pour l'icône active */
+      fill: rgba(244, 185, 66, 1) !important;
+    }
+  }
+}
+
+/* Forcer la visibilité des badges de notification */
+ion-badge,
+.notification-badge,
+.badge {
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: #E74C3C !important; /* Rouge vif */
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2px 6px !important;
+  z-index: 20 !important;
+}
+
+/* Remonter tous les éléments en bas de page */
+.message,
+ion-text,
+.login-container > *:last-child,
+.register-container > *:last-child,
+.forgot-password-container > *:last-child,
+ion-button:last-of-type,
+form + ion-button,
+form + div {
+  margin-bottom: 40px !important; /* Plus d'espace en bas */
+}
+
+/* Remonter spécifiquement les boutons en bas */
+ion-button.button-outline,
+ion-button.button-clear,
+ion-button:not([type="submit"]) {
+  margin-bottom: 30px !important;
+}
+
+/* Remonter les messages d'erreur/succès */
+.message,
+ion-text[color="danger"],
+ion-text[color="success"],
+div[class*="message"] {
+  margin-bottom: 35px !important;
+  position: relative !important;
+  bottom: 20px !important;
+}
+
+/* Ajuster le contenu pour compenser */
+ion-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  --padding-top: 25px !important; /* Plus d'espace en haut */
+  --padding-bottom: 15px !important; /* Moins d'espace en bas */
+  
+  &::part(scroll) {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* Forcer la visibilité de tous les textes */
+h1, h2, h3, h4, h5, h6,
+.login-title, .register-title, .forgot-title,
+.login-subtitle, .register-subtitle, .forgot-subtitle,
+ion-text, p, span, div {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: rgba(19, 8, 51, 1) !important; /* Opacité 100% */
+  font-weight: 500 !important; /* Plus visible */
+  text-shadow: 0 0.5px 1px rgba(0,0,0,0.05) !important; /* Ombre légère */
+}
+
+/* Forcer la visibilité des labels */
+.native-label,
+ion-label {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: rgba(44, 62, 80, 1) !important; /* Bleu foncé 100% opaque */
+  font-weight: 600 !important; /* Plus bold */
+  text-shadow: none !important;
+}
+
+/* Forcer la visibilité des placeholders */
+.input-placeholder {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: rgba(127, 140, 141, 1) !important; /* Gris 100% opaque */
+  font-weight: 400 !important;
+}
+
+/* Forcer la visibilité des boutons */
+ion-button {
+  opacity: 1 !important;
+  visibility: visible !important;
+  
+  &:not(.button-outline):not(.button-clear) {
+    --background: linear-gradient(135deg, #F4B942 0%, #E6A435 100%) !important;
+    background: linear-gradient(135deg, #F4B942 0%, #E6A435 100%) !important;
+    color: rgba(19, 8, 51, 1) !important;
+    font-weight: 700 !important; /* Plus bold */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+  }
+  
+  &.button-outline {
+    --color: rgba(19, 8, 51, 1) !important;
+    color: rgba(19, 8, 51, 1) !important;
+    --border-color: rgba(244, 185, 66, 1) !important;
+    border-color: rgba(244, 185, 66, 1) !important;
+    font-weight: 600 !important;
+  }
+  
+  &.button-clear {
+    --color: rgba(19, 8, 51, 1) !important;
+    color: rgba(19, 8, 51, 1) !important;
+    font-weight: 500 !important;
+  }
+}
+
+/* Forcer la visibilité des messages */
+.message,
+ion-text[color="danger"],
+ion-text[color="success"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-weight: 600 !important;
+  
+  &[color="danger"] {
+    color: #E74C3C !important;
+    background: rgba(231, 76, 60, 0.15) !important; /* Plus visible */
+    border-color: rgba(231, 76, 60, 0.4) !important;
+  }
+  
+  &[color="success"] {
+    color: #27AE60 !important;
+    background: rgba(39, 174, 96, 0.15) !important; /* Plus visible */
+    border-color: rgba(39, 174, 96, 0.4) !important;
+  }
+}
+
+/* Améliorer le contraste général */
+.login-container,
+.register-container,
+.forgot-password-container {
+  opacity: 1 !important;
+  visibility: visible !important;
+  padding-top: 10px !important; /* Moins d'espace en haut */
+  margin-top: 0 !important;
+  
+  * {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* Ajustements pour les illustrations */
+.login-illustration,
+.register-illustration,
+.forgot-illustration {
+  margin-top: 20px !important; /* Réduire l'espace en haut */
+}
+
+/* NOUVELLES OPTIMISATIONS RÉSOLUTION MOBILE */
+
+/* Configuration viewport et résolution */
+html {
+  font-size: 16px !important; /* Base pour rem */
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow-x: hidden !important;
+  -webkit-user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Configuration ion-app pour mobile */
+ion-app {
+  width: 100vw !important;
+  height: 100vh !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Spécial Android pour plus de visibilité */
+.platform-android {
+  ion-header {
+    top: 25px !important; /* Baisser encore plus sur Android */
+    margin-bottom: 25px !important;
+    
+    ion-toolbar {
+      --background: rgba(255, 193, 7, 1) !important;
+      background: rgba(255, 193, 7, 1) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important; /* Ombre pour visibilité */
+      
+      ion-title {
+        color: rgba(19, 8, 51, 1) !important;
+        font-weight: 800 !important; /* Extra bold sur Android */
+        font-size: 1.3rem !important; /* Plus gros */
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+      }
+    }
+  }
+  
+  ion-footer {
+    bottom: 55px !important; /* Remonté de 40px à 55px sur Android */
+    margin-top: -55px !important;
+  }
+  
+  ion-content {
+    --padding-top: 30px !important; /* Plus d'espace sur Android */
+    --padding-bottom: 50px !important; /* Plus d'espace en bas */
+  }
+  
+  /* Remonter tous les éléments en bas sur Android */
+  .message,
+  ion-button:last-of-type,
+  ion-text,
+  div:last-child {
+    margin-bottom: 50px !important;
+    position: relative !important;
+    bottom: 30px !important;
+  }
+  
+  h1, h2, h3, .login-title, .register-title, .forgot-title {
+    color: rgba(19, 8, 51, 1) !important;
+    font-weight: 700 !important;
+    font-size: 1.8rem !important; /* Plus gros sur Android */
+  }
+  
+  .login-subtitle, .register-subtitle, .forgot-subtitle {
+    color: rgba(19, 8, 51, 1) !important;
+    font-weight: 500 !important;
+    font-size: 1.1rem !important; /* Plus gros sur Android */
+  }
+}
+
+/* Fix pour les éléments invisibles */
+[style*="opacity: 0"],
+[style*="visibility: hidden"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Résolution pour écrans mobile standards */
+@media screen and (max-width: 768px) {
+  /* Smartphones portrait */
+  html {
+    font-size: 14px !important;
+  }
+  
+  ion-header {
+    top: 15px !important;
+    margin-bottom: 15px !important;
+    
+    ion-toolbar {
+      --min-height: 48px !important;
+      height: 48px !important;
+      padding: 0 8px !important;
+      
+      ion-title {
+        font-size: 1.1rem !important;
+        padding: 0 8px !important;
+      }
+    }
+  }
+  
+  ion-content {
+    --padding-start: 12px !important;
+    --padding-end: 12px !important;
+    --padding-top: 20px !important;
+    --padding-bottom: 12px !important;
+  }
+  
+  .login-container,
+  .register-container,
+  .forgot-password-container {
+    max-width: 100% !important;
+    padding: 12px !important;
+    margin: 0 !important;
+  }
+}
+
+/* Résolution pour petits smartphones (iPhone SE, etc.) */
+@media screen and (max-width: 375px) and (max-height: 667px) {
+  html {
+    font-size: 13px !important;
+  }
+  
+  ion-header {
+    top: 10px !important;
+    margin-bottom: 10px !important;
+    
+    ion-toolbar {
+      --min-height: 44px !important;
+      height: 44px !important;
+      
+      ion-title {
+        font-size: 1rem !important;
+      }
+    }
+  }
+  
+  .login-illustration,
+  .register-illustration,
+  .forgot-illustration {
+    margin: 15px 0 25px 0 !important;
+    
+    svg {
+      width: 200px !important;
+      height: 140px !important;
+    }
+  }
+  
+  .login-title,
+  .register-title,
+  .forgot-title {
+    font-size: 1.4rem !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .login-subtitle,
+  .register-subtitle,
+  .forgot-subtitle {
+    font-size: 0.9rem !important;
+    margin-bottom: 25px !important;
+  }
+  
+  .native-input-container {
+    margin-bottom: 16px !important;
+  }
+  
+  ion-button {
+    height: 48px !important;
+    font-size: 0.9rem !important;
+    margin-top: 20px !important;
+  }
+}
+
+/* Responsive pour petits écrans */
+@media (max-height: 600px) {
+  ion-header {
+    top: 15px !important;
+    margin-bottom: 15px !important;
+    
+    ion-toolbar {
+      --min-height: 45px !important;
+      height: 45px !important;
+    }
+  }
+  
+  ion-footer {
+    bottom: 40px !important; /* Remonté sur petits écrans */
+    margin-top: -40px !important;
+  }
+  
+  .login-illustration,
+  .register-illustration,
+  .forgot-illustration {
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  /* Remonter les éléments du bas sur petits écrans */
+  .message,
+  ion-button:last-of-type,
+  ion-text {
+    margin-bottom: 40px !important;
+    position: relative !important;
+    bottom: 25px !important;
+  }
+}
+
+/* Pour les écrans très petits */
+@media (max-height: 500px) {
+  ion-header {
+    top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  ion-footer {
+    bottom: 35px !important; /* Remonté sur très petits écrans */
+    margin-top: -35px !important;
+  }
+  
+  /* Remonter encore plus sur très petits écrans */
+  .message,
+  ion-button:last-of-type,
+  ion-text {
+    margin-bottom: 35px !important;
+    position: relative !important;
+    bottom: 20px !important;
+  }
+}
+
+/* Force la résolution native */
+.native-input {
+  font-size: 16px !important; /* Évite le zoom sur iOS */
+  transform: scale(1) !important;
+  zoom: 1 !important;
+}
+
+/* Optimisations pour les performances */
+* {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  box-sizing: border-box !important;
+}

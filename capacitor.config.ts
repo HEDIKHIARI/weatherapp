@@ -9,14 +9,30 @@ const config: CapacitorConfig = {
   },
   plugins: {
     Keyboard: {
-      resize: 'body',
-      style: 'dark',
-      resizeOnFullScreen: true
+      resize: 'body'as any , // ou 'ionic' ou 'none'
+      resizeOnFullScreen: true,
+    },
     
-  },
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"]
-    }
+    },
+    
+    // NOUVEAUX PLUGINS POUR MOBILE
+    SplashScreen: {
+      launchShowDuration: 2000,
+      backgroundColor: '#F4B942',
+    },
+    StatusBar: {
+      style: 'default',
+      backgroundColor: '#F4B942',
+    },
+  },
+  
+  // NOUVELLES CONFIGURATIONS ANDROID
+  android: {
+    allowMixedContent: true,
+    captureInput: true,
+    webContentsDebuggingEnabled: true
   }
 };
 
