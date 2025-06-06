@@ -7,7 +7,7 @@ ion-content {
   --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%) !important;
   font-family: 'Inter', sans-serif;
   --padding-top: 0;
-  --padding-bottom: 40px;
+  --padding-bottom: 80px !important; /* Ajout d'espace en bas pour voir tous les graphiques */
 }
 
 /* Header avec thème BWS */
@@ -129,9 +129,10 @@ ion-header {
 
 /* Wrapper des graphiques */
 .charts-wrapper {
-  padding: 0 20px 40px 20px;
+  padding: 0 20px 80px 20px !important; /* Ajout de padding bottom important */
   display: grid;
-  gap: 24px;
+  gap: 12px;
+  margin-bottom: 20px !important; /* Espace supplémentaire en bas */
 }
 
 /* Containers des graphiques */
@@ -140,11 +141,12 @@ ion-header {
   border-radius: 20px !important;
   box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08) !important;
   border: 1px solid rgba(232, 236, 240, 1) !important;
-  padding: 24px !important;
+  padding: 12px !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
+  margin-bottom: 8px !important; /* Espace entre les graphiques */
   
   &:hover {
     transform: translateY(-4px) !important;
@@ -200,7 +202,7 @@ ion-header {
   /* Canvas du graphique */
   canvas {
     max-width: 100% !important;
-    height: 300px !important;
+    height: 150px !important;
     border-radius: 12px;
     transition: all 0.3s ease;
   }
@@ -213,6 +215,11 @@ ion-header {
     width: 48px !important;
     height: 48px !important;
   }
+}
+
+/* Dernier élément avec plus d'espace */
+.chart-container:last-child {
+  margin-bottom: 40px !important;
 }
 
 /* État de chargement */
@@ -230,7 +237,6 @@ ion-content.loading {
       bottom: 0;
       background: rgba(248, 249, 250, 0.8);
       border-radius: 20px;
-      
     }
   }
 }
@@ -260,6 +266,10 @@ ion-content.loading {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  ion-content {
+    --padding-bottom: 70px !important;
+  }
+  
   .date-selector-section {
     padding: 20px 16px;
     
@@ -271,12 +281,12 @@ ion-content.loading {
   }
   
   .charts-wrapper {
-    padding: 0 16px 32px 16px;
-    gap: 20px;
+    padding: 0 16px 70px 16px !important;
+    gap: 10px;
   }
   
   .chart-container {
-    padding: 20px !important;
+    padding: 8px !important;
     border-radius: 16px !important;
     
     .chart-header {
@@ -295,12 +305,16 @@ ion-content.loading {
     }
     
     canvas {
-      height: 250px !important;
+      height: 120px !important;
     }
   }
 }
 
 @media (max-width: 480px) {
+  ion-content {
+    --padding-bottom: 60px !important;
+  }
+  
   ion-header ion-toolbar ion-title {
     font-size: 1.3rem !important;
   }
@@ -310,12 +324,12 @@ ion-content.loading {
   }
   
   .charts-wrapper {
-    padding: 0 12px 24px 12px;
-    gap: 16px;
+    padding: 0 12px 60px 12px !important;
+    gap: 8px;
   }
   
   .chart-container {
-    padding: 16px !important;
+    padding: 6px !important;
     
     .chart-header {
       flex-direction: column;
@@ -328,7 +342,7 @@ ion-content.loading {
     }
     
     canvas {
-      height: 220px !important;
+      height: 100px !important;
     }
   }
 }

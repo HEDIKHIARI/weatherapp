@@ -1,3 +1,148 @@
-<ion-badge *ngIf="unreadNotifications > 0" color="danger" class="notification-badge">
-  {{unreadNotifications}}
-</ion-badge>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alerts Component</title>
+</head>
+<body>
+<!-- weather-alerts.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Alertes Météo
+      <ion-badge *ngIf="unreadCount > 0" color="danger">
+        {{ unreadCount }}
+      </ion-badge>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleNotifications()">
+        <ion-icon 
+          [name]="notificationsEnabled ? 'notifications' : 'notifications-outline'"
+          [color]="notificationsEnabled ? 'primary' : 'medium'">
+        </ion-icon>
+      </ion-button>
+      <ion-button (click)="markAllAsRead()" *ngIf="unreadCount > 0">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- État des notifications -->
+  <ion-card *ngIf="!notificationsEnabled" color="warning">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="warning-outline"></ion-icon>
+        Notifications désactivées
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Activez les notifications pour recevoir des alertes météo en temps réel.</p>
+      <ion-button expand="block" (click)="initializeNotifications()">
+        Activer les notifications
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Liste des alertes -->
+  <ion-list *ngIf="alerts.length > 0">
+    <ion-item 
+      *ngFor="let alert of alerts" 
+      [class.unread]="!alert.read"
+      (click)="markAsRead(alert)"
+      button>
+      
+      <div slot="start" class="alert-icon">
+        {{ getAlertIcon(alert.type) }}
+      </div>
+      
+      <ion-label>
+        <h2>{{ alert.title }}</h2>
+        <p>{{ alert.message }}</p>
+        <p class="alert-time">
+          <ion-text color="medium">
+            {{ getRelativeTime(alert.timestamp) }}
+          </ion-text>
+        </p>
+      </ion-label>
+      
+      <ion-chip 
+        slot="end" 
+        [color]="alert.severity === 'extreme' ? 'danger' : 
+                alert.severity === 'high' ? 'warning' : 
+                alert.severity === 'medium' ? 'secondary' : 'success'">
+        {{ alert.severity }}
+      </ion-chip>
+    </ion-item>
+  </ion-list>
+
+  <!-- Message si aucune alerte -->
+  <div class="no-alerts" *ngIf="alerts.length === 0">
+    <ion-icon name="alert-circle" size="large" color="medium"></ion-icon>
+    <p>Aucune alerte pour le moment</p>
+  </div>
+
+  <!-- Bouton flottant pour test -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="sendTestNotification()" size="small">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<style>
+/* Styles pour le composant */
+.alert-icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.unread {
+  background-color: var(--ion-color-primary-tint);
+  font-weight: bold;
+}
+
+.alert-time {
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.no-alerts {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--ion-color-medium);
+}
+
+.no-alerts ion-icon {
+  margin-bottom: 20px;
+}
+
+/* Classes pour les sévérités */
+.alert-extreme {
+  --background: var(--ion-color-danger-tint);
+  --color: var(--ion-color-danger-contrast);
+}
+
+.alert-high {
+  --background: var(--ion-color-warning-tint);
+  --color: var(--ion-color-warning-contrast);
+}
+
+.alert-medium {
+  --background: var(--ion-color-secondary-tint);
+  --color: var(--ion-color-secondary-contrast);
+}
+
+.alert-low {
+  --background: var(--ion-color-success-tint);
+  --color: var(--ion-color-success-contrast);
+}
+</style>
+</body>
+</html>

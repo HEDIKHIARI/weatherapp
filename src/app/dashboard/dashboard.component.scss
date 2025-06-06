@@ -1,5 +1,3 @@
-/* Dashboard BWS - Design Moderne avec couleurs RGBA */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* Variables BWS en RGBA */
@@ -26,35 +24,39 @@
 ion-content {
   --background: linear-gradient(135deg, rgba(248, 249, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
   --padding-top: 0;
-  --padding-bottom: 80px; /* Espace pour le footer */
+  --padding-bottom: 0;
   font-family: 'Inter', sans-serif;
   
   &::part(scroll) {
-    padding-top: 20px;
-    padding-bottom: 90px; /* Plus d'espace pour le footer */
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
   }
 }
 
-/* Header moderne BWS - Baissé et aligné */
+/* Header moderne BWS - RÉDUIT ET ALIGNÉ */
 ion-header {
-  position: relative !important;
-  top: 10px !important; /* Baissé légèrement */
+  position: fixed !important;
+  top: 30px !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
   
   ion-toolbar {
     --background: rgba(244, 185, 66, 1) !important;
     --color: rgba(44, 62, 80, 1) !important;
     --border-color: transparent !important;
     font-family: 'Inter', sans-serif;
-    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
-    height: 56px !important;
+    box-shadow: 0 1px 8px rgba(44, 62, 80, 0.06) !important;
+    height: 48px !important;
     display: flex !important;
     align-items: center !important;
     position: relative !important;
+    min-height: 48px !important;
     
     ion-title {
       font-weight: 700 !important;
-      font-size: 1.3rem !important;
-      letter-spacing: 0.3px !important;
+      font-size: 1.1rem !important;
+      letter-spacing: 0.2px !important;
       color: rgba(44, 62, 80, 1) !important;
       text-align: center !important;
       position: absolute !important;
@@ -66,7 +68,7 @@ ion-header {
       align-items: center !important;
       justify-content: center !important;
       margin: 0 !important;
-      padding: 0 !important;
+      padding: 0 50px !important;
     }
     
     /* Boutons alignés sur la même ligne */
@@ -78,47 +80,48 @@ ion-header {
       height: auto !important;
       
       &[slot="start"] {
-        left: 12px !important;
+        left: 8px !important;
       }
       
       &[slot="end"] {
-        right: 12px !important;
+        right: 8px !important;
       }
       
       ion-button {
         --color: rgba(44, 62, 80, 1) !important;
         color: rgba(44, 62, 80, 1) !important;
         font-weight: 600 !important;
-        height: 40px !important;
-        width: 40px !important;
+        height: 36px !important;
+        width: 36px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         
         ion-icon {
           color: rgba(44, 62, 80, 1) !important;
-          font-size: 24px !important;
+          font-size: 30px !important;
         }
       }
     }
   }
 }
 
-/* Footer moderne BWS - Monté et plus visible */
+/* Footer moderne BWS - LEVÉ POUR VISIBILITÉ COMPLÈTE */
 ion-footer {
   position: fixed !important;
-  bottom: 0 !important;
+  bottom: 57px !important; /* Monté de 53px à 57px */
   left: 0 !important;
   right: 0 !important;
-  z-index: 20 !important;
+  z-index: 9999 !important;
   
   ion-toolbar {
     --background: rgba(244, 185, 66, 1) !important;
     --color: rgba(44, 62, 80, 1) !important;
     border-top: none !important;
-    box-shadow: 0 -2px 12px rgba(44, 62, 80, 0.08);
-    height: 70px !important; /* Plus haut pour accommoder texte et badge */
+    box-shadow: 0 -1px 8px rgba(44, 62, 80, 0.06) !important;
+    height: 65px !important;
     padding: 0 !important;
+    min-height: 65px !important;
     
     ion-segment {
       background: transparent !important;
@@ -132,12 +135,12 @@ ion-footer {
         font-family: 'Inter', sans-serif;
         transition: all 0.3s ease;
         position: relative !important;
-        overflow: visible !important; /* Important pour le badge */
-        padding-top: 8px !important;
-        padding-bottom: 8px !important;
+        overflow: visible !important;
+        padding: 6px 2px !important;
+        min-height: 100% !important;
         
         &.segment-button-checked {
-          transform: translateY(-2px);
+          transform: translateY(-1px);
           
           ion-icon {
             color: rgba(44, 62, 80, 1) !important;
@@ -150,15 +153,15 @@ ion-footer {
         }
         
         ion-icon {
-          font-size: 26px !important;
-          margin-bottom: 4px !important;
-          color: rgba(44, 62, 80, 0.7) !important;
+          font-size: 24px !important;
+          margin-bottom: 2px !important;
+          color: rgba(44, 62, 80, 1) !important;
         }
         
         ion-label {
           font-size: 11px !important;
           font-weight: 600 !important;
-          margin-top: 4px !important;
+          margin-top: 2px !important;
           color: rgba(44, 62, 80, 0.7) !important;
           display: block !important;
           line-height: 1.2 !important;
@@ -168,19 +171,65 @@ ion-footer {
   }
 }
 
-/* Badge de notification moderne - Totalement visible */
-ion-badge,
-.badge,
-ion-segment-button ion-badge {
-  --background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%);
-  background: linear-gradient(135deg, rgba(229, 62, 62, 1) 0%, rgba(197, 48, 48, 1) 100%) !important;
+/* Colonne de notification - POSITIONNEMENT FIXE */
+.notification-col {
+  position: fixed !important;
+  top: 110px !important; /* Baissé pour être au niveau de "Dernière mise à jour" */
+  left: 15px !important;
+  width: auto !important;
+  z-index: 9998 !important;
+  padding: 0 !important;
+}
+
+/* Bouton de notification - STYLE MODERNE */
+.notification-button {
+  --background: rgba(244, 185, 66, 1) !important;
+  background: rgba(244, 185, 66, 1) !important;
+  --color: rgba(44, 62, 80, 1) !important;
+  color: rgba(44, 62, 80, 1) !important;
+  position: relative !important;
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 3px 10px rgba(44, 62, 80, 0.15) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.25) !important;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Icône de notification */
+.notification-icon,
+.notification-button ion-icon {
+  font-size: 24px !important;
+  color: rgba(44, 62, 80, 1) !important;
+}
+
+/* Badge sur le bouton de notification - POSITION AJUSTÉE */
+.notification-badge,
+.notification-button ion-badge {
+  --background: #E74C3C !important;
+  background: #E74C3C !important;
   --color: rgba(255, 255, 255, 1) !important;
   color: rgba(255, 255, 255, 1) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   position: absolute !important;
-  top: 4px !important;
-  right: calc(50% - 22px) !important; /* Centré sur l'icône */
+  top: -8px !important;
+  right: -8px !important;
   border-radius: 12px !important;
   min-width: 20px !important;
   height: 20px !important;
@@ -188,30 +237,60 @@ ion-segment-button ion-badge {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4) !important;
   border: 2px solid rgba(255, 255, 255, 1) !important;
-  z-index: 30 !important;
-  animation: pulse-badge 2s infinite;
+  z-index: 10 !important;
+  animation: pulse-alert 2s infinite;
 }
 
-@keyframes pulse-badge {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+/* Animation pulse pour le badge d'alerte */
+@keyframes pulse-alert {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+  }
+  50% { 
+    transform: scale(1.1);
+    box-shadow: 0 2px 10px rgba(231, 76, 60, 0.6);
+  }
+}
+
+/* Badge de navigation sur les boutons du footer - GARDE POSITION ORIGINALE */
+ion-segment-button ion-badge {
+  --background: rgba(44, 62, 80, 1) !important;
+  background: rgb(214, 202, 38) !important;
+  --color: rgba(255, 255, 255, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  position: absolute !important;
+  top: -5px !important;
+  right: calc(50% - 22px) !important;
+  border-radius: 12px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  padding: 0 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.3) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+  z-index: 30 !important;
 }
 
 /* Grille principale */
 ion-grid {
-  padding: 0 16px;
+  padding: 0 12px !important;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Cartes modernes - Sélecteurs spécifiques */
+/* Cartes modernes - TAILLE RÉDUITE */
 ion-card {
   background: rgba(255, 255, 255, 1) !important;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
-  margin: 0 0 20px 0;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 8px rgba(44, 62, 80, 0.06) !important;
+  margin: 0 0 12px 0 !important;
   border: 1px solid rgba(232, 236, 240, 1);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -219,13 +298,13 @@ ion-card {
   
   /* Effet de hover moderne */
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.16);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.12) !important;
     border-color: rgba(244, 185, 66, 0.3);
   }
   
   &:active {
-    transform: translateY(-2px) scale(0.98);
+    transform: translateY(-1px) scale(0.99);
   }
   
   /* Barre colorée en haut */
@@ -235,92 +314,71 @@ ion-card {
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 2px !important;
     background: linear-gradient(90deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%);
-  }
-  
-  /* Forcer les couleurs dans les cartes */
-  * {
-    color: rgba(44, 62, 80, 1) !important;
-  }
-  
-  ion-card-title {
-    color: rgba(44, 62, 80, 1) !important;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: rgba(44, 62, 80, 1) !important;
-  }
-  
-  p, span, div {
-    color: rgba(44, 62, 80, 0.8) !important;
-  }
-  
-  ion-icon {
-    color: rgba(244, 185, 66, 1) !important;
   }
 }
 
-/* En-tête des cartes */
+/* En-tête des cartes - MÊME BACKGROUND QUE LA CARTE */
 ion-card-header {
-  padding: 20px 20px 12px;
-  background: linear-gradient(135deg, rgba(251, 252, 253, 1) 0%, rgba(248, 249, 250, 1) 100%);
+  padding: 14px 16px 10px !important;
+  background: linear-gradient(135deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%) !important;
   border-bottom: 1px solid rgba(232, 236, 240, 1);
   
   ion-card-title {
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem !important;
     font-weight: 600;
     color: rgba(44, 62, 80, 1) !important;
     display: flex;
     align-items: center;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1px;
     margin: 0;
     
     ion-icon {
-      margin-right: 10px;
-      color: rgba(244, 185, 66, 1) !important;
-      font-size: 1.2rem;
-      padding: 8px;
-      background: rgba(244, 185, 66, 0.1);
-      border-radius: 8px;
+      margin-right: 8px !important;
+      color: rgba(44, 62, 80, 1) !important;
+      font-size: 1.1rem !important;
+      padding: 6px !important;
+      background: rgba(44, 62, 80, 0.1);
+      border-radius: 6px !important;
     }
   }
 }
 
-/* Contenu des cartes */
+/* Contenu des cartes - RÉDUIT */
 ion-card-content {
-  padding: 20px;
+  padding: 14px 16px !important;
   
   h1 {
     font-family: 'Inter', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2rem !important;
     font-weight: 800;
     color: rgba(44, 62, 80, 1) !important;
-    margin: 0 0 8px 0;
-    line-height: 1.2;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.1;
     
     span {
       font-weight: 400;
-      font-size: 1.1rem;
+      font-size: 0.95rem !important;
       color: rgba(44, 62, 80, 0.8) !important;
-      margin-left: 8px;
+      margin-left: 6px !important;
     }
   }
   
   p {
     color: rgba(44, 62, 80, 0.8) !important;
-    font-size: 0.95rem;
+    font-size: 0.85rem !important;
     font-weight: 500;
     display: flex;
     align-items: center;
-    margin: 12px 0 0 0;
-    line-height: 1.4;
+    margin: 8px 0 0 0 !important;
+    line-height: 1.3;
     
     ion-icon {
-      margin-right: 8px;
-      color: rgba(244, 185, 66, 1) !important;
-      font-size: 1.1rem;
+      margin-right: 6px !important;
+      color: rgba(44, 62, 80, 1) !important;
+      font-size: 1rem !important;
     }
   }
   
@@ -328,8 +386,8 @@ ion-card-content {
   .stats-row {
     display: flex;
     justify-content: space-between;
-    margin-top: 16px;
-    padding-top: 16px;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
     border-top: 1px solid rgba(232, 236, 240, 1);
     
     .stat-item {
@@ -337,17 +395,17 @@ ion-card-content {
       flex: 1;
       
       .stat-value {
-        font-size: 1.2rem;
+        font-size: 1.1rem !important;
         font-weight: 700;
         color: rgba(44, 62, 80, 1) !important;
         display: block;
       }
       
       .stat-label {
-        font-size: 0.8rem;
+        font-size: 0.75rem !important;
         color: rgba(44, 62, 80, 0.6) !important;
         font-weight: 500;
-        margin-top: 2px;
+        margin-top: 1px !important;
       }
     }
   }
@@ -357,229 +415,137 @@ ion-card-content {
 ion-progress-bar {
   --progress-background: linear-gradient(90deg, rgb(34, 158, 61) 0%, rgb(203, 20, 20) 100%);
   --background: rgba(244, 185, 66, 0.1);
-  height: 8px;
-  border-radius: 4px;
-  margin-top: 16px;
+  height: 6px !important;
+  border-radius: 3px !important;
+  margin-top: 12px !important;
   overflow: hidden;
-  
-  /* Effet d'animation */
-  &::part(progress) {
-    border-radius: 4px;
-    position: relative;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      animation: shimmer 2s infinite;
-    }
-  }
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Dernière mise à jour */
+/* Dernière mise à jour - RÉDUITE */
 .last-update {
   color: rgba(44, 62, 80, 0.6) !important;
-  font-size: 0.85rem;
+  font-size: 0.75rem !important;
   font-weight: 500;
   text-align: center;
-  margin: 16px 0 24px;
-  padding: 12px 20px;
+  margin: 12px 0 16px !important;
+  padding: 8px 16px !important;
   background: rgba(244, 185, 66, 0.05);
-  border-radius: 12px;
+  border-radius: 8px !important;
   border: 1px solid rgba(244, 185, 66, 0.1);
   
   ion-icon {
-    margin-right: 6px;
-    color: rgba(244, 185, 66, 1) !important;
+    margin-right: 4px !important;
+    color: rgba(44, 62, 80, 1) !important;
+    font-size: 0.9rem !important;
   }
 }
 
-/* Alertes météo avec thème BWS */
-.alert-low {
-  --background: linear-gradient(135deg, rgba(255, 243, 205, 1) 0%, rgba(255, 248, 225, 1) 100%);
-  --color: rgba(44, 62, 80, 1) !important;
-  border-left: 4px solid rgba(255, 193, 7, 1);
-}
-
-.alert-medium {
-  --background: linear-gradient(135deg, rgba(255, 229, 180, 1) 0%, rgba(255, 237, 204, 1) 100%);
-  --color: rgba(44, 62, 80, 1) !important;
-  border-left: 4px solid rgba(255, 152, 0, 1);
-}
-
-.alert-high {
-  --background: linear-gradient(135deg, rgba(255, 235, 238, 1) 0%, rgba(255, 205, 210, 1) 100%);
-  --color: rgba(44, 62, 80, 1) !important;
-  border-left: 4px solid rgba(244, 67, 54, 1);
-}
-
+/* Alertes météo avec thème BWS - RÉDUITES */
+.alert-low,
+.alert-medium,
+.alert-high,
 .alert-extreme {
-  --background: linear-gradient(135deg, rgba(26, 37, 47, 1) 0%, rgba(44, 62, 80, 1) 100%);
-  --color: rgba(255, 255, 255, 1) !important;
-  border-left: 4px solid rgba(255, 23, 68, 1);
-  animation: pulse-extreme 1.5s infinite;
-}
-
-@keyframes pulse-extreme {
-  0%, 100% { 
-    opacity: 1; 
-    transform: scale(1);
-  }
-  50% { 
-    opacity: 0.9; 
-    transform: scale(1.02);
-  }
+  padding: 10px 14px !important;
+  margin: 8px 0 !important;
+  border-radius: 8px !important;
+  font-size: 0.85rem !important;
 }
 
 /* Cartes spéciales */
 .weather-card {
   background: linear-gradient(135deg, rgba(244, 185, 66, 1) 0%, rgba(248, 198, 104, 1) 100%) !important;
-  
-  ion-card-header {
-    background: rgba(255, 255, 255, 0.2);
-    
-    ion-card-title {
-      color: rgba(44, 62, 80, 1) !important;
-      
-      ion-icon {
-        background: rgba(255, 255, 255, 0.2);
-        color: rgba(44, 62, 80, 1) !important;
-      }
-    }
-  }
-  
-  ion-card-content {
-    h1, p {
-      color: rgba(44, 62, 80, 1) !important;
-    }
-    
-    .stats-row .stat-item {
-      .stat-value {
-        color: rgba(44, 62, 80, 1) !important;
-      }
-      
-      .stat-label {
-        color: rgba(44, 62, 80, 0.8) !important;
-      }
-    }
-  }
 }
 
-/* Version mobile */
+/* Version mobile - AJUSTEMENTS SUPPLÉMENTAIRES */
 @media (max-width: 768px) {
+  ion-content::part(scroll) {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  
   ion-grid {
-    padding: 0 12px;
+    padding: 0 8px !important;
   }
   
   ion-card {
-    margin-bottom: 16px;
-    border-radius: 12px;
+    margin-bottom: 10px !important;
+    border-radius: 10px !important;
   }
   
   ion-card-header {
-    padding: 16px 16px 10px;
+    padding: 12px 14px 8px !important;
     
     ion-card-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem !important;
       
       ion-icon {
-        font-size: 1.1rem;
-        padding: 6px;
+        font-size: 1rem !important;
+        padding: 5px !important;
       }
     }
   }
   
   ion-card-content {
-    padding: 16px;
+    padding: 12px 14px !important;
     
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem !important;
       
       span {
-        font-size: 1rem;
+        font-size: 0.9rem !important;
       }
     }
     
     p {
-      font-size: 0.9rem;
+      font-size: 0.8rem !important;
     }
   }
   
   .stats-row {
-    margin-top: 12px;
-    padding-top: 12px;
-  }
-  
-  /* Footer mobile */
-  ion-footer ion-toolbar {
-    height: 65px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
     
-    ion-segment ion-segment-button {
-      ion-icon {
-        font-size: 22px !important;
-      }
-      
-      ion-label {
-        font-size: 10px !important;
-      }
+    .stat-value {
+      font-size: 1rem !important;
+    }
+    
+    .stat-label {
+      font-size: 0.7rem !important;
     }
   }
 }
 
 @media (max-width: 480px) {
   ion-card-content h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem !important;
   }
   
   .stats-row {
     flex-direction: column;
-    gap: 8px;
+    gap: 6px !important;
     
     .stat-item {
       text-align: left;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 4px 0 !important;
     }
   }
 }
 
 /* Animation d'entrée */
 ion-card {
-  animation: fadeInUp 0.6s ease-out;
+  animation: fadeInUp 0.4s ease-out;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Loading state */
-.loading-skeleton {
-  background: linear-gradient(90deg, rgba(240, 240, 240, 1) 25%, rgba(224, 224, 224, 1) 50%, rgba(240, 240, 240, 1) 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-  height: 20px;
-  margin: 8px 0;
-}
-
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
 }

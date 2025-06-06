@@ -20,7 +20,7 @@ import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FirebaseDbService } from '../services/firebase-db.services';
-import { PushNotificationService } from '../services/push-notification.service';
+import { NotificationService } from '../services/notification.service';
 
 // Types d'alertes
 type AlertType = 
@@ -160,7 +160,9 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private AuthService: AuthService,
     private firebaseDbService: FirebaseDbService,
-        private pushNotificationService: PushNotificationService,
+       
+  private notificationService: NotificationService,
+
  
     
     
@@ -212,7 +214,7 @@ export class DashboardComponent implements OnInit {
 
     setInterval(() => this.loadData(), 300000);
     setInterval(() => this.checkSensorStatus(), 12 * 3600000);
-     this.pushNotificationService.initializePushNotifications();
+  
     
     
   }
@@ -297,7 +299,7 @@ export class DashboardComponent implements OnInit {
     }
 
     if (newAlerts.length > 0) {
-      this.addAlerts(newAlerts);
+      newAlerts.forEach(alert => this.addAlert(alert));
     }
   }
     private createTemperatureAlert(type: 'high' | 'low'): WeatherAlert {
@@ -399,26 +401,15 @@ export class DashboardComponent implements OnInit {
     this.alerts.unshift(alert);
     this.updateUnreadCount();
     this.presentAlertNotification(alert);
-     this.pushNotificationService.sendWeatherAlert({
-    type: alert.type,
-    severity: alert.severity,
-    message: alert.message
+    this.notificationService.sendWeatherAlert({
+  type: alert.type,
+  severity: alert.severity,
+  message: alert.message
   });
   }
   
 
-  addAlerts(alerts: WeatherAlert[]) {
-    this.alerts.unshift(...alerts);
-    this.updateUnreadCount();
-    alerts.forEach(alert => {
-      this.presentAlertNotification(alert);
-      this.pushNotificationService.sendWeatherAlert({
-        type: alert.type,
-        severity: alert.severity,
-        message: alert.message
-      });
-    });
-  }
+  
 
   updateUnreadCount() {
     this.unreadNotifications = this.alerts.filter(a => !a.read).length;
@@ -527,6 +518,9 @@ export class DashboardComponent implements OnInit {
       this.updateConnectivityIcon();
     });
   }
+ async testNotification() {
+  await this.notificationService.testDirectNotification();
+}
 
   // Méthodes existantes pour les données météo
   async openSettings() {

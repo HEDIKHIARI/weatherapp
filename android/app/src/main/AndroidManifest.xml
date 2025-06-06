@@ -45,8 +45,13 @@
     android:value="true" />
 
     </application>
+<meta-data
+  android:name="com.google.firebase.messaging.default_notification_icon"
+  android:resource="@mipmap/ic_launcher"
+/>
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 </manifest>

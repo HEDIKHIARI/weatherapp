@@ -14,7 +14,9 @@ export const environment = {
   storageBucket: "weatherapp-a4506.firebasestorage.app",
   messagingSenderId: "781832787375",
   appId: "1:781832787375:web:f1a228d7350b2fef0b4b5a",
-  measurementId: "G-4FCD0WBYH5"
+  measurementId: "G-4FCD0WBYH5",
+    backendUrl: 'http://192.168.100.113:3000' 
+    
   }
 } 
 
